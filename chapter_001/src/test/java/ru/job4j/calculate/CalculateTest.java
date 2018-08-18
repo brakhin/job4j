@@ -12,7 +12,6 @@ import static org.junit.Assert.assertThat;
 * @since 14.08.2018
 */
 public class CalculateTest {
-	
 	/**
 	* Test echo.
 	*/
@@ -24,5 +23,4 @@ public class CalculateTest {
 		String result = calc.echo(input);
 		assertThat(result, is(expect));
 	}
- 
 }
