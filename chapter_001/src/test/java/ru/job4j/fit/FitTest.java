@@ -6,7 +6,6 @@ import static org.hamcrest.number.IsCloseTo.closeTo;
 import static org.junit.Assert.assertThat;
 
 public class FitTest {
-
     @Test
     public void manWeight() {
         Fit fit = new Fit();
