@@ -10,7 +10,7 @@ public class MaxTest {
     @Test
     public void whenFirstLessSecond() {
         Max maximum = new Max();
-        int result = Max.max(1, 2);
+        int result = Math.max(1, 2);
         assertThat(result, is(2));
     }
 }
