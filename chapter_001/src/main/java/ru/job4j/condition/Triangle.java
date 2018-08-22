@@ -57,6 +57,6 @@ public class Triangle {
      * @return Признак невырожденности треугольника в прямую
      */
     private boolean exist(double ab, double ac, double bc) {
-        return ab > 0 && ac > 0 & bc > 0 && ab + ac > bc && ab + bc >ac && ab + ac > bc ;
+        return ab > 0 && ac > 0 & bc > 0 && ab + ac > bc && ab + bc > ac && ab + ac > bc;
     }
 }
