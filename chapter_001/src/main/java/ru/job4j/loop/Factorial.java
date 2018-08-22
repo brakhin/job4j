@@ -12,7 +12,7 @@ package ru.job4j.loop;
      */
     public int calc(int value) {
         int result = 1;
-        for (int i = 1; i <= value; i++ ) {
+        for (int i = 1; i <= value; i++) {
            result *= i;
         }
         return result;

@@ -6,8 +6,13 @@ public class Calculator {
     public void add(double first, double second) {
         this.result = first + second;
     }
-    public void subtraction(double first, double second) {this.result = first - second;}
-    public void divide(double first, double second) {this.result = first / second;}
+    public void subtraction(double first, double second) {
+        this.result = first - second;
+    }
+
+    public void divide(double first, double second) {
+        this.result = first / second;
+    }
 
     public double getResult() {
         return this.result;
