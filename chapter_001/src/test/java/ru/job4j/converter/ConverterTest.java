@@ -20,10 +20,10 @@ public class ConverterTest {
     }
 
     @Test
-    public void when1EuroToRubleThen70() {
+    public void when2EuroToRubleThen70() {
         Converter converter = new Converter();
-        int result = converter.euroToRuble(1);
-        assertThat(result, is(70));
+        int result = converter.euroToRuble(2);
+        assertThat(result, is(140));
     }
 
     @Test
