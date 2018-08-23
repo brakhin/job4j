@@ -32,4 +32,13 @@ public class CalculatorTest {
         double expected = 1D;
         assertThat(result, is(expected));
     }
+
+    @Test
+    public void whenMult2On2Then4() {
+        Calculator calc = new Calculator();
+        calc.mult(2D, 2D);
+        double result = calc.getResult();
+        double expected = 4D;
+        assertThat(result, is(expected));
+    }
 }
