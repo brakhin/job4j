@@ -22,4 +22,7 @@ public class Fit {
     public double womanWeight(double height) {
         return (height - 110D) * 1.15;
     }
+
+
+
 }
