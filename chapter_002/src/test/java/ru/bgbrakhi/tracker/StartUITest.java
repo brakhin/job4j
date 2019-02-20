@@ -56,7 +56,7 @@ public class StartUITest {
     }
 	
 	@Test
-	public void showAllItems() {
+	public void showAllItemsTest() {
 		Tracker tracker = new Tracker();
 		tracker.add(new Item("name_1", "desc_1"));
 		tracker.add(new Item("name_2", "desc_2"));
@@ -67,6 +67,14 @@ public class StartUITest {
 			this.out.toString(),
 			is(
 				new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
+					.add("Выберите действие : ")
+					.add("   0. Add new Item")
+					.add("   1. Show all items")
+					.add("   2. Edit item")
+					.add("   3. Delete item")
+					.add("   4. Find item by Id")
+					.add("   5. Find items by name")
+					.add("   6. Exit Program")
 					.add("--- Вывод всех заявок : ---")
 					.add("Название : name_1")
                     .add("Описание : desc_1")
@@ -74,9 +82,90 @@ public class StartUITest {
                     .add("Описание : desc_2")
 					.add("Название : name_3")
                     .add("Описание : desc_3")
+					.add("Выберите действие : ")
+					.add("   0. Add new Item")
+					.add("   1. Show all items")
+					.add("   2. Edit item")
+					.add("   3. Delete item")
+					.add("   4. Find item by Id")
+					.add("   5. Find items by name")
+					.add("   6. Exit Program")
+                    .toString()
+			)
+		);
+	}
+
+	@Test
+	public void findItemByIdTest() {
+		Tracker tracker = new Tracker();
+		tracker.add(new Item("name_1", "desc_1"));
+		Item item = tracker.add(new Item("name_2", "desc_2"));
+		tracker.add(new Item("name_3", "desc_3"));
+		Input input = new StubInput(new String[]{"4", item.getId(), "6"});
+		new StartUI(input, tracker).init();
+		assertThat(
+			this.out.toString(),
+			is(
+				new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
+					.add("Выберите действие : ")
+					.add("   0. Add new Item")
+					.add("   1. Show all items")
+					.add("   2. Edit item")
+					.add("   3. Delete item")
+					.add("   4. Find item by Id")
+					.add("   5. Find items by name")
+					.add("   6. Exit Program")
+					.add("Название : name_2")
+					.add("Описание : desc_2")
+					.add("Выберите действие : ")
+					.add("   0. Add new Item")
+					.add("   1. Show all items")
+					.add("   2. Edit item")
+					.add("   3. Delete item")
+					.add("   4. Find item by Id")
+					.add("   5. Find items by name")
+					.add("   6. Exit Program")
+                    .toString()
+			)
+		);
+	}
+
+	@Test
+	public void findItemByNameTest() {
+		Tracker tracker = new Tracker();
+		tracker.add(new Item("name_1", "desc_1"));
+		tracker.add(new Item("name_1", "desc_2"));
+		tracker.add(new Item("name_3", "desc_3"));
+		Input input = new StubInput(new String[]{"5", "name_1", "6"});
+		new StartUI(input, tracker).init();
+		assertThat(
+			this.out.toString(),
+			is(
+				new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
+					.add("Выберите действие : ")
+					.add("   0. Add new Item")
+					.add("   1. Show all items")
+					.add("   2. Edit item")
+					.add("   3. Delete item")
+					.add("   4. Find item by Id")
+					.add("   5. Find items by name")
+					.add("   6. Exit Program")
+					.add("Название : name_1")
+					.add("Описание : desc_1")
+					.add("Название : name_1")
+					.add("Описание : desc_2")
+					.add("Выберите действие : ")
+					.add("   0. Add new Item")
+					.add("   1. Show all items")
+					.add("   2. Edit item")
+					.add("   3. Delete item")
+					.add("   4. Find item by Id")
+					.add("   5. Find items by name")
+					.add("   6. Exit Program")
                     .toString()
 			)
 		);
 	}
 
 }
+
