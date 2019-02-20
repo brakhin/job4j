@@ -1,4 +1,4 @@
-package ru.bgbrakhi.models;
+package ru.bgbrakhi.tracker;
 
 import java.lang.System;
 import java.util.Random;
