@@ -1,6 +1,8 @@
 package ru.bgbrakhi.tracker;
 
 import org.junit.Test;
+import ru.bgbrakhi.models.Item;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 

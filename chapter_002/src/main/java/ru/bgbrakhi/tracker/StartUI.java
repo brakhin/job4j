@@ -1,6 +1,8 @@
 package ru.bgbrakhi.tracker;
 
 
+import ru.bgbrakhi.models.*;
+
 public class StartUI {
 	/** 
 	* Строковые константы для пунктов меню
@@ -44,50 +46,13 @@ public class StartUI {
 	* Реализация выбора действий
 	*/
 	public void init() {
-		while (true) {
-			this.showMenu();
-			String answer = input.ask("Выберите пункт меню : ");
-			if (MENU_ADD.equals(answer)) {
-				this.createItem();			
-			} else if (MENU_SHOW_ALL.equals(answer)) {
-				System.out.println("--- Вывод всех заявок : ---");
-				for (Item item : tracker.findAll()) {
-					item.show();
-				}
-			} else if (MENU_EDIT.equals(answer)) {
-				System.out.println("--- Изменение заявки ---");
-				String id = input.ask("Id заявки для редактирования : ");
-				String name = input.ask("Имя заявки");
-				String desc = input.ask("Описание заявки");
-				Item item = new Item(name, desc);
-				if (tracker.replace(id, item)) {
-					System.out.println("--- Заявка с Id " + item.getId() + " изменена ---");	
-				} else {
-					System.out.println("--- Заявка с Id " + item.getId() + " не изменена ---");	
-				}
-			} else if (MENU_DELETE.equals(answer)) {
-				String id = input.ask("Id заявки для удаления : ");
-				if (tracker.delete(id)) {
-					System.out.println("--- Заявка с Id " + id + " удалена ---");
-				} else {
-					System.out.println("--- Заявка с Id " + id + " не удалена ---");
-				}				
-			} else if (MENU_FIND_ITEM_BY_ID.equals(answer)) {
-				String id = input.ask("Id заявки для поиска : ");
-				Item item = tracker.findById(id);
-				if (item != null) {
-					item.show();
-				}
-			} else if (MENU_FIND_ITEMS_BY_NAME.equals(answer)) {
-				String name = input.ask("Имя заявок для поиска : ");
-				Item[] items = tracker.findByName(name);
-				for (Item item : items) {
-					item.show();
-				}				
-			} else if (MENU_EXIT.equals(answer)) {
-				break;
-			}
-		}
+		MenuTracker menu = new MenuTracker(this.input, this.tracker);
+		menu.fillActions();
+		do {
+			menu.show();
+			int key = Integer.valueOf(input.ask("Select : "));
+			menu.select(key);			
+		} while (!"y".equals(this.input.ask("Exit? y/n")));
 	}
 	
 	private void createItem() {
