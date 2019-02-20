@@ -1,4 +1,4 @@
-package ru.bgbrakhi.tracker;
+package ru.bgbrakhi.models;
 
 import java.lang.System;
 import java.util.Random;
@@ -49,8 +49,7 @@ public class Item {
 	}	
 	
 	public void show() {
-		System.out.println("Название : " + this.name);
-		System.out.println("Описание : " + this.desc);
+		System.out.println(String.format("%s(%s)", getName(), getDesc()));
 	}
 	
 }

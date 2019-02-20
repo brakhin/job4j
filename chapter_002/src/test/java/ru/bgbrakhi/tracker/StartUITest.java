@@ -3,6 +3,8 @@ package ru.bgbrakhi.tracker;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import ru.bgbrakhi.models.Item;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import java.util.StringJoiner;
@@ -17,7 +19,7 @@ public class StartUITest {
 	@Test
 	public void whenUserAddItemthenTrackerContainsItemWithSuchName() {
 		Tracker tracker = new Tracker();
-		Input input = new StubInput(new String[]{"0", "test name", "desc", "6"}); 
+		Input input = new StubInput(new String[]{"0", "test name", "desc", "y"});
 		new StartUI(input, tracker).init();
 		assertThat(tracker.findAll()[0].getName(), is("test name"));
 	}
@@ -26,7 +28,7 @@ public class StartUITest {
 	public void whenUpdateItemThenTrackerHasUpdatedItem() {
 		Tracker tracker = new Tracker();
 		Item item = tracker.add(new Item("test name", "desc"));
-		Input input = new StubInput(new String[]{"2", item.getId(), "test replace", "заменили заявку", "6"});
+		Input input = new StubInput(new String[]{"2", item.getId(), "test replace", "заменили заявку", "y"});
 		new StartUI(input, tracker).init();
 		assertThat(tracker.findById(item.getId()).getName(), is("test replace"));
 	}
@@ -37,7 +39,7 @@ public class StartUITest {
 		tracker.add(new Item("name_1", "desc_1"));
 		Item item = tracker.add(new Item("name_2", "desc_2"));
 		tracker.add(new Item("name_3", "desc_3"));
-		Input input = new StubInput(new String[]{"3", item.getId(), "6"});
+		Input input = new StubInput(new String[]{"3", item.getId(), "y"});
 		new StartUI(input, tracker).init();
 		assertThat(tracker.findById(item.getId()) == null ? 1 : 0, is(1));
 	}
@@ -61,35 +63,21 @@ public class StartUITest {
 		tracker.add(new Item("name_1", "desc_1"));
 		tracker.add(new Item("name_2", "desc_2"));
 		tracker.add(new Item("name_3", "desc_3"));
-		Input input = new StubInput(new String[]{"1", "6"});
+		Input input = new StubInput(new String[]{"1", "y"});
 		new StartUI(input, tracker).init();
 		assertThat(
 			this.out.toString(),
 			is(
 				new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
-					.add("Выберите действие : ")
-					.add("   0. Add new Item")
-					.add("   1. Show all items")
-					.add("   2. Edit item")
-					.add("   3. Delete item")
-					.add("   4. Find item by Id")
-					.add("   5. Find items by name")
-					.add("   6. Exit Program")
-					.add("--- Вывод всех заявок : ---")
-					.add("Название : name_1")
-                    .add("Описание : desc_1")
-					.add("Название : name_2")
-                    .add("Описание : desc_2")
-					.add("Название : name_3")
-                    .add("Описание : desc_3")
-					.add("Выберите действие : ")
-					.add("   0. Add new Item")
-					.add("   1. Show all items")
-					.add("   2. Edit item")
-					.add("   3. Delete item")
-					.add("   4. Find item by Id")
-					.add("   5. Find items by name")
-					.add("   6. Exit Program")
+						.add("0. Add the new item")
+						.add("1. Show all iems")
+						.add("2. Edit item")
+						.add("3. Delete item")
+						.add("4. Find item by id")
+						.add("5. Find items by name")
+						.add("name_1(desc_1)")
+						.add("name_2(desc_2)")
+						.add("name_3(desc_3)")
                     .toString()
 			)
 		);
@@ -101,67 +89,44 @@ public class StartUITest {
 		tracker.add(new Item("name_1", "desc_1"));
 		Item item = tracker.add(new Item("name_2", "desc_2"));
 		tracker.add(new Item("name_3", "desc_3"));
-		Input input = new StubInput(new String[]{"4", item.getId(), "6"});
+		Input input = new StubInput(new String[]{"4", item.getId(), "y"});
 		new StartUI(input, tracker).init();
 		assertThat(
 			this.out.toString(),
 			is(
-				new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
-					.add("Выберите действие : ")
-					.add("   0. Add new Item")
-					.add("   1. Show all items")
-					.add("   2. Edit item")
-					.add("   3. Delete item")
-					.add("   4. Find item by Id")
-					.add("   5. Find items by name")
-					.add("   6. Exit Program")
-					.add("Название : name_2")
-					.add("Описание : desc_2")
-					.add("Выберите действие : ")
-					.add("   0. Add new Item")
-					.add("   1. Show all items")
-					.add("   2. Edit item")
-					.add("   3. Delete item")
-					.add("   4. Find item by Id")
-					.add("   5. Find items by name")
-					.add("   6. Exit Program")
-                    .toString()
+					new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
+							.add("0. Add the new item")
+							.add("1. Show all iems")
+							.add("2. Edit item")
+							.add("3. Delete item")
+							.add("4. Find item by id")
+							.add("5. Find items by name")
+							.add("name_2(desc_2)")
+							.toString()
 			)
 		);
 	}
 
 	@Test
-	public void findItemByNameTest() {
+	public void findItemsByNameTest() {
 		Tracker tracker = new Tracker();
 		tracker.add(new Item("name_1", "desc_1"));
 		tracker.add(new Item("name_1", "desc_2"));
 		tracker.add(new Item("name_3", "desc_3"));
-		Input input = new StubInput(new String[]{"5", "name_1", "6"});
+		Input input = new StubInput(new String[]{"5", "name_1", "y"});
 		new StartUI(input, tracker).init();
 		assertThat(
 			this.out.toString(),
 			is(
 				new StringJoiner(System.lineSeparator(), "", System.lineSeparator())
-					.add("Выберите действие : ")
-					.add("   0. Add new Item")
-					.add("   1. Show all items")
-					.add("   2. Edit item")
-					.add("   3. Delete item")
-					.add("   4. Find item by Id")
-					.add("   5. Find items by name")
-					.add("   6. Exit Program")
-					.add("Название : name_1")
-					.add("Описание : desc_1")
-					.add("Название : name_1")
-					.add("Описание : desc_2")
-					.add("Выберите действие : ")
-					.add("   0. Add new Item")
-					.add("   1. Show all items")
-					.add("   2. Edit item")
-					.add("   3. Delete item")
-					.add("   4. Find item by Id")
-					.add("   5. Find items by name")
-					.add("   6. Exit Program")
+						.add("0. Add the new item")
+						.add("1. Show all iems")
+						.add("2. Edit item")
+						.add("3. Delete item")
+						.add("4. Find item by id")
+						.add("5. Find items by name")
+						.add("name_1(desc_1)")
+						.add("name_1(desc_2)")
                     .toString()
 			)
 		);
