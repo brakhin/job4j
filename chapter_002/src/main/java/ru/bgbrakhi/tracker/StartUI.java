@@ -1,8 +1,5 @@
 package ru.bgbrakhi.tracker;
 
-
-import ru.bgbrakhi.models.*;
-
 public class StartUI {
 	/** 
 	* Строковые константы для пунктов меню
