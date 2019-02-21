@@ -1,5 +1,8 @@
 package ru.bgbrakhi.tracker;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class StartUI {
 	/** 
 	* Строковые константы для пунктов меню
@@ -43,32 +46,16 @@ public class StartUI {
 	* Реализация выбора действий
 	*/
 	public void init() {
-		MenuTracker menu = new MenuTracker(this.input, this.tracker);
-		menu.fillActions();
-		do {
-			menu.show();
-			int key = Integer.valueOf(input.ask("Select : "));
-			menu.select(key);			
-		} while (!"y".equals(this.input.ask("Exit? y/n")));
-	}
-	
-	private void createItem() {
-		System.out.println("--- Добавление новой заявки ---");
-		String name = input.ask("Имя заявки");
-		String desc = input.ask("Описание заявки");
-		Item item = new Item(name, desc);
-		tracker.add(item);
-		System.out.println("--- Заявка с Id " + item.getId() + " добавлена ---");	
-	}
-	
-	private void showMenu() {
-		System.out.println("Выберите действие : ");
-		System.out.println("   0. Add new Item");
-		System.out.println("   1. Show all items");
-		System.out.println("   2. Edit item");
-		System.out.println("   3. Delete item");
-		System.out.println("   4. Find item by Id");
-		System.out.println("   5. Find items by name");
-		System.out.println("   6. Exit Program");
-	}
+    MenuTracker menu = new MenuTracker(this.input, this.tracker);
+    menu.fillActions();
+	int[] range = new int[menu.getActionsLentgh()];
+    for (int i = 0; i < menu.getActionsLentgh(); i++) {
+        range[i] = i;
+    }
+    do {
+        menu.show();
+        menu.select(input.ask("select:", range));
+    } while (!"y".equals(this.input.ask("Exit?(y): ")));
+}
+
 }
