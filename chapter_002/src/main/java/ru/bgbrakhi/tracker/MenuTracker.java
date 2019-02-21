@@ -84,7 +84,11 @@ public class MenuTracker {
 		this.input = input;
 		this.tracker = tracker;
 	}	
-	
+
+	public int getActionsLentgh() {
+		return actions.size();
+	}
+
 	public void fillActions() {
 		this.actions.add(this.new AddItem());
 		this.actions.add(new MenuTracker.ShowItems());
