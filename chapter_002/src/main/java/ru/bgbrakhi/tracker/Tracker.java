@@ -42,19 +42,18 @@ public class Tracker {
 	* затем массив Item[] схлопывается в найденной позиции и обрезается с хвоста
 	*/
 	public boolean delete(String id) {
+		boolean result = false;
 		int pos = -1;
 		for (int i = 0; i < position; i++) {
 			if (items[i].getId().equals(id)) {
 				pos = i;
+				System.arraycopy(items,pos + 1,items,pos,items.length - pos - 1);
+				position--;
+				result = true;
 				break;
 			}
 		}
-		Item[] dest = new Item[position - 1];
-		arraycopy(items, 0, dest, 0, pos);
-		arraycopy(items, pos + 1, dest, pos, position - pos - 1);
-		position--;
-		items = dest;
-		return true;	
+		return result;
 	}
 	
 	/**
