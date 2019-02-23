@@ -19,6 +19,9 @@ public class ConsoleInput implements Input {
 				break;
 			}
 		}
-		return exists ? key : -1;
+
+		if (!exists) {
+			throw new MenuOutException("The ket was not found.");
+		} else return key;
 	}
 }
