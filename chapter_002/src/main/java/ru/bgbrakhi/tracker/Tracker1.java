@@ -3,10 +3,20 @@ package ru.bgbrakhi.tracker;
 
 import java.lang.System;
 import java.util.Arrays;
+import java.util.Random;
 
 import static java.lang.System.arraycopy;
 
-public class Tracker {
+// 1. enum. Eager loading. 
+
+public enum Tracker1 {
+	INSTANCE;
+	
+	private int tag = new Random().nextInt();
+	public int getTag() {
+		return this.tag;
+	}
+	
 	private Item[] items = new Item[100];
 	
 	/**
