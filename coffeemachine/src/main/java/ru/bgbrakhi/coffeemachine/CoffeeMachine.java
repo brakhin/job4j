@@ -1,21 +1,17 @@
 package ru.bgbrakhi.coffeemachine;
 
 
+import java.util.StringJoiner;
+
 public class CoffeeMachine {
-	private Input input;
+//	private Input input;
 	private int[] result;
-	private int value = 0;
-	private int price = 0;
-	
+
 	// массив номиналов сдачи (МОНЕТЫ)
 	private int[] coins = null;
 	
-	public CoffeeMachine(Input input, int[] coins) {
-		this.input = input;
+	public CoffeeMachine(int[] coins) {
 		this.coins = coins;
-
-		result = changes(100, 33);
-
 	}
 	
 	// вычисление набора монет для сдачи
@@ -31,35 +27,19 @@ public class CoffeeMachine {
 		}
 		return result;
 	}
-	
-	// вывод результатов
-	public void printResult() {
-		System.out.println("Сдача : ");
-		if (result == null) {
-			System.out.println("нет.");
-		} else {
-			for (int i = this.coins.length - 1; i >= 0; i--) {
-				if (this.result[i] > 0) {
-					System.out.println(String.format("   монеты по %d руб : %d шт.", this.coins[i], this.result[i]));
-				}
+
+	public String getResult() {
+		StringJoiner builder = new StringJoiner(" + ", "Сдача : ", "");
+		for (int i = 0; i < result.length; i++) {
+			if (result[i] > 0) {
+				builder.add(String.format("%d * %d руб.", result[i], coins[i]));
 			}
 		}
-	}	
-
-	// ввод даты
-	public void inputData() {
-		this.value = this.input.askint("Номинал купюры : ");
-		this.price = this.input.askint("Цена кофе : ");
+		return builder.toString();
 	}
-	
-	public void doCalc() {
+
+	public void doCalc(int value, int price) {
 		result = changes(value, price);
 	}
 	
-	public static void main(String[] params) {
-		CoffeeMachine machine = new CoffeeMachine(new ConsoleInput(), new int[]{1, 2, 5, 10, 20});
-		machine.inputData();
-		machine.doCalc();
-		machine.printResult();
-	}	
-}	
+}
