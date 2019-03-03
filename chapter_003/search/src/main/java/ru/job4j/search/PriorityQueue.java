@@ -15,14 +15,19 @@ public class PriorityQueue {
         //TODO добавить вставку в связанный список.
 
         int index = 0;
-        for (int i = 0; i < tasks.size(); i++) {
-            if (task.getPriority() <= tasks.get(i).getPriority()) {
-                index = i;
-                break;
+        if (tasks.size() == 0 || task.getPriority() < tasks.peekFirst().getPriority()) {
+            tasks.addFirst(task);
+        } else if (task.getPriority() > tasks.peekLast().getPriority()) {
+            tasks.addLast(task);
+        } else {
+            for (int i = 0; i < tasks.size(); i++) {
+                if (task.getPriority() <= tasks.get(i).getPriority()) {
+                    index = i;
+                    break;
+                }
             }
+            tasks.add(index, task);
         }
-
-        tasks.add(index, task);
     }
 
     public Task take() {
