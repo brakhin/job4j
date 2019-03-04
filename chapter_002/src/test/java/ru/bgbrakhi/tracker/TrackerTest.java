@@ -12,7 +12,7 @@ public class TrackerTest {
 		Tracker tracker = new Tracker();
 		Item item = new Item("name", "desc");
 		tracker.add(item);
-		assertThat(tracker.findAll()[0], is(item));
+		assertThat(tracker.findAll().get(0), is(item));
 	}	
 	
 	@Test
