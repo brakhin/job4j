@@ -2,12 +2,14 @@ package ru.bgbrakhi.tracker;
 
 
 import java.lang.System;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import static java.lang.System.arraycopy;
 
 public class Tracker {
-	private Item[] items = new Item[100];
+	List<Item> items = new ArrayList<>();
 	
 	/**
 	* Позиция последней заявки
@@ -18,7 +20,7 @@ public class Tracker {
 	* добавляет заявку в трекер
 	*/
 	public Item add(Item item) {
-		items[position++] = item;	
+		items.set(position++, item);
 		return item;
 	}
 	
@@ -27,9 +29,9 @@ public class Tracker {
 	*/
 	public boolean replace(String id, Item item) {
 		for (int i = 0; i < position; i++) {
-			if (items[i].getId().equals(id)) {
-				item.setId(items[i].getId());
-				items[i] = item;
+			if (items.get(i).getId().equals(id)) {
+				item.setId(items.get(i).getId());
+				items.set(i, item);
 				return true;
 			}	
 		}	
@@ -45,9 +47,9 @@ public class Tracker {
 		boolean result = false;
 		int pos = -1;
 		for (int i = 0; i < position; i++) {
-			if (items[i].getId().equals(id)) {
+			if (items.get(i).getId().equals(id)) {
 				pos = i;
-				System.arraycopy(items, pos + 1, items, pos, items.length - pos - 1);
+				System.arraycopy(items, pos + 1, items, pos, items.size() - pos - 1);
 				position--;
 				result = true;
 				break;
@@ -59,22 +61,23 @@ public class Tracker {
 	/**
 	* выводит все заявки трекера
 	*/
-	public Item[] findAll() {
-		return Arrays.copyOf(items, position);
+	public List<Item> findAll() {
+		return items;
 	}
 	
 	/**
 	* ищет заявки по имени
 	*/
-	public Item[] findByName(String key) {
-		Item[] result = new Item[position];
+	public List<Item> findByName(String key) {
+		List<Item> result = new ArrayList<>();
+
 		int len = 0;
 		for (int i = 0; i < position; i++) {
-			if (items[i].getName().equals(key)) {
-				result[len++] = items[i];				
+			if (items.get(i).getName().equals(key)) {
+				result.set(len++, items.get(i));
 			}
 		}
-		return Arrays.copyOf(result, len);
+		return result;
 	}
 	
 	/**
@@ -83,8 +86,8 @@ public class Tracker {
 	public Item findById(String id) {
 		Item result = null;
 		for (int i = 0; i < position; i++) {
-			if (items[i].getId().equals(id)) {
-				result = items[i];
+			if (items.get(i).getId().equals(id)) {
+				result = items.get(i);
 				break;
 			}
 		}

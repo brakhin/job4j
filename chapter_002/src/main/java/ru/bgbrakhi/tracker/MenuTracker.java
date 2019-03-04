@@ -49,7 +49,7 @@ class FindItemsByName extends BaseAction {
 
 	public void execute(Input input, Tracker tracker) {
 		String name = input.ask("Please, enter the item's name: ");
-		Item[] items = tracker.findByName(name);
+		List<Item> items = tracker.findByName(name);
 		if (items != null) {
 			for (Item item : items) {
 				item.show();
