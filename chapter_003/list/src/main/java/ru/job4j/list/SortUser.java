@@ -46,7 +46,7 @@ public class SortUser {
     class ageComparator implements Comparator<User> {
         @Override
         public int compare(User o1, User o2) {
-            return o1.getAge() < o2.getAge() ? -1 : o1.getAge() > o2.getAge() ? 1 : 0;
+            return Integer.compare(o1.getAge(), o2.getAge());
         }
     }
 
