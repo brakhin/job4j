@@ -40,12 +40,10 @@ public class Tracker {
 	*/
 	public boolean delete(String id) {
 		boolean result = false;
-		for (Item item : items) {
-			if (item.getId().equals(id)) {
-				items.remove(item);
-				result = true;
-				break;
-			}
+		Item item = findById(id);
+		if (item != null) {
+			items.remove(item);
+			result = true;
 		}
 		return result;
 	}
