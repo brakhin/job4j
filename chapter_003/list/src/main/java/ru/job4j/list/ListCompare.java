@@ -8,7 +8,7 @@ public class ListCompare implements Comparator<String> {
     @Override
     public int compare(String left, String right) {
         int result = 0;
-        for (int i = 0; i < Math.max(left.length(), right.length()); i++) {
+        for (int i = 0; i < Math.min(left.length(), right.length()); i++) {
             if (i > left.length() - 1) {
                 result = -1;
                 break;
@@ -26,6 +26,6 @@ public class ListCompare implements Comparator<String> {
                 break;
             }
         }
-        return result;
+        return result == 0 ? Integer.compare(left.length(), right.length()) : result;
     }
 }
