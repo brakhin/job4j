@@ -9,18 +9,13 @@ import java.util.List;
 import static java.lang.System.arraycopy;
 
 public class Tracker {
-	List<Item> items = new ArrayList<>();
-	
-	/**
-	* Позиция последней заявки
-	*/
-	private int position = 0;
+	private List<Item> items = new ArrayList<>();
 	
 	/**
 	* добавляет заявку в трекер
 	*/
 	public Item add(Item item) {
-		items.set(position++, item);
+		items.add(item);
 		return item;
 	}
 	
@@ -28,7 +23,7 @@ public class Tracker {
 	* заменяет заявку в трекере
 	*/
 	public boolean replace(String id, Item item) {
-		for (int i = 0; i < position; i++) {
+		for (int i = 0; i < items.size(); i++) {
 			if (items.get(i).getId().equals(id)) {
 				item.setId(items.get(i).getId());
 				items.set(i, item);
@@ -45,12 +40,9 @@ public class Tracker {
 	*/
 	public boolean delete(String id) {
 		boolean result = false;
-		int pos = -1;
-		for (int i = 0; i < position; i++) {
-			if (items.get(i).getId().equals(id)) {
-				pos = i;
-				System.arraycopy(items, pos + 1, items, pos, items.size() - pos - 1);
-				position--;
+		for (Item item : items) {
+			if (item.getId().equals(id)) {
+				items.remove(item);
 				result = true;
 				break;
 			}
@@ -70,11 +62,9 @@ public class Tracker {
 	*/
 	public List<Item> findByName(String key) {
 		List<Item> result = new ArrayList<>();
-
-		int len = 0;
-		for (int i = 0; i < position; i++) {
+		for (int i = 0; i < items.size(); i++) {
 			if (items.get(i).getName().equals(key)) {
-				result.set(len++, items.get(i));
+				result.add(items.get(i));
 			}
 		}
 		return result;
@@ -85,7 +75,7 @@ public class Tracker {
 	*/
 	public Item findById(String id) {
 		Item result = null;
-		for (int i = 0; i < position; i++) {
+		for (int i = 0; i < items.size(); i++) {
 			if (items.get(i).getId().equals(id)) {
 				result = items.get(i);
 				break;
