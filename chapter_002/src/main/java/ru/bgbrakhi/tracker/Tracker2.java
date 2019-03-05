@@ -3,6 +3,7 @@ package ru.bgbrakhi.tracker;
 
 import java.lang.System;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import static java.lang.System.arraycopy;
@@ -56,14 +57,14 @@ public class Tracker2 {
 	/**
 	* выводит все заявки трекера
 	*/
-	public Item[] findAll() {
+	public List<Item> findAll() {
 		return tracker.findAll();
 	}
 	
 	/**
 	* ищет заявки по имени
 	*/
-	public Item[] findByName(String key) {
+	public List<Item>  findByName(String key) {
 		return tracker.findByName(key);
 	}
 	
