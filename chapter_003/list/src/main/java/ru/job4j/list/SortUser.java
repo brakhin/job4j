@@ -18,4 +18,43 @@ public class SortUser {
         result.addAll(users);
         return result;
     }
+
+    public List<User> sortNameLength(List<User> users) {
+        users.sort(new Comparator<User>() {
+            @Override
+            public int compare(User o1, User o2) {
+                int result = 0;
+                if (o1.getName().length() < o2.getName().length()) result = -1;
+                else if (o1.getName().length() > o2.getName().length()) result = 1;
+                return result;
+            }
+        });
+        return users;
+    }
+
+
+    /**
+     *  Компаратор по имени
+     */
+    class nameComparator implements Comparator<User> {
+        @Override
+        public int compare(User o1, User o2) {
+            return o1.getName().compareTo(o2.getName());
+        }
+    }
+
+    /**
+     *  Компаратор по возрасту
+     */
+    class ageComparator implements Comparator<User> {
+        @Override
+        public int compare(User o1, User o2) {
+            return o1.getAge() < o2.getAge() ? -1 : o1.getAge() > o2.getAge() ? 1 : 0;
+        }
+    }
+
+    public List<User> sortByAllFields(List<User> users) {
+        users.sort(new nameComparator().thenComparing(new ageComparator()));
+        return users;
+    }
 }
