@@ -10,9 +10,7 @@ public class SortUser {
         Set<User> result = new TreeSet<>(new Comparator<User>() {
             @Override
             public int compare(User o1, User o2) {
-                if (o1.getAge() < o2.getAge()) return -1;
-                else if (o1.getAge() > o2.getAge()) return 1;
-                else return 0;
+                return Integer.compare(o1.getAge(), o2.getAge());
             }
         });
         result.addAll(users);
