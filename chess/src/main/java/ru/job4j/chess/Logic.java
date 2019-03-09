@@ -3,7 +3,7 @@ package ru.job4j.chess;
 import ru.job4j.chess.firuges.Cell;
 import ru.job4j.chess.firuges.Figure;
 
-import java.util.Optional;
+import java.util.*;
 
 /**
  * //TODO add comments.
@@ -13,6 +13,7 @@ import java.util.Optional;
  * @since 0.1
  */
 public class Logic {
+
     private final Figure[] figures = new Figure[32];
     private int index = 0;
 

@@ -17,6 +17,9 @@ import ru.job4j.chess.firuges.Figure;
 import ru.job4j.chess.firuges.black.*;
 import ru.job4j.chess.firuges.white.*;
 
+import java.util.ArrayList;
+import java.util.TreeMap;
+
 public class Chess extends Application {
     private static final String JOB4J = "Шахматы на www.job4j.ru";
     private final int size = 8;
@@ -168,6 +171,7 @@ public class Chess extends Application {
     }
 
     private Cell findBy(double graphX, double graphY) {
+
         Cell rst = Cell.A1;
         int x = (int) graphX / 40;
         int y = (int) graphY / 40;
