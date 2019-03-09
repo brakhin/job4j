@@ -29,16 +29,15 @@ public class Bank {
 
     public void addAccountToUser(String passport, Account account) {
         User user = getUser(passport);
-        if (user == null) {
-            user = new User("", passport);
-        }
-        ArrayList<Account> list = data.get(user);
-        if (list == null) {
-            list = new ArrayList<>();
-        }
-        if (list.indexOf(account) == -1) {
-            list.add(account);
-            data.put(user, list);
+        if (user != null) {
+            ArrayList<Account> list = data.get(user);
+            if (list == null) {
+                list = new ArrayList<>();
+            }
+            if (list.indexOf(account) == -1) {
+                list.add(account);
+                data.put(user, list);
+            }
         }
     }
 
@@ -47,9 +46,7 @@ public class Bank {
         if (user != null) {
             ArrayList<Account> list = data.get(user);
             if (list != null) {
-                if (list.remove(account)) {
-                    data.put(user, list);
-                }
+                list.remove(account)
             }
         }
     }
