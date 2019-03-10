@@ -1,4 +1,4 @@
-package ru.bgbrakhi.school;
+package ru.bgbrakhi.stream;
 
 import org.junit.Test;
 
