@@ -1,6 +1,4 @@
-package ru.bgbrakhi.school;
-
-import java.util.Random;
+package ru.bgbrakhi.stream;
 
 public class Student {
     int score;
