@@ -2,7 +2,7 @@ package ru.bgbrakhi.bank;
 
 public class Account {
 
-    double value = 0d;
+    private double value = 0d;
     String requisites = "";
 
     public Account(double value, String requisites) {
@@ -20,4 +20,11 @@ public class Account {
         return this.requisites.hashCode();
     }
 
+    public void incBalance(double amount) {
+        value += amount;
+    }
+
+    public void decBalance(double amount) {
+        value -= amount;
+    }
 }
