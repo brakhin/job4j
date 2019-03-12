@@ -15,15 +15,11 @@ public class Profiles {
     }
 
     public List<Address> collect(List<Profile> profiles) {
-        profiles.sort(new Comparator<Profile>() {
-            @Override
-            public int compare(Profile p1, Profile p2) {
-                return p1.getAddress().city.compareTo(p2.getAddress().city);
-            }
-        });
-        return profiles.
-                stream().map(profile -> profile.getAddress()).collect(Collectors.toList()).
-                stream().distinct().collect(Collectors.toList());
+        return profiles.stream()
+                .map(Profile::getAddress)
+                .sorted(Comparator.comparing(Address::getCity))
+                .distinct()
+                .collect(Collectors.toList());
     }
 
     public static void main(String[] args) {
