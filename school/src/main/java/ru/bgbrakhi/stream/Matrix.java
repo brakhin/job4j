@@ -18,14 +18,7 @@ public class Matrix {
     }
 
     public List<Integer> toFlatList() {
-        List<List<Integer>> list2d = new ArrayList<>();
-        for (int i = 0; i < 3; i++) {
-            list2d.add(Arrays.asList(data[i]));
-        }
-
-
-        List<Integer> result = list2d.stream().flatMap(e -> e.stream()).collect(Collectors.toList());
-        return result;
+        return Arrays.stream(data).flatMap(Arrays::stream).collect(Collectors.toList());
     }
 
 }
