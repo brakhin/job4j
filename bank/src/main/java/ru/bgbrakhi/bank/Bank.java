@@ -1,21 +1,22 @@
 package ru.bgbrakhi.bank;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.function.Consumer;
+import java.util.stream.Collectors;
 
 public class Bank {
 
     private TreeMap<User, ArrayList<Account>> data = new TreeMap<>();
 
     public void addUser(User user) {
-        data.put(user, new ArrayList<>());
+        data.putIfAbsent(user, new ArrayList<>());
     }
 
     public void deleteUser(User user) {
         data.remove(user);
     }
 
+/*
     private User getUser(String passport) {
         User result = null;
         for (User user : data.keySet()){
@@ -26,49 +27,47 @@ public class Bank {
         }
         return result;
     }
+*/
 
     public void addAccountToUser(String passport, Account account) {
-        User user = getUser(passport);
-        if (user != null) {
-            ArrayList<Account> list = data.get(user);
-            if (list == null) {
-                list = new ArrayList<>();
-            }
-            if (list.indexOf(account) == -1) {
-                list.add(account);
-                data.put(user, list);
-            }
-        }
+        Optional<ArrayList<Account>> accounts = data.keySet().stream()
+                .filter(user -> user.passport.equals(passport))
+                .map(data::get)
+                .findAny();
+        accounts.ifPresent(ac -> new Consumer<Account>() {
+                    public void accept(Account a) {
+                        if (!ac.contains(account)) {
+                            ac.add(account);
+                        }
+                    }
+                });
     }
 
     public void deleteAccountFromUser(String passport, Account account) {
-        User user = getUser(passport);
-        if (user != null) {
-            ArrayList<Account> list = data.get(user);
-            if (list != null) {
-                list.remove(account);
-            }
-        }
+        final Optional<ArrayList<Account>> accounts = data.keySet().stream()
+                .filter(user -> user.passport.equals(passport))
+                .map(data::get)
+                .findAny();
+        accounts.ifPresent(ac -> ac.remove(account));
     }
 
     public List<Account> getUserAccounts (String passport) {
-        List<Account> result = null;
-        User user = getUser(passport);
-        if (user != null) {
-            result = data.get(user);
-        }
-        return result;
+        return data.keySet().stream()                           // стримим user
+                .filter(user -> user.passport.equals(passport))    // фильтруем user
+                .map(data::get)                                    // конвертируем в стрим accounts всех user с passport
+                .flatMap(ac -> ac.stream())                        // сливаем accounts всех user с passport в один стрим
+                .collect(Collectors.toList());                     // конвертируем стрим в лист
     }
 
     private Account getAccount(String passport, String requisite) {
-        Account result = null;
-        for (Account account : getUserAccounts(passport)) {
-            if (account.requisites.equals(requisite)) {
-                result = account;
-                break;
-            }
-        }
-        return result;
+        List<Account> result = data.keySet().stream()
+                .filter(user -> user.passport.equals(passport))
+                .map(data::get)
+                .flatMap(ac -> ac.stream())
+                .distinct()
+                .filter(account -> account.requisites.equals(requisite))
+                .collect(Collectors.toList());
+        return result.size() == 0 ? null : result.get(0);
     }
 
     public boolean transferMoney (String srcPassport, String srcRequisite, String dstPassport, String dstRequisite, double amount) {
@@ -76,10 +75,9 @@ public class Bank {
         Account srcAccount = getAccount(srcPassport, srcRequisite);
         Account dstAccount = getAccount(dstPassport, dstRequisite);
         if (srcAccount != null && dstAccount != null) {
-            srcAccount.value -= amount;
-            dstAccount.value += amount;
+            srcAccount.decBalance(amount);
+            dstAccount.incBalance(amount);
         }
         return result;
     }
-
 }
