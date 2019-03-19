@@ -1,7 +1,6 @@
 package ru.bgbrakhi.bank;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
@@ -57,7 +56,6 @@ public class BankStream {
     }
 
     private Account getAccount(String passport, String requisite) {
-
         Account result = null;
         List<Account> accounts = getUserAccounts(passport);
         if (accounts != null) {
@@ -72,8 +70,8 @@ public class BankStream {
         Account srcAccount = getAccount(srcPassport, srcRequisite);
         Account dstAccount = getAccount(dstPassport, dstRequisite);
         if (srcAccount != null && dstAccount != null) {
-            srcAccount.decBalance(amount);
-            dstAccount.incBalance(amount);
+            srcAccount.value -= amount;
+            dstAccount.value += amount;
         }
         return result;
     }
