@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -46,5 +47,11 @@ public class JaggedArrayIteratorTest {
         assertThat(it.hasNext(), is(true));
         assertThat(it.next(), is(7));
         assertThat(it.hasNext(), is(false));
+    }
+
+    @Test(expected = NoSuchElementException.class)
+    public void shoulThrowNoSuchElementException() {
+        it = new JaggedArrayIterator(new int[][] {});
+        it.next();
     }
 }
