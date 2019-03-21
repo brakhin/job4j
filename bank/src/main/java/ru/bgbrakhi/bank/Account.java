@@ -12,7 +12,7 @@ public class Account {
 
     @Override
     public boolean equals(Object o) {
-        return (o != null && getClass() == o.getClass() && this.requisites.equals(((Account)o).requisites));
+        return (o != null && getClass() == o.getClass() && this.requisites.equals(((Account) o).requisites));
     }
 
     @Override

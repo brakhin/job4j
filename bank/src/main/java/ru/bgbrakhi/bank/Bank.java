@@ -51,7 +51,7 @@ public class Bank {
         accounts.ifPresent(ac -> ac.remove(account));
     }
 
-    public List<Account> getUserAccounts (String passport) {
+    public List<Account> getUserAccounts(String passport) {
         return data.keySet().stream()                           // стримим user
                 .filter(user -> user.passport.equals(passport))    // фильтруем user
                 .map(data::get)                                    // конвертируем в стрим accounts всех user с passport
@@ -70,7 +70,7 @@ public class Bank {
         return result.size() == 0 ? null : result.get(0);
     }
 
-    public boolean transferMoney (String srcPassport, String srcRequisite, String dstPassport, String dstRequisite, double amount) {
+    public boolean transferMoney(String srcPassport, String srcRequisite, String dstPassport, String dstRequisite, double amount) {
         boolean result = false;
         Account srcAccount = getAccount(srcPassport, srcRequisite);
         Account dstAccount = getAccount(dstPassport, dstRequisite);

@@ -17,8 +17,8 @@ public class RangeCalc {
 
     public static void main(String[] args) {
         RangeCalc rc = new RangeCalc();
-        List<Double> l1 = rc.diapason(1, 10, x -> 3*x + 1);
-        List<Double> l2 = rc.diapason(1, 10, x -> 2*Math.pow(x, 2) + 3*x+ 1);
+        List<Double> l1 = rc.diapason(1, 10, x -> 3 * x + 1);
+        List<Double> l2 = rc.diapason(1, 10, x -> 2 * Math.pow(x, 2) + 3 * x + 1);
         List<Double> l3 = rc.diapason(1, 10, x -> Math.log(x));
     }
 }

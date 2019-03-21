@@ -46,7 +46,7 @@ public class BankStream {
         }
     }
 
-    public List<Account> getUserAccounts (String passport) {
+    public List<Account> getUserAccounts(String passport) {
         List<Account> result = null;
         User user = getUser(passport);
         if (user != null) {
@@ -65,13 +65,13 @@ public class BankStream {
         return result;
     }
 
-    public boolean transferMoney (String srcPassport, String srcRequisite, String dstPassport, String dstRequisite, double amount) {
+    public boolean transferMoney(String srcPassport, String srcRequisite, String dstPassport, String dstRequisite, double amount) {
         boolean result = false;
         Account srcAccount = getAccount(srcPassport, srcRequisite);
         Account dstAccount = getAccount(dstPassport, dstRequisite);
         if (srcAccount != null && dstAccount != null) {
-            srcAccount.value -= amount;
-            dstAccount.value += amount;
+            srcAccount.decBalance(amount);
+            dstAccount.incBalance(amount);
         }
         return result;
     }
