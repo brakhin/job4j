@@ -4,39 +4,29 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class Converter {
-
     private Iterator<Integer> curIterator = null;
 
-    private void updateCurIterator(final Iterator<Iterator<Integer>> iterator) throws NoSuchElementException {
-        if (iterator.hasNext()) {
-            curIterator = iterator.next();
-        }
-    }
-
     public Iterator<Integer> convert(final Iterator<Iterator<Integer>> iterator) {
-
-        if (curIterator == null) {
-            updateCurIterator(iterator);
-        }
-
         return new Iterator<Integer>() {
             @Override
             public boolean hasNext() {
-                return curIterator.hasNext();
+                if (iterator.hasNext()) {
+                    if (curIterator == null || !curIterator.hasNext()) {
+                        do {
+                            curIterator = iterator.next();
+                        } while (!curIterator.hasNext() && iterator.hasNext());
+                    }
+                }
+                return curIterator != null ? curIterator.hasNext() : false;
             }
 
             @Override
             public Integer next() {
-                Integer result = 0;
-                if (curIterator.hasNext()) {
-                    result = curIterator.next();
-                    if (!curIterator.hasNext() &&  iterator.hasNext()) {
-                        updateCurIterator(iterator);
-                    }
-                } else {
+                if (!hasNext()) {
                     throw new NoSuchElementException();
+                } else {
+                    return curIterator.next();
                 }
-                return result;
             }
         };
     }
