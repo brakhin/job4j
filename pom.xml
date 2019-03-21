@@ -14,13 +14,15 @@
      </properties>
 
     <modules>
-        <module>chapter_001</module>
-        <module>chapter_002</module>
-        <module>chess</module>
-        <module>bank</module>
-        <module>coffeemachine</module>
-        <module>depsort</module>
-        <module>lambda</module>
+        <module>1_Level_Trainee\chapter_001</module>
+        <module>1_Level_Trainee\chapter_002</module>
+        <module>1_Level_Trainee\chess</module>
+        <module>1_Level_Trainee\bank</module>
+        <module>1_Level_Trainee\school</module>
+        <module>1_Level_Trainee\coffeemachine</module>
+        <module>1_Level_Trainee\depsort</module>
+        <module>1_Level_Trainee\lambda</module>
+        <module>2_Level_Junior\iterator</module>
     </modules>
  
     <build>
