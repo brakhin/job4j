@@ -9,19 +9,15 @@ public class EvenNumbersIterator implements Iterator {
 
     public EvenNumbersIterator(final int[] data) {
         this.data = data;
-        index = getLastEvenIndex(0);
     }
 
     @Override
     public boolean hasNext() {
-        return index < data.length;
-    }
-
-    private int getLastEvenIndex(int fromIndex) {
-        int result = data.length;
-        for (int i = fromIndex; i < data.length; i++) {
+        boolean result = false;
+        for (int i = index; i < data.length; i++) {
             if (data[i] % 2 == 0) {
-                result = i;
+                result = true;
+                index = i;
                 break;
             }
         }
@@ -30,11 +26,11 @@ public class EvenNumbersIterator implements Iterator {
 
     @Override
     public Object next() {
-        int curindex = index;
-        index = getLastEvenIndex(curindex + 1);
-        if (curindex == data.length) {
+
+        if (!hasNext()) {
             throw new NoSuchElementException();
+        } else {
+            return data[index++];
         }
-        return Integer.valueOf(data[curindex]);
     }
 }
