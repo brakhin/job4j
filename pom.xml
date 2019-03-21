@@ -22,7 +22,7 @@
         <module>1_coffeemachine</module>
         <module>1_depsort</module>
         <module>1_lambda</module>
-        <module>2_iterator</module>
+        <module>2_collections_pro</module>
     </modules>
  
     <build>
