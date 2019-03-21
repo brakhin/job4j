@@ -1,7 +1,7 @@
 <project>
    <modelVersion>4.0.0</modelVersion>
    <groupId>ru.bgbrakhi</groupId>
-   <artifactId>iterator</artifactId>
+   <artifactId>collections_pro</artifactId>
    <version>2.0</version>
    <packaging>jar</packaging>
 
