@@ -59,7 +59,7 @@ public class DepRef {
     }
 
     private void validateData() {
-        for(int i = 0; i < data.size(); i++) {
+        for (int i = 0; i < data.size(); i++) {
             String dep = data.get(i);
             int slashIndex = dep.lastIndexOf("\\");
             if (slashIndex > 0) {

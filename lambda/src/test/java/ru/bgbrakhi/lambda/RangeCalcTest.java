@@ -14,14 +14,14 @@ public class RangeCalcTest {
     @Test
     public void whenLinerFunction() {
         RangeCalc rc = new RangeCalc();
-        List<Double> result = rc.diapason(1, 4, x -> 3*x + 1);
+        List<Double> result = rc.diapason(1, 4, x -> 3 * x + 1);
         List<Double> expected = Arrays.asList(4d, 7d, 10d);
         assertThat(result, is(expected));
     }
     @Test
     public void whenSquareFunction() {
         RangeCalc rc = new RangeCalc();
-        List<Double> result = rc.diapason(1, 4, x -> 2*Math.pow(x, 2) + 3*x+ 1);
+        List<Double> result = rc.diapason(1, 4, x -> 2 * Math.pow(x, 2) + 3 * x + 1);
         List<Double> expected = Arrays.asList(6d, 15d, 28d);
         assertThat(result, is(expected));
     }

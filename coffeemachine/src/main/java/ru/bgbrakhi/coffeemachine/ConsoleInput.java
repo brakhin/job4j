@@ -23,7 +23,7 @@ public class ConsoleInput implements Input {
 				valid = false;
 				result = 0;
 			}
-		} while(!valid);
+		} while (!valid);
 		return result;
 	}
 }
