@@ -22,6 +22,7 @@ public class LinkedContainer<E> implements Iterable<E> {
         Node<E> node = new Node<>(value);
         node.next = first;
         first = node;
+        modCount++;
     }
 
     public E get(int index) {
@@ -30,6 +31,13 @@ public class LinkedContainer<E> implements Iterable<E> {
             result = result.next;
         }
         return result.data;
+    }
+
+    public E delete() {
+        E result = first.data;
+        this.first = this.first.next;
+        modCount++;
+        return result;
     }
 
     @Override
