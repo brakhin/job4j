@@ -41,7 +41,11 @@ public class SimpleArray<T>  implements Iterable<T> {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
-        return (T)data[index];
+        return (T) data[index];
+    }
+
+    public int length() {
+        return data.length;
     }
 
     @Override
