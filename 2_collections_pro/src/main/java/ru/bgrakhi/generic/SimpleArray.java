@@ -38,7 +38,7 @@ public class SimpleArray<T>  implements Iterable<T> {
     }
 
     public T get(int index) {
-        if (index < 0 || index >= data.length) {
+        if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException();
         }
         return (T)data[index];
