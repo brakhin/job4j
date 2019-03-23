@@ -8,6 +8,7 @@ public class LinkedContainer<E> implements Iterable<E> {
 
     private Node<E> first;
     private int modCount = 0;
+    private int size = 0;
 
     private static class Node<E> {
         E data;
@@ -18,11 +19,17 @@ public class LinkedContainer<E> implements Iterable<E> {
         }
     }
 
+    public int size() {
+        return size;
+    }
+
+
     public void add(E value) {
         Node<E> node = new Node<>(value);
         node.next = first;
         first = node;
         modCount++;
+        size++;
     }
 
     public E get(int index) {
@@ -37,6 +44,7 @@ public class LinkedContainer<E> implements Iterable<E> {
         E result = first.data;
         this.first = this.first.next;
         modCount++;
+        size--;
         return result;
     }
 
@@ -49,7 +57,7 @@ public class LinkedContainer<E> implements Iterable<E> {
 
             @Override
             public boolean hasNext() {
-                return node.next != null;
+                return node != null && node.next != null;
             }
 
             @Override
@@ -59,6 +67,13 @@ public class LinkedContainer<E> implements Iterable<E> {
                 } else if (expectedModCount < modCount)
                     throw new ConcurrentModificationException();
                 node = node.next;
+
+                // усли итератор пуст - сбрасываем и синхронизируем счетчик изменений
+                if (!hasNext()) {
+                    modCount = 0;
+                    expectedModCount = modCount;
+                }
+
                 return (E) node.data;
             }
         };
