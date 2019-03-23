@@ -53,9 +53,9 @@ public class LinkedContainer<E> implements Iterable<E> {
 
                 if (!hasNext()) {
                     throw new NoSuchElementException();
-                } else if (expectedModCount < modCount)
+                } else if (expectedModCount < modCount) {
                     throw new ConcurrentModificationException();
-
+                }
                 result = data.get(index++);
 
                 // усли итератор пуст - сбрасываем и синхронизируем счетчик изменений

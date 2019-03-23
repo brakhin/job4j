@@ -20,7 +20,7 @@ public class BiStackQueueTest {
     }
 
     @Test
-    public void TestPoll() {
+    public void testPoll() {
         assertThat(queue.poll(), is(1));
         assertThat(queue.poll(), is(2));
         assertThat(queue.poll(), is(3));
