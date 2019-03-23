@@ -6,67 +6,57 @@ import java.util.NoSuchElementException;
 
 public class LinkedContainer<E> implements Iterable<E> {
 
-    private Node<E> first;
+    SimpleArrayList<E> data;
+
     private int modCount = 0;
     private int size = 0;
 
-    private static class Node<E> {
-        E data;
-        Node<E> next;
-
-        Node(E data) {
-            this.data = data;
-        }
+    public LinkedContainer() {
+        SimpleArrayList<E> data = new SimpleArrayList();
     }
 
     public int size() {
-        return size;
+        return data.getSize();
     }
 
 
     public void add(E value) {
-        Node<E> node = new Node<>(value);
-        node.next = first;
-        first = node;
+        data.add(value);
         modCount++;
         size++;
     }
 
     public E get(int index) {
-        Node<E> result = first;
-        for (int i = 0; i < index; i++) {
-            result = result.next;
-        }
-        return result.data;
+        return data.get(index);
     }
 
     public E delete() {
-        E result = first.data;
-        this.first = this.first.next;
-        modCount++;
-        size--;
-        return result;
+        return data.delete();
     }
 
     @Override
     public Iterator<E> iterator() {
         return new Iterator<E>() {
 
+            private int index = 0;
             private int expectedModCount = modCount;
-            Node<E> node = first;
 
             @Override
             public boolean hasNext() {
-                return node != null && node.next != null;
+                return index < data.getSize();
             }
 
             @Override
             public E next() {
+
+                E result = null;
+
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 } else if (expectedModCount < modCount)
                     throw new ConcurrentModificationException();
-                node = node.next;
+
+                result = data.get(index++);
 
                 // усли итератор пуст - сбрасываем и синхронизируем счетчик изменений
                 if (!hasNext()) {
@@ -74,7 +64,7 @@ public class LinkedContainer<E> implements Iterable<E> {
                     expectedModCount = modCount;
                 }
 
-                return (E) node.data;
+                return result;
             }
         };
     }
