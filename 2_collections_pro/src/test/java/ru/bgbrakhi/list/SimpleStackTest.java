@@ -20,7 +20,7 @@ public class SimpleStackTest {
     }
 
     @Test
-    public void TestPoll() {
+    public void testPoll() {
         assertThat(stack.poll(), is(3));
         assertThat(stack.poll(), is(2));
         assertThat(stack.poll(), is(1));

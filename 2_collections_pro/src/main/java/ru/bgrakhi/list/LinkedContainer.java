@@ -12,7 +12,7 @@ public class LinkedContainer<E> implements Iterable<E> {
     private int size = 0;
 
     public LinkedContainer() {
-        SimpleArrayList<E> data = new SimpleArrayList();
+        data = new SimpleArrayList();
     }
 
     public int size() {
