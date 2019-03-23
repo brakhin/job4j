@@ -1,6 +1,6 @@
 package ru.bgrakhi.list;
 
-import java.util.LinkedHashMap;
+import java.util.Iterator;
 
 public class SimpleStack<T> {
 
@@ -16,5 +16,13 @@ public class SimpleStack<T> {
 
     public void push(T value) {
         container.add(value);
+    }
+
+    public Iterator<T> getIterator() {
+        return container.iterator();
+    }
+
+    public int size() {
+        return container.size();
     }
 }
