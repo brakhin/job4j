@@ -58,4 +58,39 @@ public class SimpleArrayList<E> {
             this.data = data;
         }
     }
+
+    public Node<E> getFirst() {
+        return this.first;
+    }
+
+    private int indexOf(Node<E> node) {
+        int result = -1;
+        int index = 0;
+
+        Node<E> curNode = first;
+
+        while (curNode != null && curNode.next != null) {
+            if (curNode == node) {
+                result = index;
+                break;
+            }
+            index++;
+            curNode = curNode.next;
+        }
+        return result;
+    }
+
+    public boolean hasCycle(Node<E> first) {
+        boolean result = false;
+        Node<E> node = first;
+        while (node != null & node.next != null) {
+            if (indexOf(node) > indexOf(node.next)) {
+                result = true;
+                break;
+            }
+        }
+        return result;
+    }
+
+
 }
