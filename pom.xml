@@ -16,6 +16,7 @@
     <modules>
         <module>1_chapter_001</module>
         <module>1_chapter_002</module>
+        <module>1_chapter_003</module>
         <module>1_chess</module>
         <module>1_bank</module>
         <module>1_school</module>
