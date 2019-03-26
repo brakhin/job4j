@@ -68,7 +68,7 @@ public class SimpleArrayList<E> {
         Node<E> node = first;
 
         while (true) {
-            if(node.next == null) {
+            if (node.next == null) {
                 result = false;
                 break;
             }
@@ -80,6 +80,4 @@ public class SimpleArrayList<E> {
         }
         return result;
     }
-
-
 }

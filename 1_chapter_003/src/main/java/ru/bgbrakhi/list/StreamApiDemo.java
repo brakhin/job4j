@@ -12,7 +12,7 @@ public class StreamApiDemo {
     public Integer calc() {
         return Arrays.asList(data).stream()
                 .filter(i -> i % 2 == 0)
-                .map(i -> i*i)
+                .map(i -> i * i)
                 .reduce(0, Integer::sum);
     }
 }
