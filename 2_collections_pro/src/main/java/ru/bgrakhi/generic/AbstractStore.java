@@ -27,4 +27,23 @@ public abstract class AbstractStore<T extends Base> {
         }
         return result;
     }
+
+    public boolean replace(String id, T model) {
+        boolean result = false;
+        int index = idToIndex(id);
+        if (index >= 0) {
+            data.set(model, index);
+            result = true;
+        }
+        return result;
+    }
+
+    public T findById(String id) {
+        int index = idToIndex(id);
+        return index >= 0 ? data.get(index) : null;
+    }
+
+    public void add(T model) {
+        data.add(model);
+    }
 }
