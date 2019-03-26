@@ -83,7 +83,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
         data.offer(root);
         while (!data.isEmpty()) {
             Node<E> element = data.poll();
-            if (element.leaves().size() > 2 ) {
+            if (element.leaves().size() > 2) {
                 result = false;
                 break;
             }
