@@ -7,7 +7,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     private Node<E> root;
 
     public Tree(E rootVal) {
-        this.root = new Node<E>(rootVal);
+        this.root = new Node<>(rootVal);
     }
 
     @Override
@@ -75,5 +75,22 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
                 return result[0];
             }
         };
+    }
+
+    public boolean isBinary() {
+        boolean result = true;
+        Queue<Node<E>> data = new LinkedList<>();
+        data.offer(root);
+        while (!data.isEmpty()) {
+            Node<E> element = data.poll();
+            if (element.leaves().size() > 2 ) {
+                result = false;
+                break;
+            }
+            for (Node child : element.leaves()) {
+                data.offer(child);
+            }
+        }
+        return result;
     }
 }
