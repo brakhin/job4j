@@ -28,5 +28,12 @@ public class DynamicContainerTest {
         assertThat(iterator1.hasNext(), is(true));
         assertThat(iterator1.next(), is(1));
         assertThat(iterator1.next(), is(2));
+
+        Iterator<Integer> iterator2 = data.iterator();
+        assertThat(iterator2.hasNext(), is(true));
+        assertThat(iterator2.next(), is(1));
+        assertThat(iterator2.next(), is(2));
+
+        assertThat(iterator1.next(), is(3));
     }
 }
