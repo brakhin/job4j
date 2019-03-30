@@ -14,7 +14,6 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     public boolean add(E parent, E child) {
         Optional<Node<E>> parentNode = findBy(parent);
         Optional<Node<E>> childNode = findBy(child);
-
         final boolean[] result = {false};
         parentNode.ifPresent(n -> {
             n.add((childNode.isPresent() ? childNode.get() : new Node<E>(child)));
@@ -45,24 +44,23 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     public Iterator<E> iterator() {
         return new Iterator<E>() {
 
-            Optional<Node<E>> curNode = Optional.empty();
             Queue<Node<E>> data = new LinkedList<>();
             boolean initial = true;
+
+            private void addNodeToQueue(Node<E> node)  {
+                data.offer(node);
+                for (Node child : node.leaves()) {
+                    addNodeToQueue(child);
+                }
+            }
 
             @Override
             public boolean hasNext() {
                 if (initial) {
-                    data.offer(root);
+                    addNodeToQueue(root);
                     initial = false;
                 }
-                while (!data.isEmpty()) {
-                    Node<E> element = data.poll();
-                    curNode = Optional.of(element);
-                    for (Node child : element.leaves()) {
-                        data.offer(child);
-                    }
-                }
-                return curNode.isPresent();
+                return data.isEmpty();
             }
 
             @Override
@@ -70,9 +68,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                final E[] result = (E[]) new Comparable[]{null};
-                curNode.ifPresent(n -> result[0] = n.getValue());
-                return result[0];
+                return (E) data.poll();
             }
         };
     }
