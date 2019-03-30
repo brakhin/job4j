@@ -4,6 +4,8 @@ import java.util.*;
 
 public class CustomHashMap2<K, V> {
 
+    private int modifycount = 0;
+
     public static class Entry<K_, V_> {
         private K_ key;
         private V_ value;
@@ -77,7 +79,12 @@ public class CustomHashMap2<K, V> {
             reboundTable(tableLength * 2);
             index = getIndex(key);
         }
-        return setEntry(key, value, index);
+
+        boolean result = setEntry(key, value, index);
+        if (result) {
+            modifycount++;
+        }
+        return result;
     }
 
     public V get(K key) {
@@ -91,13 +98,18 @@ public class CustomHashMap2<K, V> {
         boolean result = (table[index] != null);
         System.arraycopy(table, index + 1, table, index, table.length - index - 1);
         table = Arrays.copyOf(table, table.length - 1);
+        if (result) {
+            modifycount++;
+        }
         return result;
     }
 
     public Iterator<Entry> getIterator() {
 
         return new Iterator<Entry>() {
-            private int index;
+            int index;
+
+            int oldmodcount = modifycount;
 
             @Override
             public boolean hasNext() {
@@ -116,6 +128,9 @@ public class CustomHashMap2<K, V> {
             public Entry next() {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
+                }
+                if (oldmodcount != modifycount) {
+                    throw new IllegalCallerException();
                 }
                 return table[index++];
             }
