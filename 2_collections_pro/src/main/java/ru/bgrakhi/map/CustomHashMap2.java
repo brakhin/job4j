@@ -22,11 +22,11 @@ public class CustomHashMap2<K, V> {
         }
     }
 
-    List<Entry> table;
+    Entry[] table;
     private int tableLength;
 
     public CustomHashMap2() {
-        table = new ArrayList<>();
+        table = new Entry[tableLength];
         reboundTable(tableLength);
     }
 
@@ -40,14 +40,11 @@ public class CustomHashMap2<K, V> {
     }
 
     private void reboundTable(int newTableLength) {
-        List<Entry> newTable = new ArrayList<>();
+        Entry[] newTable = new Entry[newTableLength];
 
-        for (int i = 0; i < newTableLength; i++) {
-            newTable.add(null);
-        }
         tableLength = newTableLength;
 
-        List<Entry> oldTable = table;
+        Entry[] oldTable = table;
         table = newTable;
 
         for (Entry<K, V> entry: oldTable) {
@@ -61,10 +58,10 @@ public class CustomHashMap2<K, V> {
     public boolean setEntry(K key, V value, int index) {
         boolean result = false;
 
-        result = (table.get(index) == null);
+        result = (table[index] == null);
         if (result) {
             Entry<K, V> entry = new Entry<>(key, value);
-            table.set(index, entry);
+            table[index] = entry;
         }
         return result;
     }
@@ -85,14 +82,15 @@ public class CustomHashMap2<K, V> {
 
     public V get(K key) {
         int index = getIndex(key);
-        Entry<K, V> entry = table.get(index);
+        Entry<K, V> entry = table[index];
         return entry == null ? null : entry.getValue();
     }
 
     boolean delete(K key) {
         int index = getIndex(key);
-        boolean result = (table.get(index) != null);
-        table.remove(index);
+        boolean result = (table[index] != null);
+        System.arraycopy(table, index + 1, table, index, table.length - index - 1);
+        table = Arrays.copyOf(table, table.length - 1);
         return result;
     }
 
@@ -105,7 +103,7 @@ public class CustomHashMap2<K, V> {
             public boolean hasNext() {
                 boolean result = false;
                 for (int i = index; i < tableLength; i++) {
-                    if (table.get(i) != null) {
+                    if (table[i] != null) {
                         result = true;
                         index = i;
                         break;
@@ -119,7 +117,7 @@ public class CustomHashMap2<K, V> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return table.get(index++);
+                return table[index++];
             }
         };
     }
