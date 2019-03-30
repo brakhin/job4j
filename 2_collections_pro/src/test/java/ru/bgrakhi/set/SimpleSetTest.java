@@ -12,5 +12,6 @@ public class SimpleSetTest {
         set.add(1);
         set.add(null);
         set.add(5);
+        set.add(null);
     }
 }
