@@ -21,7 +21,7 @@ public class DynamicContainer<E> implements Iterable<E> {
     }
 
     public int getSize() {
-        return container.length;
+        return size;
     }
 
     public void add(E element) {

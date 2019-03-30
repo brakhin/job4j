@@ -11,8 +11,8 @@ public class SimpleSet<E> implements Iterable<E> {
     private boolean isUnique(E element) {
         boolean result = true;
         for (int i = 0; i < data.getSize(); i++) {
-            if (data.get(i).equals(element)) {
-                result = true;
+            if (element == null || data.get(i).equals(element)) {
+                result = false;
                 break;
             }
         }
