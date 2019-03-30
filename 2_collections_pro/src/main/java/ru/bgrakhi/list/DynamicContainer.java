@@ -8,8 +8,7 @@ import java.util.NoSuchElementException;
 public class DynamicContainer<E> implements Iterable<E> {
 
     private Object[] container = new Object[] {null};
-    int size = 0;
-    int iteratorIndex = 0;
+    private int size = 0;
     private int modCount = 0;
 
     private Object[] grow(int sizeDelta) {
@@ -43,6 +42,7 @@ public class DynamicContainer<E> implements Iterable<E> {
         return new Iterator<E>() {
 
             private int expectedModCount = modCount;
+            private int iteratorIndex = 0;
 
             @Override
             public boolean hasNext() {
