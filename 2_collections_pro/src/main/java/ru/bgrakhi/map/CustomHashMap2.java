@@ -96,8 +96,7 @@ public class CustomHashMap2<K, V> {
     boolean delete(K key) {
         int index = getIndex(key);
         boolean result = (table[index] != null);
-        System.arraycopy(table, index + 1, table, index, table.length - index - 1);
-        table = Arrays.copyOf(table, table.length - 1);
+        table[index] = null;
         if (result) {
             modifycount++;
         }
@@ -130,7 +129,7 @@ public class CustomHashMap2<K, V> {
                     throw new NoSuchElementException();
                 }
                 if (oldmodcount != modifycount) {
-                    throw new IllegalCallerException();
+                    throw new ConcurrentModificationException();
                 }
                 return table[index++];
             }
