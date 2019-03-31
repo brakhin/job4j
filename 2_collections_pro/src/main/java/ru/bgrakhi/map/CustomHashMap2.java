@@ -94,11 +94,14 @@ public class CustomHashMap2<K, V> {
     }
 
     boolean delete(K key) {
+        boolean result = false;
         int index = getIndex(key);
-        boolean result = (table[index] != null);
-        table[index] = null;
-        if (result) {
-            modifycount++;
+        if (key.equals(table[index])) {
+            result = (table[index] != null);
+            table[index] = null;
+            if (result) {
+                modifycount++;
+            }
         }
         return result;
     }

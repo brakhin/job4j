@@ -24,6 +24,7 @@
         <module>1_depsort</module>
         <module>1_lambda</module>
         <module>2_collections_pro</module>
+        <module>2_io</module>
     </modules>
  
     <build>
