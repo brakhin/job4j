@@ -13,10 +13,7 @@ public class SimpleSet<E> implements Iterable<E> {
         boolean result = true;
         for (int i = 0; i < data.getSize(); i++) {
             E item = data.get(i);
-
             if (Objects.equals(element, item)) {
-
-//            if (element == null && item == null || item != null && item.equals(element)) {
                 result = false;
                 break;
             }
