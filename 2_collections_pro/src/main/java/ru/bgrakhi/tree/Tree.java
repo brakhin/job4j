@@ -1,6 +1,7 @@
 package ru.bgrakhi.tree;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
 
@@ -44,8 +45,7 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
     public Iterator<E> iterator() {
         return new Iterator<E>() {
 
-            Queue<Node<E>> data = new LinkedList<>();
-            boolean initial = true;
+            Queue<Node<E>> data = new LinkedList<>(Collections.singleton(root));
 
             private void addNodeToQueue(Node<E> node)  {
                 data.offer(node);
@@ -56,10 +56,6 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
 
             @Override
             public boolean hasNext() {
-                if (initial) {
-                    addNodeToQueue(root);
-                    initial = false;
-                }
                 return data.isEmpty();
             }
 
