@@ -1,6 +1,6 @@
 package ru.bgrakhi.generic;
 
-public abstract class AbstractStore<T extends Base> {
+public abstract class AbstractStore<T extends Base>  implements Store<T> {
     public SimpleArray<T> data;
 
     protected AbstractStore(SimpleArray<T> data) {
