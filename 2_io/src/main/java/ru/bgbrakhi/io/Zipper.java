@@ -1,13 +1,11 @@
 package ru.bgbrakhi.io;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
 public class Zipper {
-
     private Args args;
 
     public static class Args {
@@ -20,7 +18,10 @@ public class Zipper {
         private String zipFile = "";
 
         public Args(String[] params) {
-            // инициализация параметров
+            init(params);
+        }
+
+        private void init(String[] params) {
             int curValueType = -1;
             for (int i = 0; i < params.length; i++) {
                 switch (params[i]) {
@@ -65,58 +66,52 @@ public class Zipper {
         zipper.zipFiles();
     }
 
-    private String getExtention(String filename) {
-        String result = "";
-        int index = filename.lastIndexOf(".");
-        if (index != -1) {
-            result = filename.substring(index);
-        }
-        return result;
-    }
-
-    private List<File> getFiles(String rootDir) {
-        List<File> result = new ArrayList<>();
-        searchFiles(result, new File(rootDir));
-        return result;
-    }
-
-    private void searchFiles(List<File> result, File root) {
-        if (root.isDirectory()) {
-            // если каталог
-            for (File file : root.listFiles()) {
-                searchFiles(result, file);
-            }
-        } else {
-            // если файл
-            if (!getExtention(root.getName()).equals(args.exclude)) {
-                result.add(root);
-            }
-        }
-    }
-
     public void zipFiles() {
-        ArrayList<File> files = (ArrayList<File>) getFiles(args.sourceDir);
+        ArrayList<File> files = (ArrayList<File>) seek(args.sourceDir);
         try (ZipOutputStream zout = new ZipOutputStream(new FileOutputStream(args.zipFile))) {
             for (File file : files) {
                 ZipEntry ze = new ZipEntry(file.getAbsolutePath());
                 zout.putNextEntry(ze);
-
                 if (file.isFile()) {
                     try (BufferedInputStream reader = new BufferedInputStream(new FileInputStream(file.getAbsolutePath()))) {
-
-
                         byte[] data = reader.readAllBytes();
                         zout.write(data);
-
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 }
                 zout.closeEntry();
             }
-            zout.close();
         } catch (Exception e)  {
             e.printStackTrace();
         }
+    }
+
+    private List<File> seek(String rootDir) {
+        File root = new File(rootDir);
+        List<File> result = new ArrayList<>();
+        Queue<File> data = new LinkedList<>(Collections.singleton(root));
+
+        while (!data.isEmpty()) {
+            File file = data.poll();
+            if (file.isDirectory()) {
+                data.addAll(Arrays.asList(file.listFiles()));
+            }
+            if (!file.isDirectory()) {
+                if (!fileExt(file.getName()).equals(args.exclude)) {
+                    result.add(file);
+                }
+            }
+        }
+        return result;
+    }
+
+    private String fileExt(String filename) {
+        String result = "";
+        int index = filename.indexOf(".");
+        if (index != -1) {
+            result = filename.substring(index);
+        }
+        return result;
     }
 }
