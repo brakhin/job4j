@@ -47,13 +47,6 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
 
             Queue<Node<E>> data = new LinkedList<>(Collections.singleton(root));
 
-            private void addNodeToQueue(Node<E> node)  {
-                data.offer(node);
-                for (Node child : node.leaves()) {
-                    addNodeToQueue(child);
-                }
-            }
-
             @Override
             public boolean hasNext() {
                 return data.isEmpty();
@@ -64,7 +57,10 @@ public class Tree<E extends Comparable<E>> implements SimpleTree<E> {
                 if (!hasNext()) {
                     throw new NoSuchElementException();
                 }
-                return (E) data.poll();
+
+                Node<E> node = data.poll();
+                data.addAll(node.leaves());
+                return (E) node;
             }
         };
     }
