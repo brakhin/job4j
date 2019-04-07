@@ -6,6 +6,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
 
 public class AnalizerTest {
+
     @Test
     public void testCanBeEqualTo24() {
         Analizer analizer = new Analizer();

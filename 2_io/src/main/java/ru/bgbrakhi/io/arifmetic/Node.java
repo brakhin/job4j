@@ -59,7 +59,7 @@ public class Node {
         Node node = this;
         while (!node.data.isEmpty()) {
             if (operation.equals(node.data)) {
-                result ++;
+                result++;
             }
             node = node.parent;
         }

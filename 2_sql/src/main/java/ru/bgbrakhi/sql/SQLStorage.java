@@ -12,7 +12,7 @@ import static java.sql.DriverManager.getConnection;
 public class SQLStorage {
 
 
-    public static final Logger Log = LogManager.getLogger(SQLStorage.class.getName());
+    public static final Logger LOG = LogManager.getLogger(SQLStorage.class.getName());
 
     public static void main(String[] args) {
 
@@ -35,13 +35,13 @@ public class SQLStorage {
 
 
         } catch (SQLException e) {
-            Log.error(e.getMessage(), e);
+            LOG.error(e.getMessage(), e);
         } finally {
             if (conn != null) {
                 try {
                     conn.close();
                 } catch (SQLException e) {
-                    Log.error(e.getMessage(), e);
+                    LOG.error(e.getMessage(), e);
                 }
 
             }

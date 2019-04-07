@@ -13,12 +13,12 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class AnalizeTest {
     @Test
     public void testWork() throws IOException {
-        Analize analize = new Analize("server.log", "unavailable.csv");
+        Analize analize = new Analize("server.log_", "unavailable.csv");
         analize.work();
         try (BufferedReader reader = new BufferedReader(new FileReader("unavailable.csv"))) {
             StringJoiner builder = new StringJoiner(System.getProperty("line.separator"));
             reader.lines().forEach(builder::add);
-            assertThat(builder.toString(), is("10:57:01;10:59:01\r\n11:01:02;11:02:02"));
+            assertThat(builder.toString(), is("10:57:01;10:59:01\n11:01:02;11:02:02"));
         }
     }
 }

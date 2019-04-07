@@ -10,8 +10,8 @@ import java.util.*;
  * "()" : скобки
  */
 
-public class ExpressionTree implements Iterable<Node>{
-    private static final String operations = "v+-*/()";
+public class ExpressionTree implements Iterable<Node> {
+    private static final String OPERATIONS = "v+-*/()";
 
     private final Node root;
     private int length;
@@ -24,8 +24,8 @@ public class ExpressionTree implements Iterable<Node>{
     private void calcChilds(Queue<Node> queue, Node root) {
         int added = 0;
         Node node;
-        for (int i = 0; i < operations.length(); i++) {
-            String operation = operations.substring(i, i + 1);
+        for (int i = 0; i < OPERATIONS.length(); i++) {
+            String operation = OPERATIONS.substring(i, i + 1);
             if (validOperation(operation, root)) {
                 added++;
                 node = new Node(operation);
@@ -33,7 +33,7 @@ public class ExpressionTree implements Iterable<Node>{
                 root.children.add(node);
                 queue.add(node);
             }
-            if (i == operations.length() - 1 && added == 0) {
+            if (i == OPERATIONS.length() - 1 && added == 0) {
                 root.completed = true;
             }
         }
@@ -50,16 +50,16 @@ public class ExpressionTree implements Iterable<Node>{
 
         switch (operation) {
             case "+" :
-                result = Arrays.asList("v", ")").contains(root.data) && (root.operationCount("v") < length) ;
+                result = Arrays.asList("v", ")").contains(root.data) && (root.operationCount("v") < length);
                 break;
             case "-" :
-                result = Arrays.asList("v", ")").contains(root.data) && (root.operationCount("v") < length) ;
+                result = Arrays.asList("v", ")").contains(root.data) && (root.operationCount("v") < length);
                 break;
             case "*" :
-                result = Arrays.asList("v", ")").contains(root.data) && (root.operationCount("v") < length) ;
+                result = Arrays.asList("v", ")").contains(root.data) && (root.operationCount("v") < length);
                 break;
             case "/" :
-                result = Arrays.asList("v", ")").contains(root.data) && (root.operationCount("v") < length) ;
+                result = Arrays.asList("v", ")").contains(root.data) && (root.operationCount("v") < length);
                 break;
             case "(" :
                 result = root.data.isEmpty()
