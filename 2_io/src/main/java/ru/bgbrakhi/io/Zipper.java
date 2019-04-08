@@ -50,6 +50,7 @@ public class Zipper {
                 case VALUE_OUTPUT:
                     zipFile = value;
                     break;
+                default:
             }
         }
     }
