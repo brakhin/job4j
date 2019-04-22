@@ -20,7 +20,6 @@ public class Client {
     public void start() {
         try (PrintWriter out = new PrintWriter(socket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(new InputStreamReader(socket.getInputStream()))) {
-
             String str = "";
             String input = "";
             do {

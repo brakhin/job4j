@@ -8,7 +8,7 @@ import java.util.List;
 
 import static java.lang.System.arraycopy;
 
-public class Tracker {
+public class Tracker implements ITracker {
 	private List<Item> items = new ArrayList<>();
 	
 	/**

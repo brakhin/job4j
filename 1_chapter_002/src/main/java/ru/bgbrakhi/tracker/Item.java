@@ -9,6 +9,11 @@ public class Item {
 	private String name;
 	private String desc;
 	private long created;
+
+	public String getComments() {
+		return comments != null && comments.length > 0 ? comments[0] : "";
+	}
+
 	private String[] comments;
 
 

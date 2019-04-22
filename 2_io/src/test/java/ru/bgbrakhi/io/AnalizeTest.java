@@ -16,9 +16,9 @@ public class AnalizeTest {
         Analize analize = new Analize("server.log_", "unavailable.csv");
         analize.work();
         try (BufferedReader reader = new BufferedReader(new FileReader("unavailable.csv"))) {
-            StringJoiner builder = new StringJoiner(System.getProperty("line.separator"));
+            StringJoiner builder = new StringJoiner("\n");
             reader.lines().forEach(builder::add);
-            assertThat(builder.toString(), is("10:57:01;10:59:01\n11:01:02;11:02:02"));
+            assertThat(builder.toString(), is("10:58:01;10:59:01\n11:01:02;11:02:02"));
         }
     }
 }
