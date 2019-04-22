@@ -10,6 +10,11 @@
             <version>11</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>net.objecthunter</groupId>
+            <artifactId>exp4j</artifactId>
+            <version>0.4.8</version>
+        </dependency>
     </dependencies>
     <packaging>jar</packaging>
 
