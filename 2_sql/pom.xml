@@ -4,6 +4,14 @@
    <artifactId>sql</artifactId>
    <version>2.0</version>
     <dependencies>
+
+        <dependency>
+            <groupId>ru.job4j</groupId>
+            <artifactId>chapter_002</artifactId>
+            <version>2.0</version>
+        </dependency>
+
+
         <dependency>
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-graphics</artifactId>
@@ -11,11 +19,6 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>9.1-901-1.jdbc4</version>
-        </dependency>
 
     </dependencies>
     <packaging>jar</packaging>
