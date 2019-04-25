@@ -22,6 +22,8 @@ public class InteractCalc {
             case "/" :
                 calc.divide(lastValue, value);
                 break;
+            default:
+                break;
         }
         lastValue = calc.getResult();
     }
