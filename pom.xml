@@ -7,11 +7,6 @@
      <name>junior</name>
      <url>http://job4j.ru/</url>
 
-    <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
     <profiles>
         <profile>
@@ -47,6 +42,11 @@
     </profiles>
 
 
+    <properties>
+       <maven.compiler.source>11</maven.compiler.source>
+       <maven.compiler.target>11</maven.compiler.target>
+       <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+     </properties>
 
     <modules>
         <module>1_chapter_001</module>
@@ -62,8 +62,6 @@
         <module>2_io</module>
         <module>2_sql</module>
         <module>2_ood</module>
-        <module>2_gc</module>
-        <module>3_multithread</module>
     </modules>
  
     <build>
@@ -150,25 +148,6 @@
         <version>2.11.1</version>
     </dependency>
 
-    <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
-    <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-simple</artifactId>
-        <version>1.7.26</version>
-        <scope>test</scope>
-    </dependency>
-
-    <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-        <version>1.7.5</version>
-    </dependency>
-    <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-log4j12</artifactId>
-        <version>1.7.5</version>
-    </dependency>
-
     <dependency>
         <groupId>postgresql</groupId>
         <artifactId>postgresql</artifactId>
@@ -203,12 +182,6 @@
         <groupId>com.sun.xml.bind</groupId>
         <artifactId>jaxb-core</artifactId>
         <version>2.3.0.1</version>
-    </dependency>
-    <dependency>
-        <groupId>org.openjfx</groupId>
-        <artifactId>javafx-graphics</artifactId>
-        <version>11</version>
-        <scope>compile</scope>
     </dependency>
 
 </dependencies>
