@@ -61,6 +61,7 @@
         <module>2_collections_pro</module>
         <module>2_io</module>
         <module>2_sql</module>
+        <module>2_ood</module>
     </modules>
  
     <build>
