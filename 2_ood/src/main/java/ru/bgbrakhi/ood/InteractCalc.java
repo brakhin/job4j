@@ -5,24 +5,24 @@ import ru.job4j.calculator.Calculator;
 import java.util.Scanner;
 
 public class InteractCalc {
-    protected double lastValue = 0d;
-    protected Calculator calc = new Calculator();
+    private double lastValue = 0d;
+    private Calculator calc = new Calculator();
 
     public void calculate(String operation, double value) {
-        if ("+".equals(operation)) {
+        if ("+".equals(lastValue)) {
             calc.add(lastValue, value);
-        } else if ("-".equals(operation)) {
+        } else if ("-".equals(lastValue)) {
             calc.subtraction(lastValue, value);
-        } else if ("*".equals(operation)) {
+        } else if ("*".equals(lastValue)) {
             calc.mult(lastValue, value);
-        } else if ("/".equals(operation)) {
+        } else if ("/".equals(lastValue)) {
             calc.divide(lastValue, value);
         }
         lastValue = calc.getResult();
     }
 
-    public double lastValue() {
-        return this.lastValue;
+    public double getLastValue() {
+        return lastValue;
     }
 
     public static void main(String[] args) {
@@ -33,7 +33,7 @@ public class InteractCalc {
                 + "Available operations : +, -,*,/\n"
                 + "Initial value : 0");
         do {
-            System.out.print(String.valueOf(ic.lastValue()) + " ");
+            System.out.print(String.valueOf(ic.getLastValue()) + " ");
             input = sc.nextLine();
             if (!input.isEmpty()) {
                 String[] data = input.trim().split(" ");
