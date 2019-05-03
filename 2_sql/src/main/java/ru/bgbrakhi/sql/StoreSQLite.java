@@ -3,53 +3,15 @@ package ru.bgbrakhi.sql;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
-import javax.xml.bind.PropertyException;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
-import java.io.Closeable;
+import javax.xml.transform.*;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+import java.io.*;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class StoreSQLite implements Closeable {
-
-    @XmlRootElement
-    public static class Entries {
-        private List<Entry> data;
-
-        public Entries() {
-        }
-
-        public Entries(List<Entry> data) {
-            this.data = data;
-        }
-
-        public List<Entry> getData() {
-            return data;
-        }
-
-        public void setData(List<Entry> data) {
-            this.data = data;
-        }
-    }
-
-    @XmlRootElement
-    public static class Entry {
-        private int field;
-
-        public Entry() {
-        }
-
-        public Entry(Integer field) {
-            this.field = field;
-        }
-
-        public Integer getField() {
-            return field;
-        }
-    }
-
     private final Connection connection;
     private static final boolean AUTO_COMMIT = false;
 
@@ -125,13 +87,56 @@ public class StoreSQLite implements Closeable {
             List<Entry> data = store.load();
             Entries entries = new Entries(data);
 
+            ByteArrayOutputStream writer = new ByteArrayOutputStream();
+
             JAXBContext jaxbContext = JAXBContext.newInstance(Entries.class);
             Marshaller jaxbMarshaller = jaxbContext.createMarshaller();
             jaxbMarshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
             jaxbMarshaller.marshal(
                     entries,
-                    System.out
+                    writer
             );
+
+            System.out.println(writer.toString());
+
+            String xsl = "<?xml version=\"1.0\"?>\n" +
+                    "<xsl:stylesheet xmlns:xsl=\"http://www.w3.org/1999/XSL/Transform\" version=\"1.0\">\n" +
+                    "<xsl:template match=\"/\">\n" +
+                    "<entries_new>" +
+                    "   <xsl:for-each select=\"entries/data\">\n" +
+                    "       <entry>" +
+                    "           <xsl:attribute name=\"href\">" +
+                    "               <xsl:value-of select=\"field\"/>" +
+                    "           </xsl:attribute>" +
+                    "       </entry>\n" +
+                    "   </xsl:for-each>\n" +
+                    " </entries_new>\n" +
+                    "</xsl:template>\n" +
+                    "</xsl:stylesheet>\n";
+            String xml = writer.toString();
+
+            TransformerFactory factory = TransformerFactory.newInstance();
+            Transformer transformer = null;
+            try {
+                transformer = factory.newTransformer(
+                        new StreamSource(
+                        new ByteArrayInputStream(xsl.getBytes()))
+                );
+            } catch (TransformerConfigurationException e) {
+                e.printStackTrace();
+            }
+            try {
+                transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+                transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+                transformer.setOutputProperty(OutputKeys.STANDALONE, "no");
+                transformer.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+                transformer.transform(new StreamSource(
+                        new ByteArrayInputStream(xml.getBytes())),
+                        new StreamResult(System.out)
+                );
+            } catch (TransformerException e) {
+                e.printStackTrace();
+            }
         }
     }
 
