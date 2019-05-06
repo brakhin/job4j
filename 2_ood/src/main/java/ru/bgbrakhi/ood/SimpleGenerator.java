@@ -5,7 +5,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class SimpleGenerator {
-    private static final Pattern PATTERN = Pattern.compile("[$][{][a-z]+[}]+?");
+    private static final Pattern pattern = Pattern.compile("[$][{][a-z]+[}]+?");
     private final Map<String, String> values;
 
     public SimpleGenerator(Map<String, String> values) {
@@ -16,7 +16,7 @@ public class SimpleGenerator {
         String key, value;
         int keys = 0;
         String result = str;
-        Matcher matcher = PATTERN.matcher(str);
+        Matcher matcher = pattern.matcher(str);
         while (matcher.find()) {
             key = str.substring(matcher.start() + 2, matcher.end() - 1);
             value = values.get(key);
