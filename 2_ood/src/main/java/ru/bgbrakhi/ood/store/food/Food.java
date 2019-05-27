@@ -1,4 +1,4 @@
-package ru.bgbrakhi.ood.store;
+package ru.bgbrakhi.ood.store.food;
 
 import java.util.Date;
 import java.util.Objects;
