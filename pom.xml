@@ -47,7 +47,6 @@
     </profiles>
 
 
-
     <modules>
         <module>1_chapter_001</module>
         <module>1_chapter_002</module>
@@ -210,6 +209,7 @@
         <version>11</version>
         <scope>compile</scope>
     </dependency>
+
 
 </dependencies>
 </project>
