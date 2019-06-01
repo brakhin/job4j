@@ -104,6 +104,7 @@ public class Zipper {
                 if (file.isFile()) {
                     try (BufferedInputStream reader = new BufferedInputStream(new FileInputStream(file.getAbsolutePath()))) {
 
+
                         byte[] data = reader.readAllBytes();
                         zout.write(data);
 
