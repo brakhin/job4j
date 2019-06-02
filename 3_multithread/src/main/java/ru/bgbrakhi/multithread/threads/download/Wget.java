@@ -1,4 +1,4 @@
-package ru.brakhin.multithreading.threads.download;
+package ru.bgbrakhi.multithread.threads.download;
 
 import java.io.BufferedInputStream;
 import java.io.FileNotFoundException;
