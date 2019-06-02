@@ -63,7 +63,7 @@
         <module>2_sql</module>
         <module>2_ood</module>
         <module>2_gc</module>
-        <module>3_multithreadingc</module>
+        <module>3_multithread</module>
     </modules>
  
     <build>

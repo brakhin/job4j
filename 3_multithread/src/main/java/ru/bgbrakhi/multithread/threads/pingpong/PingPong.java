@@ -1,4 +1,4 @@
-package ru.brakhin.multithreading.threads.pingpong;
+package ru.bgbrakhi.multithread.threads.pingpong;
 
 
 import javafx.application.Application;

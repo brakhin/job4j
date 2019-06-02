@@ -1,4 +1,4 @@
-package ru.brakhin.multithreading.threads.pingpong;
+package ru.bgbrakhi.multithread.threads.pingpong;
 
 import javafx.scene.shape.Rectangle;
 
@@ -14,7 +14,7 @@ public class RectangleMove implements Runnable {
     @Override
     public void run() {
         int direction = 1;
-        while (true) {
+        while (!Thread.currentThread().isInterrupted()) {
             if (this.rect.getX() == this.fieldWidth - rect.getWidth()) {
                 direction = -1;
             }
@@ -25,7 +25,7 @@ public class RectangleMove implements Runnable {
             try {
                 Thread.sleep(50);
             } catch (InterruptedException e) {
-                e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
         }
     }
