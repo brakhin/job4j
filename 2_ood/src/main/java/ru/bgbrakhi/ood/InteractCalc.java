@@ -5,40 +5,36 @@ import ru.job4j.calculator.Calculator;
 import java.util.Scanner;
 
 public class InteractCalc {
-    private double lastValue = 0d;
-    private Calculator calc = new Calculator();
+    protected double lastValue = 0d;
+    protected Calculator calc = new Calculator();
 
     public void calculate(String operation, double value) {
-        switch (operation) {
-            case "+" :
-                calc.add(lastValue, value);
-                break;
-            case "-" :
-                calc.subtraction(lastValue, value);
-                break;
-            case "*" :
-                calc.mult(lastValue, value);
-                break;
-            case "/" :
-                calc.divide(lastValue, value);
-                break;
-            default:
-                break;
+        if ("+".equals(operation)) {
+            calc.add(lastValue, value);
+        } else if ("-".equals(operation)) {
+            calc.subtraction(lastValue, value);
+        } else if ("*".equals(operation)) {
+            calc.mult(lastValue, value);
+        }
+        else if ("/".equals(operation)) {
+            calc.divide(lastValue, value);
         }
         lastValue = calc.getResult();
     }
 
-    public double getLastValue() {
-        return lastValue;
+    public double lastValue() {
+        return this.lastValue;
     }
 
     public static void main(String[] args) {
         InteractCalc ic = new InteractCalc();
         String input = "";
         Scanner sc = new Scanner(System.in);
-        System.out.println("Required input : <operation> <value>, empty input for quit");
+        System.out.println("Required input : <operation> <value>, empty input for quit.\n"
+                + "Available operations : +, -,*,/\n"
+                + "Initial value : 0");
         do {
-            System.out.print(String.valueOf(ic.getLastValue()) + " ");
+            System.out.print(String.valueOf(ic.lastValue()) + " ");
             input = sc.nextLine();
             if (!input.isEmpty()) {
                 String[] data = input.trim().split(" ");
