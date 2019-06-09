@@ -7,9 +7,9 @@ import java.util.NoSuchElementException;
 
 public class DynamicContainer<E> implements Iterable<E> {
 
-    private Object[] container = new Object[] {null};
-    private int size = 0;
-    private int modCount = 0;
+    protected Object[] container = new Object[] {null};
+    protected int size = 0;
+    protected int modCount = 0;
 
     private Object[] grow(int sizeDelta) {
         Object[] result = container;
