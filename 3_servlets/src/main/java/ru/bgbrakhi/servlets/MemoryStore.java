@@ -22,19 +22,19 @@ public class MemoryStore implements IStore {
 
     @Override
     public Boolean update(User user) {
-        User user_ = findById(user.getId());
-        if (user_ != null) {
-            int index = users.indexOf(user_);
-            users.set(index, user_);
+        User user1 = findById(user.getId());
+        if (user1 != null) {
+            int index = users.indexOf(user1);
+            users.set(index, user1);
         }
         return user != null;
     }
 
     @Override
     public Boolean delete(User user) {
-        User user_ = findById(user.getId());
-        if (user_ != null) {
-            int index = users.indexOf(user_);
+        User user1 = findById(user.getId());
+        if (user1 != null) {
+            int index = users.indexOf(user1);
             users.remove(index);
         }
         return user != null;

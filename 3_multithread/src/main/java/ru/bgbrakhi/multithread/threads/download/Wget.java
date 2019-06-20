@@ -26,7 +26,7 @@ public class Wget {
             try (BufferedInputStream in = new BufferedInputStream(new URL(fileUrl).openStream());
                  FileOutputStream fileOutputStream = new FileOutputStream(fileName)
             ) {
-                byte dataBuffer[] = new byte[1024];
+                byte[] dataBuffer = new byte[1024];
                 int bytesRead;
                 long startTime = System.currentTimeMillis();
                 int downloaded = 0;

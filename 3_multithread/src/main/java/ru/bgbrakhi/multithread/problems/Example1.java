@@ -21,7 +21,9 @@ public class Example1 {
 
         @Override
         public void run() {
-            if (id == 1) value++;
+            if (id == 1) {
+                value++;
+            }
         }
     }
 

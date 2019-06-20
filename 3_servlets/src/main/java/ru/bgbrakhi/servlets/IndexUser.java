@@ -42,8 +42,12 @@ public class IndexUser {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         IndexUser indexUser = (IndexUser) o;
         return Objects.equals(firstname, indexUser.firstname)
                 && Objects.equals(lastname, indexUser.lastname)

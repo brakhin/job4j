@@ -1,6 +1,6 @@
 package ru.bgbrakhi.multithread.wait;
 
-public class Producer implements Runnable{
+public class Producer implements Runnable {
     private Integer value = 0;
     SimpleBlockingQueue<Integer> queue;
 

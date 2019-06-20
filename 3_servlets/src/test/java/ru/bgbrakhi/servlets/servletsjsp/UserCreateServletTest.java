@@ -36,6 +36,7 @@ public class UserCreateServletTest {
         HttpServletResponse responce = mock(HttpServletResponse.class);
         when(request.getParameter("login")).thenReturn("login");
         when(request.getParameter("password")).thenReturn("password");
+        when(request.getParameter("city")).thenReturn("1");
         when(request.getParameter("role")).thenReturn("1");
 
         new UserCreateServlet().doPost(request, responce);
@@ -45,7 +46,7 @@ public class UserCreateServletTest {
     @Test
     public void whenUpdateUserThenStoreIt() throws ServletException, IOException {
         ValidateServiceStub validate = new ValidateServiceStub();
-        validate.add(new User(0, "root", "root", 1));
+        validate.add(new User(0, "root", "root", 0, 1));
 
         PowerMockito.mockStatic(ValidateService.class);
 
@@ -58,6 +59,7 @@ public class UserCreateServletTest {
         when(request.getParameter("id")).thenReturn("0");
         when(request.getParameter("login")).thenReturn("login");
         when(request.getParameter("password")).thenReturn("password");
+        when(request.getParameter("city")).thenReturn("1");
         when(request.getParameter("role")).thenReturn("1");
 
         new UserUpdateServlet().doPost(request, responce);

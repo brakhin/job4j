@@ -32,7 +32,7 @@ public class UserUpdateServlet extends HttpServlet {
                     + "<input type='hidden' name='action' value='update'/>\n"
                     + "<input type='hidden' name='id' value='" + user.getId() + "'/>\n"
                     + "ID : " + user.getId() + "<br>"
-                    + "Name : <input type = 'text' name='name' value='" + user.getName() +"'>"
+                    + "Name : <input type = 'text' name='name' value='" + user.getName() + "'>"
                     + "<input type = 'submit'>"
                     + "</form>\n"
                     + "</body>\n"

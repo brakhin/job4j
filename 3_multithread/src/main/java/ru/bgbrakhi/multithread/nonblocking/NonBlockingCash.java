@@ -12,23 +12,31 @@ public class NonBlockingCash {
     private final ConcurrentHashMap<Integer, Base> data = new ConcurrentHashMap<>();
 
     public void add(Base base) {
-        data.put(base.id, base);
+        data.put(base.getId(), base);
     }
 
     public void update(final Base base) {
-        base.version++;
         data.computeIfPresent(
-                base.id,
+                base.getId(),
                 (key, value) -> {
-                    if (value.version != base.version) {
+                    Base baseTemp = new Base(base.getId());
+                    baseTemp.setVersion(base.getVersion() + 1);
+                    if (value.getVersion() != baseTemp.getVersion() - 1) {
                         throw new OptimisticException("Throw Exception in Thread");
                     }
-                    return base;
+                    return baseTemp;
                 }
         );
     }
 
     public void delete(Base base) {
-        data.remove(base.id, base);
+        data.remove(base.getId(), base);
+    }
+
+    public static void main(String[] args) {
+        Base base = new Base(1);
+        NonBlockingCash nbc = new NonBlockingCash();
+        nbc.add(base);
+        nbc.update(base);
     }
 }

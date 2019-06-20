@@ -76,17 +76,17 @@ public class ConrolQuality {
         List<Food> expiredFood;
         List<Food> validFood = new ArrayList<>();
         for (int i = 0; i < warehouse.size(); i++) {
-            BasicStore warehouse_ = warehouse.get(i);
-            expiredFood = ((WarehouseExt) warehouse_).getComponent().expired(curDate);
+            BasicStore warehouse1 = warehouse.get(i);
+            expiredFood = ((WarehouseExt) warehouse1).getComponent().expired(curDate);
             trash.addAll(expiredFood);
-            validFood.addAll(((WarehouseExt) warehouse_).getComponent().getData());
-            ((WarehouseExt) warehouse_).getComponent().clear();
+            validFood.addAll(((WarehouseExt) warehouse1).getComponent().getData());
+            ((WarehouseExt) warehouse1).getComponent().clear();
             do {
-                expiredFood = warehouse_.expired(curDate);
+                expiredFood = warehouse1.expired(curDate);
                 trash.addAll(expiredFood);
-                validFood.addAll(warehouse_.getData());
-                warehouse_.clear();
-                warehouse_ = ((WarehouseExt) warehouse_).getWarehouseRes();
+                validFood.addAll(warehouse1.getData());
+                warehouse1.clear();
+                warehouse1 = ((WarehouseExt) warehouse1).getWarehouseRes();
             } while (warehouse != null);
         }
         expiredFood = shop.expired(curDate);

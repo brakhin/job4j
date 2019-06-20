@@ -47,6 +47,7 @@
     </profiles>
 
 
+
     <modules>
         <module>1_chapter_001</module>
         <module>1_chapter_002</module>
@@ -64,7 +65,6 @@
         <module>2_gc</module>
         <module>3_multithread</module>
         <module>3_servlets</module>
-        <module>3_servlets_cinema</module>
     </modules>
  
     <build>
@@ -170,11 +170,13 @@
         <version>1.7.5</version>
     </dependency>
 
+    <!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
     <dependency>
         <groupId>postgresql</groupId>
         <artifactId>postgresql</artifactId>
         <version>9.1-901-1.jdbc4</version>
     </dependency>
+
 
     <!-- https://mvnrepository.com/artifact/org.xerial/sqlite-jdbc -->
     <dependency>
@@ -211,7 +213,6 @@
         <version>11</version>
         <scope>compile</scope>
     </dependency>
-
 
 </dependencies>
 </project>

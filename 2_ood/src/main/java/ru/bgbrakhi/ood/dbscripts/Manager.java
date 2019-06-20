@@ -26,7 +26,7 @@ public class Manager {
         return this;
     }
     
-    public List<Integer> before (Integer scriptId) {
+    public List<Integer> before(Integer scriptId) {
         List<Integer> result = new ArrayList<>(scriptId);
         List<Integer> processed = new ArrayList<>();
         result.add(scriptId);

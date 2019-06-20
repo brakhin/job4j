@@ -1,7 +1,7 @@
 package ru.bgbrakhi.multithread.wait;
 
 
-public class Consumer implements Runnable{
+public class Consumer implements Runnable {
     private Integer value = 0;
     private SimpleBlockingQueue<Integer> queue;
 
