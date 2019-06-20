@@ -47,7 +47,6 @@
     </profiles>
 
 
-
     <modules>
         <module>1_chapter_001</module>
         <module>1_chapter_002</module>
@@ -64,6 +63,7 @@
         <module>2_ood</module>
         <module>2_gc</module>
         <module>3_multithread</module>
+        <module>3_servlets</module>
     </modules>
  
     <build>
