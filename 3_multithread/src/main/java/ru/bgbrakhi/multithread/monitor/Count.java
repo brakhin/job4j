@@ -1,5 +1,6 @@
 package ru.bgbrakhi.multithread.monitor;
 
+
 import net.jcip.annotations.GuardedBy;
 import net.jcip.annotations.ThreadSafe;
 
