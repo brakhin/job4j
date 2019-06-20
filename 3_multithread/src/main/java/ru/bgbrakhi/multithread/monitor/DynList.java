@@ -7,27 +7,33 @@ import ru.bgrakhi.list.DynamicContainer;
 import java.util.Iterator;
 
 @ThreadSafe
-public class DynList<E> extends DynamicContainerExt<E> {
+public class DynList<E> implements Iterable<E> {
 
     @GuardedBy("this")
-    private DynamicContainerExt array;
+    private DynamicContainer<E> container;
 
-    public DynList(DynamicContainerExt array) {
-        this.array = array;
+    public DynList() {
+        this.container = new DynamicContainer<>();
     }
 
     @Override
     public synchronized Iterator<E> iterator() {
         Iterator<E> result = null;
         try {
-            result = copy(this.array).iterator();
+            result = copy(this.container).iterator();
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
         return result;
     }
 
-    private DynamicContainerExt copy(DynamicContainerExt object) throws CloneNotSupportedException {
-        return (DynamicContainerExt) object.clone();
+    private DynamicContainer copy(DynamicContainer<E> object) throws CloneNotSupportedException {
+        return (DynamicContainer) object.clone();
+    }
+
+    public void add(E element) throws CloneNotSupportedException {
+        synchronized (this.container) {
+            this.container.add(element);
+        }
     }
 }

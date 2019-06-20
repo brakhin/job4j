@@ -5,7 +5,7 @@ import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-public class DynamicContainer<E> implements Iterable<E> {
+public class DynamicContainer<E> implements Cloneable, Iterable<E> {
 
     protected Object[] container = new Object[] {null};
     protected int size = 0;
@@ -59,5 +59,10 @@ public class DynamicContainer<E> implements Iterable<E> {
                 return (E) container[iteratorIndex++];
             }
         };
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
