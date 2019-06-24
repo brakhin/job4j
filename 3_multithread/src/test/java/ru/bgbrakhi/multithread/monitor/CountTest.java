@@ -1,8 +1,8 @@
 package ru.bgbrakhi.multithread.monitor;
 
 import org.junit.Test;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.*;
 
 public class CountTest {
 
@@ -37,6 +37,5 @@ public class CountTest {
         second.join();
         //Проверяем результат.
         assertThat(count.get(), is(2));
-
     }
 }

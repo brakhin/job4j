@@ -1,4 +1,4 @@
-package ru.bgbrakhi.multithreading.problems;
+package ru.bgbrakhi.multithread.problems;
 
 
 /**
