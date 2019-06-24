@@ -1,10 +1,9 @@
-package ru.bgbrakhi.multithread.switcher;
+package ru.bgbrakghi.job4j.bombermen.switcher;
 
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.CyclicBarrier;
 
 public class Switcher {
-    private final StringBuilder buff = new StringBuilder();
+    private final StringBuff buff = new StringBuff();
     private final CyclicBarrier barrier = new CyclicBarrier(2);
 
     public void start() {
@@ -13,7 +12,7 @@ public class Switcher {
             public void run() {
                 int counter = 0;
                 while (!Thread.currentThread().isInterrupted()) {
-                    buff.append(1);
+                    buff.addValue(1);
                     counter++;
                     if (counter == 10) {
                         try {
@@ -40,7 +39,7 @@ public class Switcher {
                 }
 
                 while (!Thread.currentThread().isInterrupted()) {
-                    buff.append(2);
+                    buff.addValue(2);
                     counter++;
                     if (counter == 10) {
                         try {
