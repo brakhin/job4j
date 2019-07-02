@@ -15,7 +15,8 @@ public class InteractCalc {
             calc.subtraction(lastValue, value);
         } else if ("*".equals(operation)) {
             calc.mult(lastValue, value);
-        } else if ("/".equals(operation)) {
+        }
+        else if ("/".equals(operation)) {
             calc.divide(lastValue, value);
         }
         lastValue = calc.getResult();
