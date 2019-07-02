@@ -64,7 +64,7 @@
         <module>2_ood</module>
         <module>2_gc</module>
         <module>3_multithread</module>
-        <module>3_servlet</module>
+        <module>3_servlets</module>
     </modules>
  
     <build>
