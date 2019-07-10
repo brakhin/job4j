@@ -5,6 +5,7 @@
          http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
 <<<<<<< HEAD
+<<<<<<< HEAD
     <servlet>
         <servlet-name>EchoServlet</servlet-name>
         <servlet-class>ru.bgbrakhi.servlets.EchoServlet</servlet-class>
@@ -13,6 +14,8 @@
         <servlet-name>EchoServlet</servlet-name>
         <url-pattern>/echo</url-pattern>
     </servlet-mapping>
+=======
+>>>>>>> acee0ba... 1. Crud servlet, Web app architecture.[#147129]
 =======
 >>>>>>> acee0ba... 1. Crud servlet, Web app architecture.[#147129]
 
@@ -24,6 +27,7 @@
         <servlet-name>HttpExample</servlet-name>
         <url-pattern>/http</url-pattern>
     </servlet-mapping>
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 
@@ -81,4 +85,6 @@
     </servlet-mapping>
 
 >>>>>>> 74a88dd... 1. Перенести все виды из предыдущего задания на JSP[#147112]
+=======
+>>>>>>> acee0ba... 1. Crud servlet, Web app architecture.[#147129]
 </web-app>
