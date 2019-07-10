@@ -110,6 +110,7 @@ public class DbStore implements IStore {
         CopyOnWriteArrayList<User> result = new CopyOnWriteArrayList<>();
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement st = connection.prepareStatement("select * from users;")) {
+<<<<<<< HEAD
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 result.add(new User(
@@ -121,11 +122,23 @@ public class DbStore implements IStore {
                 );
             }
             rs.close();
+=======
+
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                result.add(new User(
+                            rs.getInt("id"),
+                            rs.getString("name")
+                        )
+                );
+            }
+>>>>>>> a08e7f9... 1. Перенести все виды из предыдущего задания на JSP[#147112]
         } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
     }
+<<<<<<< HEAD
 
     @Override
     public Integer isCredentional(String login, String password) {
@@ -144,4 +157,6 @@ public class DbStore implements IStore {
         }
         return -1;
     }
+=======
+>>>>>>> a08e7f9... 1. Перенести все виды из предыдущего задания на JSP[#147112]
 }
