@@ -30,16 +30,22 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     <servlet>
         <servlet-name>UserCreateServlet</servlet-name>
         <servlet-class>ru.bgbrakhi.servlets.servlets.UserCreateServlet</servlet-class>
 =======
+=======
+>>>>>>> a08e7f9... 1. Перенести все виды из предыдущего задания на JSP[#147112]
 
     <servlet>
         <servlet-name>UserCreateServlet</servlet-name>
         <servlet-class>ru.bgbrakhi.servlets.servletsjsp.UserCreateServlet</servlet-class>
+<<<<<<< HEAD
 >>>>>>> 74a88dd... 1. Перенести все виды из предыдущего задания на JSP[#147112]
+=======
+>>>>>>> a08e7f9... 1. Перенести все виды из предыдущего задания на JSP[#147112]
     </servlet>
     <servlet-mapping>
         <servlet-name>UserCreateServlet</servlet-name>
@@ -47,6 +53,7 @@
     </servlet-mapping>
 
     <servlet>
+<<<<<<< HEAD
 <<<<<<< HEAD
         <servlet-name>UsersServlet </servlet-name>
         <servlet-class>ru.bgbrakhi.servlets.servlets.UsersServlet</servlet-class>
@@ -67,6 +74,8 @@
 =======
 >>>>>>> acee0ba... 1. Crud servlet, Web app architecture.[#147129]
 =======
+=======
+>>>>>>> a08e7f9... 1. Перенести все виды из предыдущего задания на JSP[#147112]
         <servlet-name>UserUpdateServlet</servlet-name>
         <servlet-class>ru.bgbrakhi.servlets.servletsjsp.UserUpdateServlet</servlet-class>
     </servlet>
@@ -84,7 +93,10 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
+<<<<<<< HEAD
 >>>>>>> 74a88dd... 1. Перенести все виды из предыдущего задания на JSP[#147112]
 =======
 >>>>>>> acee0ba... 1. Crud servlet, Web app architecture.[#147129]
+=======
+>>>>>>> a08e7f9... 1. Перенести все виды из предыдущего задания на JSP[#147112]
 </web-app>

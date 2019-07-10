@@ -20,31 +20,19 @@ public class MemoryStore implements IStore {
 
     @Override
     public Boolean update(User user) {
-<<<<<<< HEAD
         User user_ = findById(user.getId());
         if (user_ != null) {
             int index = users.indexOf(user_);
-=======
-        User user1 = findById(user.getId());
-        if (user1 != null) {
-            int index = users.indexOf(user1);
->>>>>>> 74a88dd... 1. Перенести все виды из предыдущего задания на JSP[#147112]
-            users.set(index, user);
+            users.set(index, user_);
         }
         return user != null;
     }
 
     @Override
     public Boolean delete(User user) {
-<<<<<<< HEAD
         User user_ = findById(user.getId());
         if (user_ != null) {
             int index = users.indexOf(user_);
-=======
-        User user1 = findById(user.getId());
-        if (user1 != null) {
-            int index = users.indexOf(user1);
->>>>>>> 74a88dd... 1. Перенести все виды из предыдущего задания на JSP[#147112]
             users.remove(index);
         }
         return user != null;

@@ -35,5 +35,4 @@ public class ValidateService {
     public User findById(User user) {
         return store.findById(user.getId());
     }
-
 }
