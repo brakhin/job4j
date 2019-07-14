@@ -65,6 +65,7 @@
         <module>2_gc</module>
         <module>3_multithread</module>
         <module>3_servlets</module>
+        <module>3_servlets_cinema</module>
     </modules>
  
     <build>
