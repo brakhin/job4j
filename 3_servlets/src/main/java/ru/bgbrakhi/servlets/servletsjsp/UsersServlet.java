@@ -15,6 +15,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 public class UsersServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("users.jsp").forward(req, resp);
+        req.setAttribute("users", ValidateService.getInstance().findAll());
+        req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req, resp);
     }
 }

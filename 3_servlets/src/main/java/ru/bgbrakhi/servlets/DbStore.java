@@ -10,7 +10,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class DbStore implements IStore {
     private static final BasicDataSource SOURCE = new BasicDataSource();
     private static final DbStore INSTANCE = new DbStore();
-    private AtomicInteger id = new AtomicInteger(0);
 
     public DbStore() {
         SOURCE.setUrl("jdbc:sqlite:db\\\\database.db");
@@ -19,7 +18,6 @@ public class DbStore implements IStore {
         SOURCE.setMinIdle(5);
         SOURCE.setMaxIdle(10);
         SOURCE.setMaxOpenPreparedStatements(100);
-
         try {
             Class.forName("org.sqlite.JDBC");
         } catch (ClassNotFoundException e) {
