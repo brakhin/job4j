@@ -100,7 +100,6 @@ public class DbStore implements IStore {
         CopyOnWriteArrayList<User> result = new CopyOnWriteArrayList<>();
         try (Connection connection = SOURCE.getConnection();
              PreparedStatement st = connection.prepareStatement("select * from users;")) {
-
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 result.add(new User(
