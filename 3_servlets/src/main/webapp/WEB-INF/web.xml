@@ -5,6 +5,9 @@
          http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
          version="2.4">
 
+
+
+
     <filter>
         <filter-name>AuthFilter</filter-name>
         <filter-class>ru.bgbrakhi.servlets.AuthFilter</filter-class>
@@ -34,14 +37,6 @@
         <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>Logout</servlet-name>
-        <servlet-class>ru.bgbrakhi.servlets.servletsjsp.LogoutServlet</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Logout</servlet-name>
-        <url-pattern>/logout</url-pattern>
-    </servlet-mapping>
 
     <servlet>
         <servlet-name>HttpExample</servlet-name>
@@ -80,5 +75,14 @@
     <servlet-mapping>
         <servlet-name>JSONController</servlet-name>
         <url-pattern>/json</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>ru.bgbrakhi.servlets.servletsjsp.LogoutServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/logout</url-pattern>
     </servlet-mapping>
 </web-app>
