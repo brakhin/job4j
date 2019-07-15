@@ -33,8 +33,10 @@ public class DbStore implements IStore {
     public Boolean add(User user) {
         Boolean result = false;
         try (Connection connection = SOURCE.getConnection();
-            PreparedStatement st = connection.prepareStatement("insert into users(name) values(?);")) {
-            st.setString(1, user.getName());
+            PreparedStatement st = connection.prepareStatement("insert into users(login, password, role) values(?, ?, ?);")) {
+            st.setString(1, user.getLogin());
+            st.setString(2, user.getPassword());
+            st.setInt(3, user.getRole());
             st.execute();
             result = true;
         } catch (Exception e) {
@@ -48,10 +50,12 @@ public class DbStore implements IStore {
 
         Boolean result = false;
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement st = connection.prepareStatement("update users set name=? where id=?;")) {
+             PreparedStatement st = connection.prepareStatement("update users set login=?, password=?, role=? where id=?;")) {
 
-            st.setString(1, user.getName());
-            st.setInt(2, user.getId());
+            st.setString(1, user.getLogin());
+            st.setString(2, user.getPassword());
+            st.setInt(3, user.getRole());
+            st.setInt(4, user.getId());
             st.execute();
             result = true;
         } catch (Exception e) {
@@ -86,9 +90,12 @@ public class DbStore implements IStore {
             if (rs.next()) {
                 result = new User(
                         rs.getInt("id"),
-                        rs.getString("name")
+                        rs.getString("login"),
+                        rs.getString("password"),
+                        rs.getInt("role")
                 );
             }
+            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -103,14 +110,34 @@ public class DbStore implements IStore {
             ResultSet rs = st.executeQuery();
             while (rs.next()) {
                 result.add(new User(
-                            rs.getInt("id"),
-                            rs.getString("name")
-                        )
+                        rs.getInt("id"),
+                        rs.getString("login"),
+                        rs.getString("password"),
+                        rs.getInt("role"))
                 );
             }
+            rs.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return result;
+    }
+
+    @Override
+    public Integer isCredentional(String login, String password) {
+        try (Connection connection = SOURCE.getConnection();
+             PreparedStatement st = connection.prepareStatement("select id from users where login=? and password=?;")) {
+
+            st.setString(1, login);
+            st.setString(2, password);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("id");
+            }
+            rs.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

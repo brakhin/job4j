@@ -18,6 +18,7 @@ public class UserUpdateServlet extends HttpServlet {
         User user = ValidateService.getInstance().findById(Integer.parseInt(req.getParameter("id")));
         if (user != null) {
             req.setAttribute("user", user);
+            req.setAttribute("role", req.getSession().getAttribute("role"));
             req.getRequestDispatcher("/WEB-INF/views/update.jsp").forward(req, resp);
         }
     }
@@ -26,10 +27,12 @@ public class UserUpdateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         String id = req.getParameter("id");
-        String name = req.getParameter("name");
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
+        String role = req.getParameter("role");
 
         if ("update".equals(action)) {
-            if ((Boolean) new DispatchPattern(action, name, Integer.parseInt(id)).init().process(action)) {
+            if ((Boolean) new DispatchPattern(action, login, password, Integer.parseInt(role), Integer.parseInt(id)).init().process(action)) {
 //                resp.sendRedirect(String.format("%s/users.jsp", req.getContextPath()));
                 req.setAttribute("users", ValidateService.getInstance().findAll());
                 req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req, resp);

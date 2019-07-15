@@ -17,7 +17,9 @@
     <body>
         Create user <br>
         <form action="${pageContext.servletContext.contextPath}/create" method="post">
-            Name : <input type = "text" name="name"><br>
+            Login : <input type = "text" name="login"><br>
+            Password : <input type = "password" name="password"><br>
+            Role : <input type = "text" name="role"><br>
             <input type = "submit">
         </form>
     </body>

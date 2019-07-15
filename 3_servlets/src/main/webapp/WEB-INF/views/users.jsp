@@ -20,28 +20,43 @@
             <tr>
                 <th>Id</th>
                 <th>Name</th>
+                <th>Password</th>
+                <th>Role</th>
             </tr>
             <c:forEach items="${users}" var="user" >
                 <tr>
                     <td><c:out value="${user.id}"></c:out></td>
-                    <td><c:out value="${user.name}"></c:out></td>
-                    <td>
-                        <form action="${pageContext.servletContext.contextPath}/edit" method="post">
-                            <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>"/>
-                            <input type="submit" value="Edit">
-                        </form>
-                    </td>
-                    <td>
-                        <form action="${pageContext.servletContext.contextPath}/delete" method="post">
-                            <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>"/>
-                            <input type="submit" value="Delete">
-                        </form>
-                    </td>
+                    <td><c:out value="${user.login}"></c:out></td>
+                    <td><c:out value="${user.password}"></c:out></td>
+                    <td><c:out value="${user.role}"></c:out></td>
+
+                    <c:if test="${role == 1 || role == user.role}">
+                        <td>
+                            <form action="${pageContext.servletContext.contextPath}/edit" method="post">
+                                <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>"/>
+                                <input type="submit" value="Edit">
+                            </form>
+                        </td>
+                        <td>
+                            <form action="${pageContext.servletContext.contextPath}/delete" method="post">
+                                <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>"/>
+                                <input type="submit" value="Delete">
+                            </form>
+                        </td>
+                    </c:if>
+
                 </tr>
             </c:forEach>
         </table>
-        <form action="${pageContext.servletContext.contextPath}/create" method="get">
-            <input type="submit" value="Create">
+
+        <c:if test="${role == 1}">
+            <form action="${pageContext.servletContext.contextPath}/create" method="get">
+                <input type="submit" value="Create">
+            </form>
+        </c:if>
+
+        <form action="${pageContext.servletContext.contextPath}/logout" method="post">
+            <input type="submit" value="Logout">
         </form>
     </body>
 </html>

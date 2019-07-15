@@ -8,4 +8,5 @@ public interface IStore {
     Boolean delete(User user);
     User findById(Integer id);
     CopyOnWriteArrayList<User> findAll();
+    Integer isCredentional(String login, String password);
 }

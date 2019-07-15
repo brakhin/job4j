@@ -17,9 +17,25 @@ Created by IntelliJ IDEA.
 <body>
 <form action="${pageContext.servletContext.contextPath}/edit" method="post">
     <input type="hidden" name="action" value="update">
-    <input type="hidden" name="id" value="<%=request.getParameter("id")%>">
+    <input type="hidden" name="id" value="<c:out value="${user.id}"></c:out>">
     ID : <c:out value="${user.id}"></c:out> <br>
-    Name : <input type = "text" name="name" value="<c:out value="${user.name}"></c:out>"><br>
+    Login : <input type = "text" name="login" value="<c:out value="${user.login}"></c:out>"><br>
+    Password : <input type = "password" name="password" value="<c:out value="${user.password}"></c:out>"><br>
+    <c:if test="${role == 1}">
+        Role : <select name="role">
+            <option value="1" <c:if test="${user.role == 1}">selected</c:if>>Admin</option>
+            <option value="2" <c:if test="${user.role == 2}">selected</c:if>>DBA</option>
+            <option value="3" <c:if test="${user.role == 3}">selected</c:if>>User</option>
+        </select>
+    </c:if>
+    <c:if test="${role != 1}">
+        <input type="hidden" name="role" value="<c:out value="${user.role}"></c:out>">
+        Role :
+        <c:if test="${user.role == 1}">Admin</c:if>
+        <c:if test="${user.role == 2}">DBA</c:if>
+        <c:if test="${user.role == 3}">User</c:if>
+    </c:if>
+    <br>
     <input type = "submit">
 </form>
 </body>

@@ -18,8 +18,10 @@ public class UserCreateServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = "add";
-        String name = req.getParameter("name");
-        new DispatchPattern(action, name, -1).init().process(action);
+        String login = req.getParameter("login");
+        String password = req.getParameter("password");
+        String role = req.getParameter("role");
+        new DispatchPattern(action, login, password,  Integer.parseInt(role), -1).init().process(action);
 //        resp.sendRedirect(String.format("%s/create.jsp", req.getContextPath()));
 
         req.setAttribute("users", ValidateService.getInstance().findAll());

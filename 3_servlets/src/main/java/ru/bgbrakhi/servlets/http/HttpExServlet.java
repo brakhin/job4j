@@ -14,6 +14,6 @@ public class HttpExServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = req.getParameter("action");
         String name = req.getParameter("name");
-        new DispatchPattern(action, name, -1).init().process(action);
+        new DispatchPattern(action, name, "", 0, -1).init().process(action);
     }
 }

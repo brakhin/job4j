@@ -13,17 +13,21 @@ public class DispatchPattern {
 
 
     private final String action;
-    private final String name;
+    private final String login;
+    private final String password;
+    private final Integer role;
     private final Integer id;
 
-    public DispatchPattern(String action, String name, Integer id) {
+    public DispatchPattern(String action, String login, String password, Integer role, Integer id) {
         this.action = action;
-        this.name = name;
+        this.login = login;
+        this.password = password;
+        this.role = role;
         this.id = id;
     }
 
     public DispatchPattern init() {
-        User user = new User(id, name);
+        User user = new User(id, login, password, role);
         dispatch.put("add", a -> validateLogic.add(user));
         dispatch.put("update", a -> validateLogic.update(user));
         dispatch.put("delete", a -> validateLogic.delete(user));

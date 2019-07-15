@@ -54,4 +54,9 @@ public class MemoryStore implements IStore {
     public CopyOnWriteArrayList<User> findAll() {
         return users;
     }
+
+    @Override
+    public Integer isCredentional(String login, String password) {
+        return -1;
+    }
 }

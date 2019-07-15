@@ -5,19 +5,37 @@ import java.util.Objects;
 
 public class User {
     private int id;
-    private String name;
+
+    //    private String login;
     private String login;
-    private String email;
-    private Date createDate;
+    private String password;
+    private int role = 0;
 
-    public User(int id, String name) {
+    public User(int id, String login, String password, Integer role) {
         this.id = id;
-        this.name = name;
+        this.login = login;
+        this.password = password;
+        this.role = role;
     }
-
 
     public int getId() {
         return id;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getRole() {
+        return role;
     }
 
     @Override
@@ -26,26 +44,13 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return id == user.id
-                && Objects.equals(name, user.name)
+                && role == user.role
                 && Objects.equals(login, user.login)
-                && Objects.equals(email, user.email)
-                && Objects.equals(createDate, user.createDate);
+                && Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, login, email, createDate);
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+        return Objects.hash(id, login, password, role);
     }
 }

@@ -35,4 +35,10 @@ public class ValidateService {
     public User findById(User user) {
         return store.findById(user.getId());
     }
+
+    public Integer isCredentional(String login, String password) {
+        return store.isCredentional(login, password);
+    }
+
+
 }
