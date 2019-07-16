@@ -43,7 +43,10 @@ public class UserUpdateServlet extends HttpServlet {
                     )
             ) {
                 req.setAttribute("users", ValidateService.getInstance().findAll());
-                req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req, resp);
+                RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/users.jsp");
+                if (dispatcher != null) {
+                    dispatcher.forward(req, resp);
+                }
             }
         } else {
             doGet(req, resp);

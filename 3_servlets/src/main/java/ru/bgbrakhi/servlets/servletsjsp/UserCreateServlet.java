@@ -4,6 +4,7 @@ import ru.bgbrakhi.servlets.DispatchPattern;
 import ru.bgbrakhi.servlets.User;
 import ru.bgbrakhi.servlets.ValidateService;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -27,7 +28,10 @@ public class UserCreateServlet extends HttpServlet {
 //        resp.sendRedirect(String.format("%s/create.jsp", req.getContextPath()));
 
         req.setAttribute("users", ValidateService.getInstance().findAll());
-        req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req, resp);
 
+        RequestDispatcher dispatcher = req.getRequestDispatcher("/WEB-INF/views/users.jsp");
+        if (dispatcher != null) {
+            dispatcher.forward(req, resp);
+        }
     }
 }
