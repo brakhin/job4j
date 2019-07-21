@@ -33,10 +33,11 @@ public class DbStore implements IStore {
     public Boolean add(User user) {
         Boolean result = false;
         try (Connection connection = SOURCE.getConnection();
-            PreparedStatement st = connection.prepareStatement("insert into users(login, password, role) values(?, ?, ?);")) {
+            PreparedStatement st = connection.prepareStatement("insert into users(login, password, city, role) values(?, ?, ?, ?);")) {
             st.setString(1, user.getLogin());
             st.setString(2, user.getPassword());
-            st.setInt(3, user.getRole());
+            st.setInt(3, user.getCity());
+            st.setInt(4, user.getRole());
             st.execute();
             result = true;
         } catch (Exception e) {
@@ -50,12 +51,13 @@ public class DbStore implements IStore {
 
         Boolean result = false;
         try (Connection connection = SOURCE.getConnection();
-             PreparedStatement st = connection.prepareStatement("update users set login=?, password=?, role=? where id=?;")) {
+             PreparedStatement st = connection.prepareStatement("update users set login=?, password=?, city=?, role=? where id=?;")) {
 
             st.setString(1, user.getLogin());
             st.setString(2, user.getPassword());
-            st.setInt(3, user.getRole());
-            st.setInt(4, user.getId());
+            st.setInt(3, user.getCity());
+            st.setInt(4, user.getRole());
+            st.setInt(5, user.getId());
             st.execute();
             result = true;
         } catch (Exception e) {
@@ -92,6 +94,7 @@ public class DbStore implements IStore {
                         rs.getInt("id"),
                         rs.getString("login"),
                         rs.getString("password"),
+                        rs.getInt("city"),
                         rs.getInt("role")
                 );
             }
@@ -113,6 +116,7 @@ public class DbStore implements IStore {
                         rs.getInt("id"),
                         rs.getString("login"),
                         rs.getString("password"),
+                        rs.getInt("city"),
                         rs.getInt("role"))
                 );
             }

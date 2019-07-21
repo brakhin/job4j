@@ -14,6 +14,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 public class SigninController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+//        req.setAttribute("error", "---");
         req.getRequestDispatcher("/WEB-INF/views/login.jsp").forward(req, resp);
    }
 
@@ -38,6 +39,5 @@ public class SigninController extends HttpServlet {
             req.setAttribute("error", "Credentional is invalid");
             doGet(req, resp);
         }
-
     }
 }

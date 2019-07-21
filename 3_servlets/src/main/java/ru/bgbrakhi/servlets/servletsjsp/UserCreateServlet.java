@@ -20,8 +20,9 @@ public class UserCreateServlet extends HttpServlet {
         String action = "add";
         String login = req.getParameter("login");
         String password = req.getParameter("password");
+        String city = req.getParameter("city");
         String role = req.getParameter("role");
-        new DispatchPattern(action, login, password,  Integer.parseInt(role), -1).init().process(action);
+        new DispatchPattern(action, login, password,  Integer.parseInt(city), Integer.parseInt(role), -1).init().process(action);
 //        resp.sendRedirect(String.format("%s/create.jsp", req.getContextPath()));
 
         req.setAttribute("users", ValidateService.getInstance().findAll());

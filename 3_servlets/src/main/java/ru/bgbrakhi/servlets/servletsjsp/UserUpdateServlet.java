@@ -29,20 +29,22 @@ public class UserUpdateServlet extends HttpServlet {
         String id = req.getParameter("id");
         String login = req.getParameter("login");
         String password = req.getParameter("password");
+        String city = req.getParameter("city");
         String role = req.getParameter("role");
 
         if ("update".equals(action)) {
-            if ((Boolean) new DispatchPattern(action, login, password, Integer.parseInt(role), Integer.parseInt(id)).init().process(action)) {
-//                resp.sendRedirect(String.format("%s/users.jsp", req.getContextPath()));
+            if ((Boolean) new DispatchPattern(action,
+                    login,
+                    password,
+                    Integer.parseInt(city),
+                    Integer.parseInt(role),
+                    Integer.parseInt(id)).init().process(action)
+            ) {
                 req.setAttribute("users", ValidateService.getInstance().findAll());
                 req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req, resp);
             }
         } else {
             doGet(req, resp);
-//            req.getRequestDispatcher("/WEB-INF/views/update.jsp").forward(req, resp);
-
-//            RequestDispatcher disp = req.getRequestDispatcher("update.jsp");
-//            disp.forward(req, resp);
         }
     }
 }

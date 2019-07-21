@@ -1,1 +1,1 @@
-insert into users(login, password, role) values("root", "root", 1);
+insert into users(login, password, city, role) values("root", "root", 1, 1);

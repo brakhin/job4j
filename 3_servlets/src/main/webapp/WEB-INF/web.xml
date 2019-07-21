@@ -85,4 +85,13 @@
         <servlet-name>Logout</servlet-name>
         <url-pattern>/logout</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>JSON</servlet-name>
+        <servlet-class>ru.bgbrakhi.servlets.servletsjsp.JSONController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>JSON</servlet-name>
+        <url-pattern>/json</url-pattern>
+    </servlet-mapping>
 </web-app>
