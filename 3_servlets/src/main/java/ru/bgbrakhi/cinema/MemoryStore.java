@@ -1,4 +1,4 @@
-package ru.bgbrakhi.servlets;
+package ru.bgbrakhi.cinema;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicInteger;

@@ -1,7 +1,4 @@
-package ru.bgbrakhi.servlets;
-
-import ru.bgbrakhi.servlets.User;
-import ru.bgbrakhi.servlets.ValidateService;
+package ru.bgbrakhi.cinema;
 
 import java.util.HashMap;
 import java.util.Map;

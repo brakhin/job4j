@@ -1,4 +1,4 @@
-package ru.bgbrakhi.servlets;
+package ru.bgbrakhi.cinema;
 
 import java.util.concurrent.CopyOnWriteArrayList;
 

@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+<body>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+    function getUrlVars() {
+        var vars = {};
+        var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+            vars[key] = value;
+        });
+        return vars;
+    }
+    function getUrlParam(parameter, defaultvalue){
+        var urlparameter = defaultvalue;
+        if(window.location.href.indexOf(parameter) > -1){
+            urlparameter = getUrlVars()[parameter];
+        }
+        return urlparameter;
+    }
+
+    $(
+        $.ajax("./payment?seat=" + getUrlParam("seat", "0"), {
+            method: "get",
+            complete : function(data) {
+                var jsonData = JSON.parse(data.responseText);
+                if (jsonData.error == undefined) {
+                    document.getElementsByName("div_header")[0].innerHTML =
+                        "<h3>Вы выбрали ряд " + jsonData.line + " место " + jsonData.col + ", Сумма : 500 рублей.</h3>"
+                } else {
+                    if (jsonData.error == 1) {
+                        document.getElementsByName("div_error")[0].innerHTML =
+                            "&nbsp;Место не найдено !";
+                    }
+                    if (jsonData.error == 2) {
+                        document.getElementsByName("div_error")[0].innerHTML =
+                            "&nbsp;Ряд " + jsonData.line + " место " + jsonData.col + " куплено ранее!";
+                    }
+                }
+                document.getElementsByName("div_error")[0].hidden = (jsonData.error == undefined);
+                document.getElementsByName("div_form")[0].hidden = (jsonData.error != undefined);
+            }
+        })
+    )
+
+    function validate() {
+        var username = document.getElementsByName("username")[0].value;
+        var phone = document.getElementsByName("phone")[0].value;
+
+        if (username == '') {
+            alert("Введите Ф.И.О.");
+            return false;
+        }
+        if (phone == '') {
+            alert("Введите номер телефона");
+            return false;
+        }
+        return true;
+    }
+
+    function postData() {
+        if (!validate()) return false;
+        $.ajax("./payment", {
+                method : "post",
+                data : {
+                    seatid : getUrlParam("seat", "0"),
+                    username : document.getElementsByName("username")[0].value,
+                    phone : document.getElementsByName("phone")[0].value
+                },
+                complete : window.location = "index.html"
+            }
+
+        );
+        return true;
+    }
+</script>
+
+<div class="container">
+    <div id="header" name="div_header" class="row pt-3"></div>
+    <div name="div_error" class="card" style="background-color: red; color: white;
+        text-transform: uppercase; font-weight: bold" ></div>
+    <div class="row" name = "div_form">
+        <form>
+            <div class="form-group">
+                <label for="username">ФИО</label>
+                <input type="text" class="form-control" id="username" name="username" placeholder="ФИО">
+            </div>
+            <div class="form-group">
+                <label for="phone">Номер телефона</label>
+                <input type="text" class="form-control" id="phone" name="phone" placeholder="Номер телефона">
+            </div>
+            <button type="button" class="btn btn-success" onclick="return postData()">Оплатить</button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
