@@ -15,7 +15,7 @@ public class UserUpdateServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        User user = ValidateService.getInstance().findById(Integer.parseInt(req.getParameter("id")));
+        User user = ValidateService.getInstance().findById(new User(Integer.parseInt(req.getParameter("id")), ""));
         if (user != null) {
             req.setAttribute("user", user);
             req.setAttribute("role", req.getSession().getAttribute("role"));
@@ -33,12 +33,14 @@ public class UserUpdateServlet extends HttpServlet {
         String role = req.getParameter("role");
 
         if ("update".equals(action)) {
-            if ((Boolean) new DispatchPattern(action,
-                    login,
-                    password,
-                    Integer.parseInt(city),
-                    Integer.parseInt(role),
-                    Integer.parseInt(id)).init().process(action)
+            if ((Boolean) new DispatchPattern().init().process(action,
+                    new User(
+                            Integer.parseInt(id),
+                            login,
+                            password,
+                            Integer.parseInt(city),
+                            Integer.parseInt(role))
+                    )
             ) {
                 req.setAttribute("users", ValidateService.getInstance().findAll());
                 req.getRequestDispatcher("/WEB-INF/views/users.jsp").forward(req, resp);

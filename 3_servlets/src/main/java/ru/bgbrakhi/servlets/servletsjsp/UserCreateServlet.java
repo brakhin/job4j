@@ -1,6 +1,7 @@
 package ru.bgbrakhi.servlets.servletsjsp;
 
 import ru.bgbrakhi.servlets.DispatchPattern;
+import ru.bgbrakhi.servlets.User;
 import ru.bgbrakhi.servlets.ValidateService;
 
 import javax.servlet.ServletException;
@@ -22,7 +23,7 @@ public class UserCreateServlet extends HttpServlet {
         String password = req.getParameter("password");
         String city = req.getParameter("city");
         String role = req.getParameter("role");
-        new DispatchPattern(action, login, password,  Integer.parseInt(city), Integer.parseInt(role), -1).init().process(action);
+        new DispatchPattern().init().process(action, new User(-1, login, password,  Integer.parseInt(city), Integer.parseInt(role)));
 //        resp.sendRedirect(String.format("%s/create.jsp", req.getContextPath()));
 
         req.setAttribute("users", ValidateService.getInstance().findAll());

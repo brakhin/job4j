@@ -1,8 +1,5 @@
 package ru.bgbrakhi.servlets;
 
-import ru.bgbrakhi.servlets.servlets.User;
-import ru.bgbrakhi.servlets.servlets.ValidateService;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
