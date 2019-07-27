@@ -48,6 +48,25 @@
                 '</td><td>' + sex +
                 '</td><td>' + description +
                 '</td></tr>');
+
+            return false;
+        }
+
+        function addUser() {
+            if (!validate()) return;
+
+            $.ajax('./json', {
+                method: 'post',
+                complete : addRow(),
+                data: {
+                    firstname: $('#firstname').val(),
+                    lastname: $('#lastname').val(),
+                    sex : $("input[name='sex']:checked").val(),
+                    description : $('#description').val()}
+                }
+            )
+
+            return false;
         }
     </script>
 
@@ -90,7 +109,7 @@
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button type="submit" class="btn btn-default" onclick="return validate();">Submit</button>
-            <button type="button" class="btn btn-default" onclick="addRow();">Add row</button>
+            <button type="button" class="btn btn-default" onclick="return addUser();">Add row</button>
         </div>
     </div>
 </form>

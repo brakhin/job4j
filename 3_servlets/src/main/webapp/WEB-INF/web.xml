@@ -104,4 +104,13 @@
         <servlet-name>UserUpdateServlet</servlet-name>
         <url-pattern>/edit</url-pattern>
     </servlet-mapping>
+
+    <servlet>
+        <servlet-name>JSONController</servlet-name>
+        <servlet-class>ru.bgbrakhi.servlets.servlets.JSONController</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>JSONController</servlet-name>
+        <url-pattern>/json</url-pattern>
+    </servlet-mapping>
 </web-app>

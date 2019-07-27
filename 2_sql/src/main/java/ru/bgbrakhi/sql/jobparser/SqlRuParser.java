@@ -1,6 +1,5 @@
 package ru.bgbrakhi.sql.jobparser;
 
-import org.apache.log4j.BasicConfigurator;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 

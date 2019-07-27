@@ -1,5 +1,6 @@
 package ru.bgbrakhi.servlets.servlets;
 
+import ru.bgbrakhi.servlets.DispatchPattern;
 import ru.bgbrakhi.servlets.User;
 
 import javax.servlet.ServletException;
@@ -11,6 +12,8 @@ import java.io.PrintWriter;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public class UsersServlet extends HttpServlet {
+    private  final  DispatchPattern dispatcher = new DispatchPattern().init();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
@@ -18,7 +21,7 @@ public class UsersServlet extends HttpServlet {
 
         String action = "all";
         CopyOnWriteArrayList<User> users =
-                (CopyOnWriteArrayList<User>) new DispatchPattern(action, "", -1).init().process(action);
+                (CopyOnWriteArrayList<User>) dispatcher.process(action, new User(-1, ""));
 
         StringBuilder sb = new StringBuilder("<table border='1'>");
         sb.append("<tr><td>Id</td><td>Name</td></tr>");

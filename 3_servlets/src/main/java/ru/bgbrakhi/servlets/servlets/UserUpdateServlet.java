@@ -11,11 +11,13 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class UserUpdateServlet extends HttpServlet {
+    private  final  DispatchPattern dispatcher = new DispatchPattern().init();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String action = "find";
         String id = req.getParameter("id");
-        User user = (User) new DispatchPattern(action, "", Integer.parseInt(id)).init().process(action);
+        User user = (User) dispatcher.init().process(action, new User(Integer.parseInt(id), ""));
         if (user != null) {
             resp.setContentType("text/html");
             PrintWriter writer = new PrintWriter(resp.getOutputStream());
@@ -46,7 +48,7 @@ public class UserUpdateServlet extends HttpServlet {
         String name = req.getParameter("name");
 
         if ("update".equals(action)) {
-            if ((Boolean) new DispatchPattern(action, name, Integer.parseInt(id)).init().process(action)) {
+            if ((Boolean) new DispatchPattern().init().process(action, new User(Integer.parseInt(id), name))) {
                 resp.sendRedirect(req.getContextPath() + "/list");
             }
         } else {

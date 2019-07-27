@@ -1,6 +1,7 @@
 package ru.bgbrakhi.servlets.servlets;
 
 import ru.bgbrakhi.servlets.DispatchPattern;
+import ru.bgbrakhi.servlets.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +11,8 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 public class UserCreateServlet extends HttpServlet {
+    private  final  DispatchPattern dispatcher = new DispatchPattern().init();
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
@@ -34,7 +37,7 @@ public class UserCreateServlet extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         doGet(req, resp);        String action = "add";
         String name = req.getParameter("name");
-        new DispatchPattern(action, name, -1).init().process(action);
+        dispatcher.process(action, new User(-1, name));
 
     }
 }
