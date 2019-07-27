@@ -4,7 +4,7 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ValidateService {
     private static final ValidateService INSTANCE = new ValidateService();
-    private final IStore store = MemoryStore.getInstance();
+    private final IStore store = DbStore.getInstance();
 
     public static ValidateService getInstance() {
         return INSTANCE;
@@ -28,7 +28,7 @@ public class ValidateService {
         return false;
     }
 
-    public CopyOnWriteArrayList<User> finadAll() {
+    public CopyOnWriteArrayList<User> findAll() {
         return store.findAll();
     }
 

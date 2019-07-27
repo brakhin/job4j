@@ -22,6 +22,7 @@ public class User {
 
     @Override
     public boolean equals(Object o) {
+<<<<<<< HEAD
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
@@ -30,6 +31,20 @@ public class User {
                 Objects.equals(login, user.login) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(createDate, user.createDate);
+=======
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        User user = (User) o;
+        return id == user.id
+                && Objects.equals(name, user.name)
+                && Objects.equals(login, user.login)
+                && Objects.equals(email, user.email)
+                && Objects.equals(createDate, user.createDate);
+>>>>>>> 74a88dd... 1. Перенести все виды из предыдущего задания на JSP[#147112]
     }
 
     @Override

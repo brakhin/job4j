@@ -1,13 +1,5 @@
 package ru.bgbrakhi.servlets;
 
-<<<<<<< HEAD
-import ru.bgbrakhi.servlets.User;
-import ru.bgbrakhi.servlets.ValidateService;
-=======
-import ru.bgbrakhi.servlets.servlets.User;
-import ru.bgbrakhi.servlets.servlets.ValidateService;
->>>>>>> acee0ba... 1. Crud servlet, Web app architecture.[#147129]
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
@@ -32,7 +24,7 @@ public class DispatchPattern {
         dispatch.put("add", a -> validateLogic.add(user));
         dispatch.put("update", a -> validateLogic.update(user));
         dispatch.put("delete", a -> validateLogic.delete(user));
-        dispatch.put("all", a -> validateLogic.finadAll());
+        dispatch.put("all", a -> validateLogic.findAll());
         dispatch.put("find", a -> validateLogic.findById(user));
         return this;
     }

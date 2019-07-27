@@ -25,10 +25,17 @@
         <url-pattern>/http</url-pattern>
     </servlet-mapping>
 <<<<<<< HEAD
+<<<<<<< HEAD
 
     <servlet>
         <servlet-name>UserCreateServlet</servlet-name>
         <servlet-class>ru.bgbrakhi.servlets.servlets.UserCreateServlet</servlet-class>
+=======
+
+    <servlet>
+        <servlet-name>UserCreateServlet</servlet-name>
+        <servlet-class>ru.bgbrakhi.servlets.servletsjsp.UserCreateServlet</servlet-class>
+>>>>>>> 74a88dd... 1. Перенести все виды из предыдущего задания на JSP[#147112]
     </servlet>
     <servlet-mapping>
         <servlet-name>UserCreateServlet</servlet-name>
@@ -36,6 +43,7 @@
     </servlet-mapping>
 
     <servlet>
+<<<<<<< HEAD
         <servlet-name>UsersServlet </servlet-name>
         <servlet-class>ru.bgbrakhi.servlets.servlets.UsersServlet</servlet-class>
     </servlet>
@@ -54,4 +62,23 @@
     </servlet-mapping>
 =======
 >>>>>>> acee0ba... 1. Crud servlet, Web app architecture.[#147129]
+=======
+        <servlet-name>UserUpdateServlet</servlet-name>
+        <servlet-class>ru.bgbrakhi.servlets.servletsjsp.UserUpdateServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UserUpdateServlet</servlet-name>
+        <url-pattern>/edit</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>UsersServlet </servlet-name>
+        <servlet-class>ru.bgbrakhi.servlets.servletsjsp.UsersServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>UsersServlet</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+
+>>>>>>> 74a88dd... 1. Перенести все виды из предыдущего задания на JSP[#147112]
 </web-app>
