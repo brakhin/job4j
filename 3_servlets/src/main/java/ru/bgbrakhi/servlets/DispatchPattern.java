@@ -1,7 +1,12 @@
 package ru.bgbrakhi.servlets;
 
+<<<<<<< HEAD
 import ru.bgbrakhi.servlets.User;
 import ru.bgbrakhi.servlets.ValidateService;
+=======
+import ru.bgbrakhi.servlets.servlets.User;
+import ru.bgbrakhi.servlets.servlets.ValidateService;
+>>>>>>> acee0ba... 1. Crud servlet, Web app architecture.[#147129]
 
 import java.util.HashMap;
 import java.util.Map;
