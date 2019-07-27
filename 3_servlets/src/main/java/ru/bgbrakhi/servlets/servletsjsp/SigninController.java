@@ -28,7 +28,7 @@ public class SigninController extends HttpServlet {
         if (id != -1) {
             HttpSession session = req.getSession();
             synchronized (session) {
-                User user = ValidateService.getInstance().findById(id);
+                User user = ValidateService.getInstance().findById(new User(id, ""));
                 if (user != null) {
                     session.setAttribute("login", login);
                     session.setAttribute("role", user.getRole());
