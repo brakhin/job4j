@@ -6,10 +6,12 @@ import org.hibernate.Transaction;
 import ru.bgbrakhi.todolist.models.Item;
 import ru.bgbrakhi.todolist.utils.HibernateUtil;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Consumer;
 import java.util.function.Function;
 
 public class ItemStorage implements IStore {
@@ -19,55 +21,46 @@ public class ItemStorage implements IStore {
         return INSTANCE;
     }
 
-    public void addItem(Item item) {
+    private <T> T tx(final Function<Session, T> command) {
         final Session session = HibernateUtil.getSessionFactory().openSession();
-        final Transaction transaction = session.beginTransaction();
+        final Transaction tx = session.beginTransaction();
         try {
-            session.save(item);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
+            T rsl = command.apply(session);
+            tx.commit();
+            return rsl;
+        } catch (final Exception e) {
+            session.getTransaction().rollback();
+            throw e;
         } finally {
             session.close();
         }
+    }
+
+    private void tx(final Consumer<Session> command) {
+        final Session session = HibernateUtil.getSessionFactory().openSession();
+        final Transaction tx = session.beginTransaction();
+        try {
+            command.accept(session);
+            tx.commit();
+        } catch (final Exception e) {
+            session.getTransaction().rollback();
+            throw e;
+        } finally {
+            session.close();
+        }
+    }
+
+    public void addItem(Item item) {
+        this.tx((Function<Session, Serializable>) session -> session.save(item));
     }
 
     public void updateItem(Item item) {
-        final Session session = HibernateUtil.getSessionFactory().openSession();
-        final Transaction transaction = session.beginTransaction();
-        try {
-            session.update(item);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-
+        this.tx((Consumer<Session>) session -> session.update(item));
     }
 
     public List<Item> getAll() {
-        List<Item> result = null;
         final Session session = HibernateUtil.getSessionFactory().openSession();
-        final Transaction transaction = session.beginTransaction();
-        try {
-            result = session.createQuery("from Item").list();
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            session.close();
-        }
-        return result;
+        return session.createQuery("from Item").list();
     }
 
     @Override

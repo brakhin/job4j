@@ -48,6 +48,7 @@ public class AjaxController extends HttpServlet {
             if (item != null) {
                 item.setDone(!item.getDone());
                 logic.updateItem(item);
+//                resp.setStatus(200);
             }
         }
     }
