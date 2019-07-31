@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+            if ($('#description').val() == '') {
+                alert("Введите описание")
+                return false;
+            }
+            return true;
+        }
+
+        function sleepFor( sleepDuration ){
+            var now = new Date().getTime();
+            while(new Date().getTime() < now + sleepDuration){ /* do nothing */ }
+        }
+
+        function tryUpdate() {
+//            showData();
+        }
+
+        function changeDone(id) {
+            $.ajax("./ajax", {
+                method : "post",
+                data : {type : "click", id : id},
+                success : function() {
+                    showData();
+                }
+            });
+            return true;
+        }
+
+        function send() {
+            if (!validate()) return false;
+            $.ajax("./ajax", {
+                method : "post",
+                data : {type : "desc", description : $('#description').val()},
+                complete : function() {
+                    showData();
+                }
+            });
+            return true;
+        }
+
+        function showData() {
+            $.ajax("./ajax", {
+                method : "get",
+                complete : function(data) {
+                    var items = JSON.parse(data.responseText);
+                    var result = "<thead>\n"
+                        + "<tr>\n"
+                        + "   <th style=\"width: 120px;\">№</th>\n"
+                        + "   <th>Дата</th>\n"
+                        + "   <th>Описание</th>\n"
+                        + "   <th>Выполнено</th>\n"
+                        + "</tr>\n"
+                        + "</thead>\n"
+                        + "<tbody>\n";
+                    var index = 1;
+                    var checked;
+
+
+                    for (var i = 0; i < items.length; i ++) {
+
+                        var item = items[i];
+
+
+                        if(document.getElementById("showactive").checked && item.done) continue;
+
+                        checked = "";
+                        if (item.done == true) checked = "checked=\"checked\"";
+
+                        result += "<tr>\n";
+                        result += "<td style=\"width: 2%;\">" + index++ + "</td>";
+                        result += "<td style=\"width: 200px;\">" + item.created + "</td>";
+                        result += "<td>" + item.description + "</td>";
+                        result += "<td class=\"text-center\" style=\"width: 10px;\"><input class=\"form-check-input\" " + checked + " type=\"checkbox\" onclick='changeDone(" + item.id + ")'></td>";
+                        result += "</tr>\n";
+                    }
+                    result += "</tbody>\n";
+
+                    document.getElementById("table").innerHTML = result;
+                    document.getElementById("table").hidden = (items.length == 0);
+
+//                    console.clear();
+//                    console.log(result);
+                }
+            })
+        };
+        $(
+            showData()
+        )
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <h2>Добавление</h2>
+    <form>
+        <div class="form-group">
+            <label for="description">Описание :</label>
+            <input type="text" class="form-control" id="description" placeholder="Введите описание" name="description">
+        </div>
+        <button type="button" class="btn btn-primary" onclick="return send();">Добавить</button>
+        <button type="button" class="btn btn-primary" onclick="showData();">Обновить</button>
+    </form>
+</div>
+<br>
+<div class="container">
+    <div class="form-group form-check">
+        <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" id="showactive" onclick="showData()">Только активные
+        </label>
+    </div>
+</div>
+
+
+<table class="table table-striped" id="table">
+</table>
+
+
+</body>
+</html>
