@@ -2,11 +2,12 @@
 [![codecov](https://codecov.io/gh/brakhin/job4j/branch/master/graph/badge.svg)](https://codecov.io/gh/brakhin/job4j)
 
 # Репозиторий Бориса Брахина
-Я прохожу обучение по курсу Job4j. Планирую пройти его к концу марта 2019 г.
+Репозиторий содержит практический материал Job4j. 
 
 Ниже находятся наиболее интересные проекты, которые я реализовал во время обучения
 
-Темы:
-Базовый синтаксис языка Java
-
-Объединение зафиксированных изменений
+<b>1. Трекер заявок (JDBC, PostgreSQL)</b>
+   <br>Основной модуль : <a href="https://github.com/brakhin/job4j/blob/master/1_chapter_002/src/main/java/ru/bgbrakhi/tracker/StartUI.java">StartUI.java</a>
+   <br>Ссылка : https://github.com/brakhin/job4j/tree/master/1_chapter_002 
+   <br>UML-схема :
+   <br><img src="1_chapter_002/Trackstudio_UML.jpg">

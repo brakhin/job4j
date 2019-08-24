@@ -8,7 +8,7 @@ class UpdateItem extends BaseAction {
 		super(key, name);
 	}
 
-	public void execute(Input input, Tracker tracker) {
+	public void execute(Input input, ITracker tracker) {
 		String id = input.ask("Please, enter the item's id: ");
 		String name = input.ask("Please, enter the item's name: ");
 		String desc = input.ask("Please, enter the item's desc: ");
@@ -23,7 +23,7 @@ class DeleteItem extends BaseAction {
 		super(key, name);
 	}
 
-	public void execute(Input input, Tracker tracker) {
+	public void execute(Input input, ITracker tracker) {
 		String id = input.ask("Please, enter the item's id: ");
 		tracker.delete(id);
 	}
@@ -33,7 +33,7 @@ class FindItemById extends BaseAction  {
 	protected FindItemById(int key, String name) {
 		super(key, name);
 	}
-	public void execute(Input input, Tracker tracker) {
+	public void execute(Input input, ITracker tracker) {
 		String id = input.ask("Please, enter the item's id: ");
 		Item item = tracker.findById(id);
 		if (item != null) {
@@ -47,7 +47,7 @@ class FindItemsByName extends BaseAction {
 		super(key, name);
 	}
 
-	public void execute(Input input, Tracker tracker) {
+	public void execute(Input input, ITracker tracker) {
 		String name = input.ask("Please, enter the item's name: ");
 		List<Item> items = tracker.findByName(name);
 		if (items != null) {
@@ -61,10 +61,10 @@ class FindItemsByName extends BaseAction {
 public class MenuTracker {
 
 	private Input input;
-	private Tracker tracker;
+	private ITracker tracker;
 	private List<UserAction> actions = new ArrayList<>();
 
-	public MenuTracker(Input input, Tracker tracker) {
+	public MenuTracker(Input input, ITracker tracker) {
 		this.input = input;
 		this.tracker = tracker;
 	}
@@ -99,7 +99,7 @@ public class MenuTracker {
 			super(key, name);
 		}
 
-		public void execute(Input input, Tracker tracker) {
+		public void execute(Input input, ITracker tracker) {
 			String name = input.ask("Please, enter the task's name: ");
 			String desc = input.ask("Please, enter the task's desc: ");
 			tracker.add(new Item(name, desc));
@@ -111,7 +111,7 @@ public class MenuTracker {
 			super(key, name);
 		}
 
-		public void execute(Input input, Tracker tracker) {
+		public void execute(Input input, ITracker tracker) {
 			for (Item item : tracker.findAll()) {
 				item.show();
 			}
