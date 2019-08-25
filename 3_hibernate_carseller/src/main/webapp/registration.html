@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        function validate() {
+            if (document.getElementById("login").value == '') {
+                alert("Логин не может быть пустым")
+                return false;
+            }
+            if (document.getElementById("pwd1").value == '') {
+                alert("Пароль не может быть пустым")
+                return false;
+            }
+            if (document.getElementById("pwd1").value != document.getElementById("pwd2").value) {
+                alert("Пароли не совпадают")
+                return false;
+            }
+            return true;
+        }
+
+        function doRegistration() {
+            if (!validate()) return false;
+            $.ajax("./ajax", {
+                    method : "post",
+                    data : {
+                        command : "registration",
+                        login : document.getElementById("login").value,
+                        password : document.getElementById("pwd1").value
+                    },
+                    success : function() {
+                        window.location = "mynotes.html";
+                    }
+                }
+            );
+        }
+
+        function doCancel() {
+            window.location = "index.html";
+        }
+    </script>
+</head>
+<body>
+
+<div class="container">
+    <h2>Регистрация</h2>
+    <form>
+        <div class="form-group">
+            <label for="login">Логин:</label>
+            <input type="email" class="form-control" id="login" placeholder="Введите логин" name="login">
+        </div>
+        <div class="form-group">
+            <label for="pwd1">Пароль:</label>
+            <input type="password" class="form-control" id="pwd1" placeholder="Введите пароль" name="pswd">
+        </div>
+        <div class="form-group">
+            <label for="pwd2">Пароль еще раз:</label>
+            <input type="password" class="form-control" id="pwd2" placeholder="Повторите пароль" name="pswd">
+        </div>
+
+        <button type="button" onclick="doRegistration();" class="btn btn-primary" style="float:left">Принять</button>
+        <button type="button" onclick="doCancel();" class="btn btn-danger" style="float:right">Отмена</button>
+
+
+    </form>
+</div>
+
+</body>
+</html>

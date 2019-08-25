@@ -13,10 +13,10 @@ import java.util.Set;
 import java.util.function.Function;
 
 public class ItemStorage implements IStore {
-    private final static ItemStorage ourInstance = new ItemStorage();
+    private final static ItemStorage INSTANCE = new ItemStorage();
 
     public static ItemStorage getInstance() {
-        return ourInstance;
+        return INSTANCE;
     }
 
     public void addItem(Item item) {

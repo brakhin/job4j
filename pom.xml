@@ -67,6 +67,7 @@
         <module>3_servlets</module>
         <module>3_hibernate</module>
         <module>3_servlets_cinema</module>
+        <module>3_hibernate_carseller</module>
     </modules>
  
     <build>

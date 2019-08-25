@@ -1,5 +1,7 @@
 package ru.bgbrakhi.sql.jobparser;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.quartz.*;
 import org.quartz.impl.StdSchedulerFactory;
 
@@ -8,16 +10,19 @@ import java.io.InputStream;
 import java.util.Properties;
 
 public class SqlRuParser {
-    public static String appProperties;
+    private static final Logger LOG = LogManager.getLogger(SqlRuParser.class);
 
     public SqlRuParser() {
         initSheduler();
     }
 
     private void initSheduler() {
+        Properties properties = new Properties();
+        properties.setProperty("org.quartz.threadPool.threadCount", String.valueOf(1));
+
         SchedulerFactory schedulerFactory = new StdSchedulerFactory();
 
-        try (InputStream in = SqlRuParser.class.getClassLoader().getResourceAsStream(appProperties)) {
+        try (InputStream in = SqlRuParser.class.getClassLoader().getResourceAsStream("app.properties")) {
             Properties config = new Properties();
             config.load(in);
 
@@ -37,20 +42,9 @@ public class SqlRuParser {
             sheduler.start();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
         } catch (SchedulerException e) {
-            e.printStackTrace();
+            LOG.error(e.getMessage(), e);
         }
-
-
-    }
-
-    public static void main(String[] args) throws IOException {
-        if (args.length == 0) {
-            appProperties = "app.properties";
-        } else {
-            appProperties = args[0];
-        }
-        SqlRuParser sqlRuParser = new SqlRuParser();
     }
 }

@@ -6,10 +6,10 @@ import java.util.List;
 
 public class Validator implements IStore {
     private final ItemStorage store = ItemStorage.getInstance();
-    private final static Validator ourInstance = new Validator();
+    private final static Validator INSTANCE = new Validator();
 
     public static Validator getInstance() {
-        return ourInstance;
+        return INSTANCE;
     }
 
     @Override

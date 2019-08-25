@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Bootstrap Example</title>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script>
+        function validateLogin() {
+            if (document.getElementById("loginAuth").value == '') {
+                alert("Логин не может быть пустым")
+                return false;
+            }
+            if (document.getElementById("pwd").value == '') {
+                alert("Пароль не может быть пустым")
+                return false;
+            }
+            return true;
+        }
+
+        function doLogin() {
+            window.location = "login.html";
+        }
+
+        function doRegistration() {
+            window.location = "registration.html";
+        }
+
+        function showMyNotes() {
+            window.location = "mynotes.html";
+        }
+
+        function doLogout() {
+            $.ajax("./ajax", {
+                    method : "post",
+                    data : {
+                        command : "logout"
+                    },
+                    success : function() {
+                        window.location = "index.html";
+                    }
+                }
+            );
+        }
+
+        function showData() {
+            $.ajax("./ajax", {
+                method : "get",
+                data : {
+                    command : "get_all_cars"
+                },
+                complete : function(data) {
+                    var items = JSON.parse(data.responseText);
+
+                    var result = "<thead>\n"
+                        + "<tr>\n"
+                        + "   <th>№</th>\n"
+                        + "   <th>Город</th>\n"
+                        + "   <th>Тип</th>\n"
+                        + "   <th>Марка</th>\n"
+                        + "   <th>Модель</th>\n"
+                        + "   <th>Кузов</th>\n"
+                        + "   <th>Год выпуска</th>\n"
+                        + "   <th>Цена</th>\n"
+                        + "</tr>\n"
+                        + "</thead>\n"
+                        + "<tbody>\n";
+                    var index = 1;
+
+                    for (var i = 0; i < items.length; i ++) {
+
+                        var item = items[i];
+
+                        result += "<tr>\n";
+                        result += "<td style=\"width: 2%;\">" + index++ + "</td>\n";
+                        result += "<td>" + item.city.name + "</td>\n";
+                        result += "<td>" + item.carmodel.cartype.name + "</td>\n";
+                        result += "<td>" + item.carmodel.carmark.name + "</td>\n";
+                        result += "<td>" + item.carmodel.name + "</td>\n";
+                        result += "<td>" + item.carbody.name + "</td>\n";
+                        result += "<td>" + item.year + "</td>\n";
+                        result += "<td>" + item.price + "</td>\n";
+                        result += "</tr>\n";
+                    }
+                    result += "</tbody>\n";
+                    document.getElementById("table").innerHTML = result;
+                    document.getElementById("table").hidden = (items.length == 0);
+                }
+            })
+        };
+        $(
+            showData()
+        )
+
+        $(
+            $.ajax("./ajax?command=login", {
+                    method : "get",
+                    data : {command : "login"},
+                    complete : function(data) {
+                        var login = "";
+                        if (data.responseText.length > 0) {
+                            var json = JSON.parse(data.responseText);
+                            login = json.login;
+                        }
+                        document.getElementById("menuLogin").hidden = (login.toString().length > 0);
+                        document.getElementById("menuRegister").hidden = (login.toString().length > 0);
+                        document.getElementById("menuNotes").hidden = (login.toString().length == 0);
+                        document.getElementById("menuLogout").hidden = (login.toString().length == 0);
+                    }
+                }
+            )
+        )
+    </script>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <!-- Brand -->
+    <a class="navbar-brand" href="#">CarStore</a>
+
+    <!-- Links -->
+    <ul class="navbar-nav">
+        <li class="nav-item dropdown" id="menu_personal_area">
+            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                Личный кабинет
+            </a>
+            <div class="dropdown-menu">
+                <a id="menuLogin" class="dropdown-item"  href="login.html">Авторизация</a>
+                <a id="menuRegister" class="dropdown-item" href="registration.html">Регистрация</a>
+                <a id="menuNotes" hidden="true" class="dropdown-item" onclick="showMyNotes();">Мои объявления</a>
+                <a id="menuLogout" hidden="true" class="dropdown-item" onclick="doLogout();">Выход</a>
+            </div>
+        </li>
+        <li hidden class="nav-item">
+            <a class="nav-link" href="#">Поиск</a>
+        </li>
+    </ul>
+</nav>
+<table class="table table-striped" id="table">
+</table>
+</body>
+</html>
