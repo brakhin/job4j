@@ -1,6 +1,5 @@
-package ru.bgbrakhi.cinema;
+package ru.bgbrakhi.servlets;
 
-import java.util.Date;
 import java.util.Objects;
 
 public class User {

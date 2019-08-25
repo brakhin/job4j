@@ -1,4 +1,4 @@
-package ru.bgbrakhi.cinema;
+package ru.bgbrakhi.servlets;
 
 import java.util.Objects;
 
@@ -34,8 +34,12 @@ public class Account {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Account account = (Account) o;
         return seatid == account.seatid
                 && Objects.equals(username, account.username)

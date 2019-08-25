@@ -18,7 +18,7 @@ import java.util.Properties;
 import java.util.stream.Collectors;
 
 public class Parser implements Closeable {
-    private static final Logger LOG = LogManager.getLogger(Parser.class.getName());
+    private static final Logger LOG = LogManager.getLogger(Parser.class);
 
     private String configName;
     private long vacancyTime;
@@ -130,7 +130,6 @@ public class Parser implements Closeable {
         } while (validLink && vacancyTime > lastTime);
         storeLastTime();
         LOG.info(String.format("Stop parcing. Set lastTime to %s, %d records was added", new Date(lastTime).toString(), added));
-        LOG.info("-----------------------------------------------------------------------------------------------");
     }
 
     private void parseLink(String link) throws IOException {
@@ -158,6 +157,7 @@ public class Parser implements Closeable {
                     stat.setString(2, text);
                     stat.setString(3, link);
                     stat.executeUpdate();
+                    LOG.info(String.format("Add vacancy \"%s\"", link));
                     added++;
                 } catch (SQLException e) {
                     LOG.error(e.getMessage());
@@ -194,5 +194,8 @@ public class Parser implements Closeable {
         }
     }
 
-
+    public static void main(String[] args) {
+        Parser parser = new Parser("app.properties");
+        parser.parse();
+    }
 }

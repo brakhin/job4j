@@ -1,4 +1,4 @@
-package ru.bgbrakhi.cinema;
+package ru.bgbrakhi.servlets;
 
 import org.apache.commons.dbcp2.BasicDataSource;
 
@@ -14,7 +14,7 @@ public class DbStore implements IStore {
     private static final DbStore INSTANCE = new DbStore();
 
     private DbStore() {
-        SOURCE.setUrl("jdbc:sqlite:db\\\\cinema.db");
+        SOURCE.setUrl("jdbc:sqlite:db\\\\servlets.db");
         SOURCE.setUsername("");
         SOURCE.setPassword("");
         SOURCE.setMinIdle(5);

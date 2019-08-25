@@ -1,4 +1,4 @@
-package ru.bgbrakhi.cinema;
+package ru.bgbrakhi.servlets;
 
 import java.util.HashMap;
 import java.util.Map;

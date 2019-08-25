@@ -34,12 +34,4 @@ public class TrackerSQLTest {
         TrackerSQL sql = new TrackerSQL(this.init());
         assertThat(sql.init(), is(true));
     }
-
-    @Test
-    public void createItem() throws Exception {
-        try (TrackerSQL tracker = new TrackerSQL(ConnectionRollback.create(this.init()))) {
-           tracker.add(new Item("name", "desc"));
-            assertThat(tracker.findByName("name").size(), is(1));
-        }
-    }
 }

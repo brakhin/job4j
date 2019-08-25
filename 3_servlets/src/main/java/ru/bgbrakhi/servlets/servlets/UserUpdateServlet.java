@@ -1,7 +1,7 @@
-package ru.bgbrakhi.cinema.servlets;
+package ru.bgbrakhi.servlets.servlets;
 
-import ru.bgbrakhi.cinema.DispatchPattern;
-import ru.bgbrakhi.cinema.User;
+import ru.bgbrakhi.servlets.DispatchPattern;
+import ru.bgbrakhi.servlets.User;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;

@@ -1,7 +1,6 @@
-package ru.bgbrakhi.cinema;
+package ru.bgbrakhi.servlets;
 
 import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.atomic.LongAdder;
 
 public class MemoryStore implements IStore {

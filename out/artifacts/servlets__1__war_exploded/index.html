@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <title>Hello, world!</title>
+</head>
+<body>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+<script>
+    function validate() {
+        var seat_id = $("input[name='place']:checked").val();
+        if (seat_id == undefined) {
+            alert("Выберите место из доступных")
+            return false;
+        }
+
+        window.location = "payment.html?seat=" + seat_id;
+        return false;
+    }
+</script>
+<script>
+    $(
+        $.ajax("./hall", {
+            method: "get",
+            complete : function(data) {
+                var sits_list = JSON.parse(data.responseText);
+                console.log(sits_list);
+
+                var result = "<thead>\n"
+                    + "<tr>\n"
+                    + "   <th style=\"width: 120px;\">Ряд / Место</th>\n"
+                    + "   <th>1</th>\n"
+                    + "   <th>2</th>\n"
+                    + "   <th>3</th>\n"
+                    + "</tr>\n"
+                    + "</thead>\n"
+                    + "<tbody>\n";
+
+                var index = 0;
+                var disabled;
+                var tr_style;
+                var seat;
+                var account;
+                for (var line = 1; line <= 3; line ++) {
+                    result += "<tr>\n"
+                        + "   <th>" + line + "</th>\n";
+                    for (var col = 1; col <= 3; col ++) {
+                        seat = sits_list[index++];
+                        disabled = "";
+                        if (seat.account != -1) {disabled = "disabled"}
+                        tr_style = "";
+                        if (seat.account != -1) {tr_style = "style=\"background-color: #ff0000\""}
+                        result += "   <td " + tr_style + "><input " + disabled +" type=\"radio\" name=\"place\" value=\"" + seat.id + "\"> Ряд " + line + ", Место " + col + "</td>\n"
+                    }
+                    result += "</tr>\n";
+                }
+                result += "</tbody>";
+                document.getElementById("table").innerHTML = result;
+                console.log(result);
+            }
+        })
+    )
+</script>
+
+<div class="container">
+    <div class="row pt-3">
+        <h4>
+            Бронирование месте на сеанс
+        </h4>
+        <table id="table" class="table table-bordered">
+        </table>
+    </div>
+    <div class="row float-right">
+        <button type="button" class="btn btn-success" onclick="return validate();">Оплатить</button>
+    </div>
+</div>
+</body>
+</html>
