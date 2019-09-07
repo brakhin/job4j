@@ -10,16 +10,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script>
 
-        function changeFile() {
-
-            var fileName = document.getElementById("edFile");
-
-            document.getElementById("picture").src = fileName;
-
-            console.log(fileName.value);
-
-        }
-
         function doLogout() {
             $.ajax("./ajax", {
                     method : "post",
@@ -95,64 +85,63 @@
         function changeType() {
             var cbType = document.getElementById("cbType");
 
-            $.ajax("./ajax", {
-                    method : "get",
-                    data : {command : "get_models", type : cbType.options[cbType.selectedIndex].text},
-                    complete : function(data) {
-                        if (data.responseText.length > 0) {
-                            var items = JSON.parse(data.responseText);
+             if (cbType.selectedIndex > -1) {
+                 $.ajax("./ajax", {
+                         method : "get",
+                         data : {command : "get_models", type : cbType.options[cbType.selectedIndex].text},
+                         complete : function(data) {
+                             if (data.responseText.length > 0) {
+                                 var items = JSON.parse(data.responseText);
 
-                            var result = "";
-                            for (var i = 0; i < items.length; i ++) {
-                                var item = items[i];
-                                result += "<option>" + item.name + "</option>\n";
-                            }
-                            document.getElementById("cbModel").innerHTML = result;
-                        }
-                    }
-                }
-            )
-            $.ajax("./ajax", {
-                    method : "get",
-                    data : {command : "get_marks", type : cbType.options[cbType.selectedIndex].text},
-                    complete : function(data) {
-                        if (data.responseText.length > 0) {
-                            var items = JSON.parse(data.responseText);
+                                 var result = "";
+                                 for (var i = 0; i < items.length; i ++) {
+                                     var item = items[i];
+                                     result += "<option>" + item.name + "</option>\n";
+                                 }
+                                 document.getElementById("cbModel").innerHTML = result;
+                             }
+                         }
+                     }
+                 )
+                 $.ajax("./ajax", {
+                         method : "get",
+                         data : {command : "get_marks", type : cbType.options[cbType.selectedIndex].text},
+                         complete : function(data) {
+                             if (data.responseText.length > 0) {
+                                 var items = JSON.parse(data.responseText);
 
-                            var result = "";
-                            for (var i = 0; i < items.length; i ++) {
-                                var item = items[i];
-                                result += "<option>" + item.name + "</option>\n";
-                            }
-                            document.getElementById("cbMark").innerHTML = result;
-                        }
-                    }
-                }
-            )
-            $.ajax("./ajax", {
-                    method : "get",
-                    data : {command : "get_bodies", type : cbType.options[cbType.selectedIndex].text},
-                    complete : function(data) {
-                        if (data.responseText.length > 0) {
-                            var items = JSON.parse(data.responseText);
+                                 var result = "";
+                                 for (var i = 0; i < items.length; i ++) {
+                                     var item = items[i];
+                                     result += "<option>" + item.name + "</option>\n";
+                                 }
+                                 document.getElementById("cbMark").innerHTML = result;
+                             }
+                         }
+                     }
+                 )
+                 $.ajax("./ajax", {
+                         method : "get",
+                         data : {command : "get_bodies", type : cbType.options[cbType.selectedIndex].text},
+                         complete : function(data) {
+                             if (data.responseText.length > 0) {
+                                 var items = JSON.parse(data.responseText);
 
-                            var result = "";
-                            for (var i = 0; i < items.length; i ++) {
-                                var item = items[i];
-                                result += "<option>" + item.carbody.name + "</option>\n";
-                            }
-                            document.getElementById("cbBody").innerHTML = result;
+                                 var result = "";
+                                 for (var i = 0; i < items.length; i ++) {
+                                     var item = items[i];
+                                     result += "<option>" + item.carbody.name + "</option>\n";
+                                 }
+                                 document.getElementById("cbBody").innerHTML = result;
 
-                        }
-                    }
-                }
-            )
+                             }
+                         }
+                     }
+                 )
+             }
         }
 
         function validate() {
-
-            console.log("--------");
-
             var edCity = document.getElementById("edCity");
             var cbCity = document.getElementById("cbCity");
             var edType = document.getElementById("edType");
@@ -211,7 +200,6 @@
         }
 
         function changeInactive(id) {
-            console.log(id);
             $.ajax("./ajax", {
                 method : "post",
                 data : {command : "change_inactive", id : id},
@@ -219,6 +207,19 @@
 //                    showData();
                 }
             });
+        }
+
+        function timeConverter(timestamp){
+            var a = new Date(timestamp);
+            var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            var year = a.getFullYear();
+            var month = months[a.getMonth()];
+            var date = a.getDate();
+            var hour = a.getHours();
+            var min = a.getMinutes();
+            var sec = a.getSeconds();
+            var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+            return time;
         }
 
         function doSaveData() {
@@ -262,6 +263,7 @@
         }
 
         function showData() {
+
             $.ajax("./ajax", {
                 method : "get",
                 data : {
@@ -269,15 +271,14 @@
                 },
                 complete : function(data) {
                     var json = JSON.parse(data.responseText);
-
                     if (json.data == null) return;
-
-
                     document.getElementById("navbar").text = "CarStore [" + json.login + "]";
                     var result = "<thead>\n"
                         + "<tr>\n"
                         + "   <th>№</th>\n"
                         + "   <th>Неактивно</th>\n"
+                        + "   <th>Дата</th>\n"
+                        + "   <th>Изображение</th>\n"
                         + "   <th>Город</th>\n"
                         + "   <th>Тип</th>\n"
                         + "   <th>Марка</th>\n"
@@ -291,22 +292,33 @@
                     var index = 1;
                     for (var i = 0; i < json.data.length; i ++) {
                         var item = json.data[i];
+
+
                         result += "<tr>\n";
-                        result += "<td style=\"width: 2%;\">" + index++ + "</td>\n";
+                        result += "<td style=\"width: 2%;vertical-align: middle\">" + index++ + "</td>\n";
 
                         var checked = item.inactive ? "checked" : "";
 
-                        result += "<td class=\"text-center\" style=\"width: 10px;\"><input class=\"form-check-input\" "
-                            + checked + " type=\"checkbox\" onclick='changeInactive(" + item.id + ")'></td>";
+                        result += "<td class=\"text-center\" style=\"width: 10px;vertical-align: middle\"><input class=\"form-check-input\" "
+                            + checked + " type=\"checkbox\" onclick='changeInactive(" + item.id + ")'>&nbsp;</td>";
 
+                        result += "<td style=\"width: 170px;vertical-align: middle\">" + timeConverter(item.timestamp) + "</td>\n";
 
-                        result += "<td>" + item.city.name + "</td>\n";
-                        result += "<td>" + item.carmodel.cartype.name + "</td>\n";
-                        result += "<td>" + item.carmodel.carmark.name + "</td>\n";
-                        result += "<td>" + item.carmodel.name + "</td>\n";
-                        result += "<td>" + item.carbody.name + "</td>\n";
-                        result += "<td>" + item.year + "</td>\n";
-                        result += "<td>" + item.price + "</td>\n";
+                        result += "<td style=\"width: 200px;vertical-align: middle\"><img id=\"picture\" name=\"picture\" style=\"max-width: 400px\"\n" +
+                            (item.filename == undefined
+                            ?
+                            "                                         src=\"\"\n"
+                            :
+                            "                                         src=\"image_upload/" + item.filename + "\"\n") +
+                            "                                         class=\"rounded mx-auto d-block\" alt=\"\"></td>\n";
+
+                        result += "<td style='vertical-align: middle'>" + item.city.name + "</td>\n";
+                        result += "<td style='vertical-align: middle'>" + item.carmodel.cartype.name + "</td>\n";
+                        result += "<td style='vertical-align: middle'>" + item.carmodel.carmark.name + "</td>\n";
+                        result += "<td style='vertical-align: middle'>" + item.carmodel.name + "</td>\n";
+                        result += "<td style='vertical-align: middle'>" + item.carbody.name + "</td>\n";
+                        result += "<td style='vertical-align: middle'>" + item.year + "</td>\n";
+                        result += "<td style='vertical-align: middle'>" + item.price + "</td>\n";
                         result += "</tr>\n";
                     }
                     result += "</tbody>\n";
@@ -348,6 +360,7 @@
         <form action="/carseller/add_data" method="post" enctype="multipart/form-data">
         <table width="100%" cellspacing="10px">
                 <tr>
+<!--
                     <td style="border: thick solid gray" width="500px">
                         <table width="100%">
                             <tr>
@@ -362,6 +375,7 @@
                     <td>
                         &nbsp;&nbsp;
                     </td>
+-->
                     <td>
                         <table width="100%">
                             <tr>
@@ -471,7 +485,7 @@
                             <tr>
                                 <td>
                                     <br>
-                                    <input type="file" id="edFile" name="edFile"onchange="changeFile();">
+                                    <input type="file" id="edFile" name="edFile">
                                 </td>
                             </tr>
                             <tr>

@@ -3,11 +3,12 @@ package ru.bgbrakhi.carseller.models;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.Objects;
 
 @Entity
-@Table(name = "ref_carentity")
-public class CarEntity {
+@Table(name = "cars")
+public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
@@ -44,7 +45,11 @@ public class CarEntity {
     @NotNull
     private Boolean inactive;
 
-    public CarEntity() {
+    @Column(name = "timestamp")
+    private Long timestamp;
+
+    public Car() {
+        timestamp = System.currentTimeMillis();
     }
 
     public long getId() {
@@ -112,12 +117,16 @@ public class CarEntity {
     }
 
     public Boolean getInactive() {
-        return inactive;
+        return inactive == null ? false : inactive;
     }
 
     public void setInactive(Boolean inactive) {
         this.inactive = inactive;
     }
+
+    public Long getTimestamp() { return timestamp; }
+
+    public void setTimestamp(Long timestamp) { this.timestamp = timestamp; }
 
     @Override
     public boolean equals(Object o) {
@@ -127,11 +136,11 @@ public class CarEntity {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        CarEntity carEntity = (CarEntity) o;
-        return id == carEntity.id
-                && Objects.equals(carmodel, carEntity.carmodel)
-                && Objects.equals(carbody, carEntity.carbody)
-                && Objects.equals(year, carEntity.year);
+        Car car = (Car) o;
+        return id == car.id
+                && Objects.equals(carmodel, car.carmodel)
+                && Objects.equals(carbody, car.carbody)
+                && Objects.equals(year, car.year);
     }
 
 
@@ -142,11 +151,16 @@ public class CarEntity {
 
     @Override
     public String toString() {
-        return "CarEntity{"
+        return "Car{"
                 + "id=" + id
                 + ", carmodel=" + carmodel
                 + ", carbody=" + carbody
                 + ", year=" + year
                 + '}';
+    }
+
+    public static void main(String[] args) {
+        Date d = new Date(1567591940658L);
+        int a = 0;
     }
 }

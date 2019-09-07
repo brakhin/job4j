@@ -28,7 +28,7 @@ public class AjaxController extends HttpServlet {
         if ("login".equals(command)) {
             String login = (String) req.getSession().getAttribute("login");
             PrintWriter writer = new PrintWriter(resp.getOutputStream());
-            writer.append(String.format("{\"login\":\"%s\"}", login == null ? "\"\"" : login));
+            writer.append(String.format("{\"login\":\"%s\"}", login == null ? "''" : login));
             writer.flush();
         } else if ("get_cities".equals(command)) {
             PrintWriter writer = new PrintWriter(resp.getOutputStream());
@@ -69,7 +69,8 @@ public class AjaxController extends HttpServlet {
             writer.flush();
         } else if ("get_all_cars".equals(command)) {
             PrintWriter writer = new PrintWriter(resp.getOutputStream());
-            List<CarEntity> items = logic.getAllCarEntities();
+            String filter = req.getParameter("filter");
+            List<Car> items = logic.getAllCars(filter, true);
             String seatsJSON = new Gson().toJson(items);
             writer.append(seatsJSON);
             writer.flush();
@@ -77,7 +78,7 @@ public class AjaxController extends HttpServlet {
             HttpSession session = req.getSession();
             String login = (String) session.getAttribute("login");
             PrintWriter writer = new PrintWriter(resp.getOutputStream());
-            List<CarEntity> items = logic.getUserCarEntities(login);
+            List<Car> items = logic.getUserCars(login);
             String seatsJSON = new Gson().toJson(items);
             writer.append(String.format("{\"data\" : %s, \"login\" : \"%s\"}", seatsJSON, login));
             writer.flush();
@@ -112,31 +113,7 @@ public class AjaxController extends HttpServlet {
             session.invalidate();
         } else if ("change_inactive".equals(command)) {
             String id = map.get("id");
-            logic.swapCarEntityInactiveState(Long.parseLong(id));
-        } else if ("add_data".equals(command)) {
-            HttpSession session = req.getSession();
-            CarEntity carEntity = new CarEntity();
-            CarModel carModel = new CarModel();
-            CarType carType = new CarType();
-            carType.setName(map.get("type"));
-            CarMark carMark = new CarMark();
-            carMark.setName(map.get("mark"));
-            City city = new City();
-            city.setName(map.get("city"));
-            CarBody carBody = new CarBody();
-            carBody.setName(map.get("body"));
-            carModel.setCartype(carType);
-            carModel.setCarmark(carMark);
-            carModel.setName(map.get("model"));
-            carEntity.setCity(city);
-            carEntity.setCarmodel(carModel);
-            carEntity.setCarbody(carBody);
-            carEntity.setYear(Integer.parseInt(map.get("year")));
-            carEntity.setPrice(Integer.parseInt(map.get("price")));
-            carEntity.setFilename("null".equals(map.get("file")) ? "" : map.get("file"));
-            logic.getCarEntity((String) session.getAttribute("login"), map.get("city"), map.get("type"), map.get("mark"), map.get("model"),
-                    map.get("body"), Integer.parseInt(map.get("year")), Integer.parseInt(map.get("price")),
-                    "null".equals(map.get("file")) ? "" : map.get("file"));
+            logic.swapCarInactiveState(Long.parseLong(id));
         }
     }
 }

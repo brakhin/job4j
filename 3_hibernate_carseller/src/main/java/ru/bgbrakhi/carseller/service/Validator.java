@@ -1,6 +1,6 @@
 package ru.bgbrakhi.carseller.service;
 
-import ru.bgbrakhi.carseller.models.CarEntity;
+import ru.bgbrakhi.carseller.models.Car;
 import ru.bgbrakhi.carseller.models.CarType;
 import ru.bgbrakhi.carseller.models.User;
 import ru.bgbrakhi.carseller.models.*;
@@ -26,9 +26,14 @@ public class Validator implements IStorage {
     }
 
     @Override
-    public CarEntity getCarEntity(String login, String cityName, String carType, String carMark, String carModel, String carBody,
-                                  Integer year, Integer price, String fileName) {
-        return storage.getCarEntity(login, cityName, carType, carMark, carModel, carBody, year, price, fileName);
+    public Car getCar(CarData carData) {
+//    public Car getCar(String login, String cityName, String carType, String carMark, String carModel, String carBody, Integer year, Integer price, String fileName) {
+        return !carData.getLogin().isEmpty()
+                ?
+//                storage.getCar(login, cityName, carType, carMark, carModel, carBody, year, price, fileName)
+                storage.getCar(carData)
+                :
+                null;
     }
 
     @Override
@@ -52,13 +57,13 @@ public class Validator implements IStorage {
     }
 
     @Override
-    public List<CarEntity> getAllCarEntities() {
-        return storage.getAllCarEntities();
+    public List<Car> getAllCars(String filter, Boolean onlyActive) {
+        return storage.getAllCars(filter, onlyActive);
     }
 
     @Override
-    public List<CarEntity> getUserCarEntities(String login) {
-        return storage.getUserCarEntities(login);
+    public List<Car> getUserCars(String login) {
+        return storage.getUserCars(login);
     }
 
     @Override
@@ -82,7 +87,7 @@ public class Validator implements IStorage {
     }
 
     @Override
-    public void swapCarEntityInactiveState(Long id) {
-        storage.swapCarEntityInactiveState(id);
+    public void swapCarInactiveState(Long id) {
+        storage.swapCarInactiveState(id);
     }
 }

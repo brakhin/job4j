@@ -5,7 +5,6 @@ import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import ru.bgbrakhi.carseller.models.*;
 import ru.bgbrakhi.carseller.service.Validator;
-import ru.bgbrakhi.carseller.utils.Util;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -68,7 +67,6 @@ public class AddDataController extends HttpServlet {
         }
 
         try {
-            @SuppressWarnings("unchecked")
             List<FileItem> formItems = upload.parseRequest(request);
             String fileName1 = "";
             if (formItems != null && formItems.size() > 0) {
@@ -83,6 +81,7 @@ public class AddDataController extends HttpServlet {
                             String filePath = uploadPath + File.separator + fileName;
                             File storeFile = new File(filePath);
                             item.write(storeFile);
+                            map.put("file", fileName1);
                         }
                     } else {
                         String fieldname = item.getFieldName().toLowerCase();
@@ -93,7 +92,7 @@ public class AddDataController extends HttpServlet {
                     }
                 }
                 HttpSession session = request.getSession();
-                CarEntity carEntity = new CarEntity();
+                Car car = new Car();
                 CarModel carModel = new CarModel();
                 CarType carType = new CarType();
                 carType.setName(map.get("type"));
@@ -106,15 +105,15 @@ public class AddDataController extends HttpServlet {
                 carModel.setCartype(carType);
                 carModel.setCarmark(carMark);
                 carModel.setName(map.get("model"));
-                carEntity.setCity(city);
-                carEntity.setCarmodel(carModel);
-                carEntity.setCarbody(carBody);
-                carEntity.setYear(Integer.parseInt(map.get("year")));
-                carEntity.setPrice(Integer.parseInt(map.get("price")));
-                carEntity.setFilename("null".equals(map.get("file")) ? "" : map.get("file"));
-                logic.getCarEntity((String) session.getAttribute("login"), map.get("city"), map.get("type"), map.get("mark"), map.get("model"),
+                car.setCity(city);
+                car.setCarmodel(carModel);
+                car.setCarbody(carBody);
+                car.setYear(Integer.parseInt(map.get("year")));
+                car.setPrice(Integer.parseInt(map.get("price")));
+                car.setFilename("null".equals(map.get("file")) ? "" : map.get("file"));
+                logic.getCar(new CarData((String) session.getAttribute("login"), map.get("city"), map.get("type"), map.get("mark"), map.get("model"),
                         map.get("body"), Integer.parseInt(map.get("year")), Integer.parseInt(map.get("price")),
-                        "null".equals(map.get("file")) ? "" : map.get("file"));
+                        "null".equals(map.get("file")) ? "" : map.get("file")));
             }
         } catch (Exception e) {
             e.printStackTrace();
