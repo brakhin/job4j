@@ -1,0 +1,10 @@
+<hibernate-mapping xmlns="http://www.hibernate.org/xsd/orm/hbm">
+    <class name="ru.bgbrakhi.xml.models.Car" table="car">
+        <id name="id" column="id">
+            <generator class="identity" />
+        </id>
+        <many-to-one name="carbody" column="id_carbody" class="ru.bgbrakhi.xml.models.CarBody" cascade="all"/>
+        <many-to-one name="engine" column="id_engine" class="ru.bgbrakhi.xml.models.Engine" cascade="all"/>
+        <many-to-one name="transmission" column="id_transmission" class="ru.bgbrakhi.xml.models.Transmission" cascade="all"/>
+    </class>
+</hibernate-mapping>
