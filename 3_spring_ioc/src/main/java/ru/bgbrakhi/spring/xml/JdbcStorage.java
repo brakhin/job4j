@@ -1,4 +1,4 @@
-package ru.bgbrakhi.spring;
+package ru.bgbrakhi.spring.xml;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

@@ -1,4 +1,4 @@
-package ru.bgbrakhi.spring;
+package ru.bgbrakhi.spring.xml;
 
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;

@@ -1,4 +1,4 @@
-package ru.bgbrakhi.spring;
+package ru.bgbrakhi.spring.xml;
 
 public class User {
     private Long id;

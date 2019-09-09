@@ -1,4 +1,4 @@
-package ru.bgbrakhi.spring;
+package ru.bgbrakhi.spring.xml;
 
 public interface IStorage {
     Long addUser(User user);
