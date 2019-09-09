@@ -32,26 +32,6 @@ public class CarModel {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        CarModel carModel = (CarModel) o;
-        return id == carModel.id
-                && Objects.equals(cartype, carModel.cartype)
-                && Objects.equals(carmark, carModel.carmark)
-                && Objects.equals(name, carModel.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, cartype, carmark, name);
-    }
-
     public long getId() {
         return id;
     }
@@ -93,5 +73,21 @@ public class CarModel {
                 + ", name='" + name
                 + '\''
                 + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CarModel carModel = (CarModel) o;
+        return id == carModel.id &&
+                Objects.equals(cartype, carModel.cartype) &&
+                Objects.equals(carmark, carModel.carmark) &&
+                Objects.equals(name, carModel.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, cartype, carmark, name);
     }
 }

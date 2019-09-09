@@ -24,24 +24,6 @@ public class CarType {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        CarType carType = (CarType) o;
-        return id == carType.id
-                && Objects.equals(name, carType.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
-    }
-
     public long getId() {
         return id;
     }
@@ -65,5 +47,19 @@ public class CarType {
                 + ", name='" + name
                 + '\''
                 + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CarType carType = (CarType) o;
+        return id == carType.id &&
+                Objects.equals(name, carType.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 }

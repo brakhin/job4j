@@ -24,24 +24,6 @@ public class CarMark {
         this.name = name;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        CarMark carBody = (CarMark) o;
-        return id == carBody.id
-                && Objects.equals(name, carBody.name);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name);
-    }
-
     public long getId() {
         return id;
     }
@@ -65,5 +47,19 @@ public class CarMark {
                 +  ", name='" + name
                 + '\''
                 + '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        CarMark carMark = (CarMark) o;
+        return id == carMark.id &&
+                Objects.equals(name, carMark.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name);
     }
 }

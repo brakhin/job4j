@@ -10,30 +10,18 @@ import java.util.List;
 public class Validator implements IStorage {
 
     private final IStorage storage = Storage.getInstance();
-    private static Class locker = Storage.class;
-    private static Validator instance;
+    private static final Validator INSTANCE = new Validator();
 
     private Validator() {
     }
 
     public static Validator getInstance() {
-        if (instance == null) {
-            synchronized (locker) {
-                instance = new Validator();
-            }
-        }
-        return instance;
+        return INSTANCE;
     }
 
     @Override
     public Car getCar(CarData carData) {
-//    public Car getCar(String login, String cityName, String carType, String carMark, String carModel, String carBody, Integer year, Integer price, String fileName) {
-        return !carData.getLogin().isEmpty()
-                ?
-//                storage.getCar(login, cityName, carType, carMark, carModel, carBody, year, price, fileName)
-                storage.getCar(carData)
-                :
-                null;
+        return !carData.getLogin().isEmpty() ? storage.getCar(carData) : null;
     }
 
     @Override

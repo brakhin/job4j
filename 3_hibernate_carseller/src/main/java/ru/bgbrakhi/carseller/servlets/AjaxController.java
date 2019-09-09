@@ -20,69 +20,112 @@ import java.util.stream.Collectors;
 
 public class AjaxController extends HttpServlet {
     private final Validator logic = Validator.getInstance();
+    
+    private static final String CONSTANT_LOGIN = "login";
+    private static final String CONSTANT_GET_CITIES = "get_cities";
+    private static final String CONSTANT_GET_TYPES = "get_types";
+    private static final String CONSTANT_GET_MODELS = "get_models";
+    private static final String CONSTANT_GET_MARKS = "get_marks";
+    private static final String CONSTANT_GET_BODIES = "get_bodies";
+    private static final String CONSTANT_GET_ALL_CARS = "get_all_cars";
+    private static final String CONSTANT_GET_USER_CARS = "get_user_cars";
+    private static final String CONSTANT_REGISTRATION = "registration";
+    private static final String CONSTANT_LOGOUT = "logout";
+    private static final String CONSTANT_CHANGE_INACTIVE = "change_inactive";
+
+    private String getLogin(HttpSession session) {
+        String login = (String) session.getAttribute("login");
+        return String.format("{\"login\":\"%s\"}", login == null ? "''" : login);
+    }
+
+    private String getCities() {
+        List<City> items = logic.getAllCities();
+        return new Gson().toJson(items);
+    }
+
+    private String getTypes() {
+        List<CarType> items = logic.getAllCarTypes();
+        return new Gson().toJson(items);
+    }
+
+    private String getModels(String type) {
+        List<CarModel> items = logic.getModels(type);
+        return new Gson().toJson(items);
+    }
+
+    private String getMarks(String type) {
+        List<CarModel> items = logic.getModels(type);
+        return new Gson().toJson(items.stream()
+                .map(i -> i.getCarmark())
+                .distinct()
+                .collect(Collectors.toList())
+        );
+    }
+
+    private String getBodies(String type) {
+        List<CarBody> items = logic.getBodies(type);
+        return new Gson().toJson(items);
+    }
+
+    private String getAllCars(String filter) {
+        List<Car> items = logic.getAllCars(filter, true);
+        return new Gson().toJson(items);
+    }
+
+    private String getUserCars(HttpSession session) {
+        String login = (String) session.getAttribute("login");
+        List<Car> items = logic.getUserCars(login);
+        String seatsJSON = new Gson().toJson(items);
+        return String.format("{\"data\" : %s, \"login\" : \"%s\"}", seatsJSON, login);
+    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html");
         String command = req.getParameter("command");
-        if ("login".equals(command)) {
-            String login = (String) req.getSession().getAttribute("login");
-            PrintWriter writer = new PrintWriter(resp.getOutputStream());
-            writer.append(String.format("{\"login\":\"%s\"}", login == null ? "''" : login));
-            writer.flush();
-        } else if ("get_cities".equals(command)) {
-            PrintWriter writer = new PrintWriter(resp.getOutputStream());
-            List<City> items = logic.getAllCities();
-            String seatsJSON = new Gson().toJson(items);
-            writer.append(seatsJSON);
-            writer.flush();
-        } else if ("get_types".equals(command)) {
-            PrintWriter writer = new PrintWriter(resp.getOutputStream());
-            List<CarType> items = logic.getAllCarTypes();
-            String seatsJSON = new Gson().toJson(items);
-            writer.append(seatsJSON);
-            writer.flush();
-        } else if ("get_models".equals(command)) {
-            String type = req.getParameter("type");
-            PrintWriter writer = new PrintWriter(resp.getOutputStream());
-            List<CarModel> items = logic.getModels(type);
-            String seatsJSON = new Gson().toJson(items);
-            writer.append(seatsJSON);
-            writer.flush();
-        } else if ("get_marks".equals(command)) {
-            String type = req.getParameter("type");
-            PrintWriter writer = new PrintWriter(resp.getOutputStream());
-            List<CarModel> items = logic.getModels(type);
-            String seatsJSON = new Gson().toJson(items.stream()
-                    .map(i -> i.getCarmark())
-                    .distinct()
-                    .collect(Collectors.toList())
-            );
-            writer.append(seatsJSON);
-            writer.flush();
-        } else if ("get_bodies".equals(command)) {
-            String type = req.getParameter("type");
-            PrintWriter writer = new PrintWriter(resp.getOutputStream());
-            List<CarBody> items = logic.getBodies(type);
-            String seatsJSON = new Gson().toJson(items);
-            writer.append(seatsJSON);
-            writer.flush();
-        } else if ("get_all_cars".equals(command)) {
-            PrintWriter writer = new PrintWriter(resp.getOutputStream());
-            String filter = req.getParameter("filter");
-            List<Car> items = logic.getAllCars(filter, true);
-            String seatsJSON = new Gson().toJson(items);
-            writer.append(seatsJSON);
-            writer.flush();
-        } else if ("get_user_cars".equals(command)) {
-            HttpSession session = req.getSession();
-            String login = (String) session.getAttribute("login");
-            PrintWriter writer = new PrintWriter(resp.getOutputStream());
-            List<Car> items = logic.getUserCars(login);
-            String seatsJSON = new Gson().toJson(items);
-            writer.append(String.format("{\"data\" : %s, \"login\" : \"%s\"}", seatsJSON, login));
-            writer.flush();
+        PrintWriter writer = new PrintWriter(resp.getOutputStream());
+        if (CONSTANT_LOGIN.equals(command)) {
+            writer.append(getLogin(req.getSession()));
+        } else if (CONSTANT_GET_CITIES.equals(command)) {
+            writer.append(getCities());
+        } else if (CONSTANT_GET_TYPES.equals(command)) {
+            writer.append(getTypes());
+        } else if (CONSTANT_GET_MODELS.equals(command)) {
+            writer.append(getModels(req.getParameter("type")));
+        } else if (CONSTANT_GET_MARKS.equals(command)) {
+            writer.append(getMarks(req.getParameter("type")));
+        } else if (CONSTANT_GET_BODIES.equals(command)) {
+            writer.append(getBodies(req.getParameter("type")));
+        } else if (CONSTANT_GET_ALL_CARS.equals(command)) {
+            writer.append(getAllCars(req.getParameter("filter")));
+        } else if (CONSTANT_GET_USER_CARS.equals(command)) {
+            writer.append(getUserCars(req.getSession()));
         }
+        writer.flush();
+    }
+
+    private void processLogin(HttpSession session, Map<String, String> map) {
+        User user = logic.getUser(map.get("login"), map.get("password"));
+        if (user.getId() != 0) {
+            session.setAttribute("login", map.get("login"));
+        }
+    }
+
+    private void processRegistration(HttpSession session, Map<String, String> map) {
+        User user = logic.getUser(map.get("login"), map.get("password"));
+        if (user.getId() == 0) {
+            logic.saveUser(user);
+        }
+        session.setAttribute("login", map.get("login"));
+    }
+
+    private void processLogount(HttpSession session) {
+        session.invalidate();
+    }
+
+    private void swapCarInactiveState(Map<String, String> map) {
+        String id = map.get("id");
+        logic.swapCarInactiveState(Long.parseLong(id));
     }
 
     @Override
@@ -95,25 +138,15 @@ public class AjaxController extends HttpServlet {
         }
         Map<String, String> map = Util.postDataToMap(builder.toString());
         String command = map.get("command");
-        if ("login".equals(command)) {
-            User user = logic.getUser(map.get("login"), map.get("password"));
-            if (user.getId() != 0) {
-                HttpSession session = req.getSession();
-                session.setAttribute("login", map.get("login"));
-            }
-        } else if ("registration".equals(command)) {
-            User user = logic.getUser(map.get("login"), map.get("password"));
-            if (user.getId() == 0) {
-                logic.saveUser(user);
-            }
-            HttpSession session = req.getSession();
-            session.setAttribute("login", map.get("login"));
-        } else if ("logout".equals(command)) {
-            HttpSession session = req.getSession();
-            session.invalidate();
-        } else if ("change_inactive".equals(command)) {
-            String id = map.get("id");
-            logic.swapCarInactiveState(Long.parseLong(id));
+        HttpSession session = req.getSession();
+        if (CONSTANT_LOGIN.equals(command)) {
+            processLogin(session, map);
+        } else if (CONSTANT_REGISTRATION.equals(command)) {
+            processRegistration(session, map);
+        } else if (CONSTANT_LOGOUT.equals(command)) {
+            processLogount(session);
+        } else if (CONSTANT_CHANGE_INACTIVE.equals(command)) {
+            swapCarInactiveState(map);
         }
     }
 }
