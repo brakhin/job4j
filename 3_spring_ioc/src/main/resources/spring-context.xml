@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="configuration" class="ru.bgbrakhi.spring.Configuration"/>
+
+    <bean id="jdbc" class="ru.bgbrakhi.spring.JdbcStorage">
+        <constructor-arg name = "configuration" ref="configuration"></constructor-arg>
+    </bean>
+
+    <bean id="storage" class="ru.bgbrakhi.spring.UserStorage">
+        <constructor-arg name = "storage" ref="jdbc"></constructor-arg>
+    </bean>
+</beans>

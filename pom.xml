@@ -68,6 +68,7 @@
         <module>3_hibernate</module>
         <module>3_servlets_cinema</module>
         <module>3_hibernate_carseller</module>
+        <module>3_spring_ioc</module>
     </modules>
  
     <build>
@@ -175,9 +176,9 @@
 
     <!-- https://mvnrepository.com/artifact/postgresql/postgresql -->
     <dependency>
-        <groupId>postgresql</groupId>
+        <groupId>org.postgresql</groupId>
         <artifactId>postgresql</artifactId>
-        <version>9.1-901-1.jdbc4</version>
+        <version>42.2.6</version>
     </dependency>
 
 
