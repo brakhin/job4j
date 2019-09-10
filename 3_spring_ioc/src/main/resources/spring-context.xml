@@ -5,7 +5,7 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean id="configuration" class="ru.bgbrakhi.spring.xml.Configuration"/>
+    <bean id="configuration" class="ru.bgbrakhi.spring.xml.ConfigObj"/>
 
     <bean id="jdbc" class="ru.bgbrakhi.spring.xml.JdbcStorage">
         <constructor-arg name = "configuration" ref="configuration"></constructor-arg>

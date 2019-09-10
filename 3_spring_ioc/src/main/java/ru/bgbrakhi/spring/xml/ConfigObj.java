@@ -5,11 +5,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.InputStream;
 import java.util.Properties;
 
-public class Configuration implements IConfiguration {
+public class ConfigObj implements IConfiguration {
     private final Properties config = new Properties();
 
     @Autowired
-    public Configuration() {
+    public ConfigObj() {
         try (InputStream in = getClass().getClassLoader().getResourceAsStream("app.properties")) {
             config.load(in);
         } catch (Exception e) {
