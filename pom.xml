@@ -69,6 +69,7 @@
         <module>3_servlets_cinema</module>
         <module>3_hibernate_carseller</module>
         <module>3_spring_ioc</module>
+        <module>3_spring_mvc</module>
         <module>xml</module>
         <module>mvc</module>
     </modules>
