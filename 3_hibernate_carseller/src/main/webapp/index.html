@@ -8,182 +8,183 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-</head>
-<script>
-    function validateLogin() {
-        if (document.getElementById("loginAuth").value == '') {
-            alert("Логин не может быть пустым")
-            return false;
+
+    <script>
+        function validateLogin() {
+            if (document.getElementById("loginAuth").value == '') {
+                alert("Логин не может быть пустым")
+                return false;
+            }
+            if (document.getElementById("pwd").value == '') {
+                alert("Пароль не может быть пустым")
+                return false;
+            }
+            return true;
         }
-        if (document.getElementById("pwd").value == '') {
-            alert("Пароль не может быть пустым")
-            return false;
-        }
-        return true;
-    }
 
-    function loadMarks() {
-        $.ajax("./ajax", {
-            method : "get",
-            data : {command : "get_marks", type : ''},
-            complete : function(data) {
-                if (data.responseText.length > 0) {
-                    var items = JSON.parse(data.responseText);
-                    var result = "<option>Все</option>\n";;
-                    for (var i = 0; i < items.length; i++) {
-                        var item = items[i];
-                        result += "<option>" + item.name + "</option>\n";
-                    }
-                    document.getElementById("cbMark").innerHTML = result;
-                }
-            }
-        })
-    }
-
-    function doLogin() {
-        window.location = "login.html";
-    }
-
-    function doRegistration() {
-        window.location = "registration.html";
-    }
-
-    function showMyNotes() {
-        window.location = "mynotes.html";
-    }
-
-    function doLogout() {
-        $.ajax("./ajax", {
-                method : "post",
-                data : {
-                    command : "logout"
-                },
-                success : function() {
-                    window.location = "index.html";
-                }
-            }
-        );
-    }
-
-    function timeConverter(timestamp){
-        var a = new Date(timestamp);
-        var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-        var year = a.getFullYear();
-        var month = months[a.getMonth()];
-        var date = a.getDate();
-        var hour = a.getHours();
-        var min = a.getMinutes();
-        var sec = a.getSeconds();
-        var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
-        return time;
-    }
-
-    function getFilter() {
-        var cbMark = document.getElementById("cbMark");
-        var cToday = document.getElementById("today");
-        var cPhotoOnly = document.getElementById("photoonly");
-
-        var result = "{\"mark\" : \"" + (cbMark.selectedIndex > 0 ? cbMark.options[cbMark.selectedIndex].value : "");
-        result += "\", \"today\" : " + (cToday.checked ? "true" : "false");
-        result += ", \"photoOnly\" : " + (cPhotoOnly.checked ? "true" : "false") + "}";
-        return result;
-    }
-
-    function resetFilter() {
-        var cbMark = document.getElementById("cbMark");
-        var cToday = document.getElementById("today");
-        var cPhotoOnly = document.getElementById("photoonly");
-
-        if (cbMark != null) cbMark.selectedIndex = 0;
-        if (cToday != null) cToday.checked = false;
-        if (cPhotoOnly != null) cPhotoOnly.checked = false;
-
-        showData();
-    }
-
-    function showData(filter) {
-        $.ajax("./ajax", {
-            method : "get",
-            data : {
-                command : "get_all_cars",
-                filter : filter
-            },
-            complete : function(data) {
-                var items = JSON.parse(data.responseText);
-
-                var result = "<thead>\n"
-                    + "<tr>\n"
-                    + "   <th>№</th>\n"
-                    + "   <th>Дата</th>\n"
-                    + "   <th>Изображение</th>\n"
-                    + "   <th>Город</th>\n"
-                    + "   <th>Тип</th>\n"
-                    + "   <th>Марка</th>\n"
-                    + "   <th>Модель</th>\n"
-                    + "   <th>Кузов</th>\n"
-                    + "   <th>Год выпуска</th>\n"
-                    + "   <th>Цена</th>\n"
-                    + "</tr>\n"
-                    + "</thead>\n"
-                    + "<tbody>\n";
-                var index = 1;
-
-                for (var i = 0; i < items.length; i ++) {
-
-                    var item = items[i];
-                    result += "<tr>\n";
-                    result += "<td style=\"width: 2%;vertical-align: middle\">" + index++ + "</td>\n";
-                    result += "<td style=\"width: 170px;vertical-align: middle\">" + timeConverter(item.timestamp) + "</td>\n";
-                    result += "<td style=\"width: 200px;vertical-align: middle\"><img id=\"picture\" name=\"picture\" style=\"max-width: 400px\"\n" +
-                        (item.filename == undefined
-                            ?
-                            "                                         src=\"\"\n"
-                            :
-                            "                                         src=\"image_upload/" + item.filename + "\"\n") +
-                        "                                         class=\"rounded mx-auto d-block\" alt=\"\"></td>\n";
-
-                    result += "<td style='vertical-align: middle'>" + item.city.name + "</td>\n";
-                    result += "<td style='vertical-align: middle'>" + item.carmodel.cartype.name + "</td>\n";
-                    result += "<td style='vertical-align: middle'>" + item.carmodel.carmark.name + "</td>\n";
-                    result += "<td style='vertical-align: middle'>" + item.carmodel.name + "</td>\n";
-                    result += "<td style='vertical-align: middle'>" + item.carbody.name + "</td>\n";
-                    result += "<td style='vertical-align: middle'>" + item.year + "</td>\n";
-                    result += "<td style='vertical-align: middle'>" + item.price + "</td>\n";
-                    result += "</tr>\n";
-                }
-                result += "</tbody>\n";
-                document.getElementById("table").innerHTML = result;
-                document.getElementById("table").hidden = (items.length == 0);
-            }
-        })
-    };
-    $(
-        showData()
-    )
-    $(
-        loadMarks()
-    )
-
-    $(
-        $.ajax("./ajax?command=login", {
+        function loadMarks() {
+            $.ajax("./ajax", {
                 method : "get",
-                data : {command : "login"},
+                data : {command : "get_marks", type : ''},
                 complete : function(data) {
-                    var login = "";
-
                     if (data.responseText.length > 0) {
-                        var json = JSON.parse(data.responseText);
-                        login = json.login;
+                        var items = JSON.parse(data.responseText);
+                        var result = "<option>Все</option>\n";;
+                        for (var i = 0; i < items.length; i++) {
+                            var item = items[i];
+                            result += "<option>" + item.name + "</option>\n";
+                        }
+                        document.getElementById("cbMark").innerHTML = result;
                     }
-                    document.getElementById("menuLogin").hidden = (login != "''");
-                    document.getElementById("menuRegister").hidden = (login != "''");
-                    document.getElementById("menuNotes").hidden = (login == "''");
-                    document.getElementById("menuLogout").hidden = (login == "''");
                 }
-            }
+            })
+        }
+
+        function doLogin() {
+            window.location = "login.html";
+        }
+
+        function doRegistration() {
+            window.location = "registration.html";
+        }
+
+        function showMyNotes() {
+            window.location = "mynotes.html";
+        }
+
+        function doLogout() {
+            $.ajax("./ajax", {
+                    method : "post",
+                    data : {
+                        command : "logout"
+                    },
+                    success : function() {
+                        window.location = "index.html";
+                    }
+                }
+            );
+        }
+
+        function timeConverter(timestamp){
+            var a = new Date(timestamp);
+            var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+            var year = a.getFullYear();
+            var month = months[a.getMonth()];
+            var date = a.getDate();
+            var hour = a.getHours();
+            var min = a.getMinutes();
+            var sec = a.getSeconds();
+            var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+            return time;
+        }
+
+        function getFilter() {
+            var cbMark = document.getElementById("cbMark");
+            var cToday = document.getElementById("today");
+            var cPhotoOnly = document.getElementById("photoonly");
+
+            var result = "{\"mark\" : \"" + (cbMark.selectedIndex > 0 ? cbMark.options[cbMark.selectedIndex].value : "");
+            result += "\", \"today\" : " + (cToday.checked ? "true" : "false");
+            result += ", \"photoOnly\" : " + (cPhotoOnly.checked ? "true" : "false") + "}";
+            return result;
+        }
+
+        function resetFilter() {
+            var cbMark = document.getElementById("cbMark");
+            var cToday = document.getElementById("today");
+            var cPhotoOnly = document.getElementById("photoonly");
+
+            if (cbMark != null) cbMark.selectedIndex = 0;
+            if (cToday != null) cToday.checked = false;
+            if (cPhotoOnly != null) cPhotoOnly.checked = false;
+
+            showData();
+        }
+
+        function showData(filter) {
+            $.ajax("./ajax", {
+                method : "get",
+                data : {
+                    command : "get_all_cars",
+                    filter : filter
+                },
+                complete : function(data) {
+                    var items = JSON.parse(data.responseText);
+
+                    var result = "<thead>\n"
+                        + "<tr>\n"
+                        + "   <th>№</th>\n"
+                        + "   <th>Дата</th>\n"
+                        + "   <th>Изображение</th>\n"
+                        + "   <th>Город</th>\n"
+                        + "   <th>Тип</th>\n"
+                        + "   <th>Марка</th>\n"
+                        + "   <th>Модель</th>\n"
+                        + "   <th>Кузов</th>\n"
+                        + "   <th>Год выпуска</th>\n"
+                        + "   <th>Цена</th>\n"
+                        + "</tr>\n"
+                        + "</thead>\n"
+                        + "<tbody>\n";
+                    var index = 1;
+
+                    for (var i = 0; i < items.length; i ++) {
+
+                        var item = items[i];
+                        result += "<tr>\n";
+                        result += "<td style=\"width: 2%;vertical-align: middle\">" + index++ + "</td>\n";
+                        result += "<td style=\"width: 170px;vertical-align: middle\">" + timeConverter(item.timestamp) + "</td>\n";
+                        result += "<td style=\"width: 200px;vertical-align: middle\"><img id=\"picture\" name=\"picture\" style=\"max-width: 400px\"\n" +
+                            (item.filename == undefined
+                                ?
+                                "                                         src=\"\"\n"
+                                :
+                                "                                         src=\"image_upload/" + item.filename + "\"\n") +
+                            "                                         class=\"rounded mx-auto d-block\" alt=\"\"></td>\n";
+
+                        result += "<td style='vertical-align: middle'>" + item.city.name + "</td>\n";
+                        result += "<td style='vertical-align: middle'>" + item.carmodel.cartype.name + "</td>\n";
+                        result += "<td style='vertical-align: middle'>" + item.carmodel.carmark.name + "</td>\n";
+                        result += "<td style='vertical-align: middle'>" + item.carmodel.name + "</td>\n";
+                        result += "<td style='vertical-align: middle'>" + item.carbody.name + "</td>\n";
+                        result += "<td style='vertical-align: middle'>" + item.year + "</td>\n";
+                        result += "<td style='vertical-align: middle'>" + item.price + "</td>\n";
+                        result += "</tr>\n";
+                    }
+                    result += "</tbody>\n";
+                    document.getElementById("table").innerHTML = result;
+                    document.getElementById("table").hidden = (items.length == 0);
+                }
+            })
+        };
+        $(
+            showData()
         )
-    )
-</script>
+        $(
+            loadMarks()
+        )
+
+        $(
+            $.ajax("./ajax?command=login", {
+                    method : "get",
+                    data : {command : "login"},
+                    complete : function(data) {
+                        var login = "";
+
+                        if (data.responseText.length > 0) {
+                            var json = JSON.parse(data.responseText);
+                            login = json.login;
+                        }
+                        document.getElementById("menuLogin").hidden = (login != "''");
+                        document.getElementById("menuRegister").hidden = (login != "''");
+                        document.getElementById("menuNotes").hidden = (login == "''");
+                        document.getElementById("menuLogout").hidden = (login == "''");
+                    }
+                }
+            )
+        )
+    </script>
+</head>
 <body>
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">

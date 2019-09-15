@@ -18,6 +18,7 @@
     <modules>
         <module>annotation</module>
         <module>xml</module>
+        <module>carseller</module>
     </modules>
 
     <build>
