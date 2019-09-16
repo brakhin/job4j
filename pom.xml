@@ -70,6 +70,8 @@
         <module>3_hibernate_carseller</module>
         <module>3_spring_ioc</module>
         <module>3_spring_mvc</module>
+        <module>3_spring_data</module>
+        <module>3_spring_security</module>
         <module>xml</module>
         <module>mvc</module>
     </modules>

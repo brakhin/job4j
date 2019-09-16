@@ -1,6 +1,5 @@
 package ru.bgbrakhi.carseller.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;

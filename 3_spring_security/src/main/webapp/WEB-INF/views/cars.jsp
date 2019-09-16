@@ -26,7 +26,7 @@
                 Личный кабинет
             </a>
             <div class="dropdown-menu">
-                <a id="menuLogin" class="dropdown-item"  href="login.html">Авторизация</a>
+                <a id="menuLogin" class="dropdown-item"  href="login.do">Авторизация</a>
                 <a id="menuRegister" class="dropdown-item" href="registration.html">Регистрация</a>
                 <a id="menuNotes" hidden="true" class="dropdown-item" onclick="showMyNotes();">Мои объявления</a>
                 <a id="menuLogout" hidden="true" class="dropdown-item" onclick="doLogout();">Выход</a>
