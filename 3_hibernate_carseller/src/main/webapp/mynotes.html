@@ -200,7 +200,7 @@
         }
 
         function changeInactive(id) {
-            $.ajax("./ajax", {
+            $.ajax("/ajax", {
                 method : "post",
                 data : {command : "change_inactive", id : id},
                 success : function() {

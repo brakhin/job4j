@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.util.Objects;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Table(name = "users")
@@ -20,6 +21,9 @@ public class User {
     @Column(name = "password")
     @NotNull
     private String password;
+
+    @Column(name = "enable")
+    private Integer enable;
 
     public User() {
     }
@@ -50,7 +54,15 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = new BCryptPasswordEncoder().encode(password);
+    }
+
+    public Integer getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Integer enable) {
+        this.enable = enable;
     }
 
     @Override

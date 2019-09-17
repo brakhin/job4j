@@ -2,6 +2,8 @@ package ru.bgbrakhi.carseller.servlets;
 
 
 import com.google.gson.Gson;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import ru.bgbrakhi.carseller.models.*;
 import ru.bgbrakhi.carseller.service.Validator;
 import ru.bgbrakhi.carseller.utils.Util;
@@ -105,8 +107,8 @@ public class AjaxController extends HttpServlet {
     }
 
     private void processLogin(HttpSession session, Map<String, String> map) {
-        User user = logic.getUser(map.get("login"), map.get("password"));
-        if (user.getId() != 0) {
+        User user = logic.getUser(map.get("login"));
+        if (BCrypt.checkpw(map.get("password"), user.getPassword()) && user.getId() != 0) {
             session.setAttribute("login", map.get("login"));
         }
     }

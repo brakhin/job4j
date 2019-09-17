@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+	   					   http://www.springframework.org/schema/beans/spring-beans.xsd
+	   					   http://www.springframework.org/schema/security
+	   					   http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <http auto-config="true">
+        <access-denied-handler error-page="/403" />
+        <intercept-url pattern="/mynotes.do" access="hasRole('ROLE_USER')" />
+        <intercept-url pattern="/cars.do" access="permitAll()" />
+        <intercept-url pattern="/login.do" access="permitAll()" />
+        <form-login login-page="/login.do"
+                    default-target-url="/cars.do"
+                    authentication-failure-url="/login.do?error=error"
+                    username-parameter="login"
+                    password-parameter="password"
+                    login-processing-url="/login.do"/>
+        <logout logout-success-url="/cars.do"/>
+        <csrf disabled="true"/>
+    </http>
+
+    <beans:bean id="bcrypt" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <authentication-manager>
+        <authentication-provider>
+            <password-encoder ref="bcrypt" />
+            <jdbc-user-service data-source-ref="dataSource"
+                               users-by-username-query=
+                                       "select login, password, enable from users where login=?"
+                               authorities-by-username-query=
+                                       "select u.login, r.name from user_role ur
+                                        inner join users u on ur.id_user = u.id
+                                        inner join ref_role r on ur.id_role = r.id
+                                        where u.login=?" />
+        </authentication-provider>
+    </authentication-manager>
+</beans:beans>

@@ -26,6 +26,7 @@ public class Car {
     @JoinColumn(name = "id_carmodel")
     private CarModel carmodel;
 
+//    @ManyToOne(cascade = CascadeType.ALL)
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_carbody")
     private CarBody carbody;

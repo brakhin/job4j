@@ -3,11 +3,11 @@ package ru.bgbrakhi.carseller.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.bgbrakhi.carseller.UserFilter;
 import ru.bgbrakhi.carseller.models.Car;
 import ru.bgbrakhi.carseller.repositories.ICarRepository;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 import static ru.bgbrakhi.carseller.controller.CarsController.COANTANT_FILTER_ALL_MARKS;
@@ -29,5 +29,20 @@ public class CarServiceImpl implements ICarService {
                 filter == null ? "" : filter.getMark(),
                 filter != null && filter.getToday(),
                 filter != null && filter.getWithphoto());
+    }
+
+    @Override
+    public List<Car> findForUser(String login) {
+        return carRepository.findForUser(login);
+    }
+
+    @Override
+    public void swapInactive(Long id, String login) {
+        carRepository.swapInactive(id, login);
+    }
+
+    @Override
+    public Car save(Car car) {
+        return carRepository.save(car);
     }
 }

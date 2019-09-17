@@ -12,28 +12,29 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+<script>
+    function showMyNotes() {
+        window.location = "mynotes.do";
+    }
+    function doLogout() {
+        window.location = "login.do?logout";
+    }
+
+
+</script>
+
 </head>
 <body>
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <!-- Brand -->
-    <a class="navbar-brand" href="#">CarStore</a>
+    <a class="navbar-brand" id="navbar" href="#">CarStore${login}</a>
 
     <!-- Links -->
     <ul class="navbar-nav">
-        <li class="nav-item dropdown" id="menu_personal_area">
-            <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-                Личный кабинет
-            </a>
-            <div class="dropdown-menu">
-                <a id="menuLogin" class="dropdown-item"  href="login.do">Авторизация</a>
-                <a id="menuRegister" class="dropdown-item" href="registration.html">Регистрация</a>
-                <a id="menuNotes" hidden="true" class="dropdown-item" onclick="showMyNotes();">Мои объявления</a>
-                <a id="menuLogout" hidden="true" class="dropdown-item" onclick="doLogout();">Выход</a>
-            </div>
-        </li>
-        <li hidden class="nav-item">
-            <a class="nav-link" href="#">Поиск</a>
+        <li class="nav-item">
+            <a class="nav-link"  onclick="showMyNotes();">Мои объявления</a>
         </li>
     </ul>
 </nav>
@@ -41,7 +42,7 @@
 <div class="container-left" style="background-color:lightgray;padding:10px">
 
     <div class="container" style="padding-top: 20px; padding-bottom: 20px">
-        <form action="${pageContext.servletContext.contextPath}/cars.do" method="post">
+        <form action="${pageContext.servletContext.contextPath}/" method="post">
 
             <div class="form-group">
                 <label for="cbMark"><b>Марка</b></label>
@@ -64,6 +65,8 @@
             <button type="submit" class="btn btn-primary" style="float:left;
                                        margin-right:10px">Поиск</button>
             <br>
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+
         </form>
     </div>
 </div>
@@ -84,7 +87,6 @@
     </tr>
     </thead>
     <c:set var="index" scope="page" value="0"/>
-
     <tbody>
     <c:forEach items="${cars}" var="car" varStatus="status">
         <c:set var="index" value="${index + 1}" scope="page"/>
@@ -101,7 +103,8 @@
                         NO IMAGE
                     </c:when>
                     <c:otherwise>
-                        <img id='picture' name='picture' style='max-width: 400px' src='image_upload/${car.filename}' class='rounded mx-auto d-block'>
+                        <img class='rounded mx-auto d-block' id='picture' name='picture' style='max-width: 400px'
+                             src='${pageContext.servletContext.contextPath}/image?file=${car.filename}'>
                     </c:otherwise>
                 </c:choose>
             </td>

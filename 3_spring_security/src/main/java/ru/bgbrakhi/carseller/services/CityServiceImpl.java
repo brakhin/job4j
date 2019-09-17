@@ -1,0 +1,31 @@
+package ru.bgbrakhi.carseller.services;
+
+import com.google.common.collect.Lists;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import ru.bgbrakhi.carseller.models.City;
+import ru.bgbrakhi.carseller.repositories.ICarRepository;
+import ru.bgbrakhi.carseller.repositories.ICityRepository;
+
+import java.util.List;
+
+@Service()
+@Repository
+public class CityServiceImpl implements ICityService {
+
+    @Autowired
+    private ICityRepository cityRepository;
+
+    @Override
+    public List<City> getAll() {
+        return Lists.newArrayList(cityRepository.findAll());
+
+    }
+
+    @Override
+    public City getByName(String name) {
+        return cityRepository.findByName(name);
+    }
+}

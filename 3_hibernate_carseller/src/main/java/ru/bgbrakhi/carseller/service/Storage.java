@@ -12,21 +12,15 @@ import java.util.List;
 
 public class Storage implements IStorage {
 
-    private static Class locker = Storage.class;
     private SessionFactory factory;
-    private static Storage instance;
+    private static final Storage INSTANCE = new Storage();
 
     private Storage() {
         factory = new Configuration().configure().buildSessionFactory();
     }
 
     public static Storage getInstance() {
-        if (instance == null) {
-            synchronized (locker) {
-                instance = new Storage();
-            }
-        }
-        return instance;
+        return INSTANCE;
     }
 
     public void shutdown() {

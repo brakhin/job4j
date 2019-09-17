@@ -27,6 +27,7 @@
         <property name="hibernate.dbcp.minIdle">5</property>
         <property name="hibernate.dbcp.maxWaitMillis">-1</property>
 
+        <mapping class="ru.bgbrakhi.carseller.models.Role"/>
         <mapping class="ru.bgbrakhi.carseller.models.User"/>
         <mapping class="ru.bgbrakhi.carseller.models.CarType"/>
         <mapping class="ru.bgbrakhi.carseller.models.CarMark"/>

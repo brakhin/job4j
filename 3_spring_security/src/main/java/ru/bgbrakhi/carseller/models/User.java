@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 
 import javax.persistence.*;
 import java.util.Objects;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
 @Table(name = "users")
@@ -20,6 +21,9 @@ public class User {
     @Column(name = "password")
     @NotNull
     private String password;
+
+    @Column(name = "enable")
+    private Integer enable;
 
     public User() {
     }
@@ -50,25 +54,35 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = new BCryptPasswordEncoder().encode(password);
+    }
+
+    public Integer getEnable() {
+        return enable;
+    }
+
+    public void setEnable(Integer enable) {
+        this.enable = enable;
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return id == user.id
-                && Objects.equals(login, user.login)
-                && Objects.equals(password, user.password);
+        return id == user.id &&
+                Objects.equals(login, user.login) &&
+                Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id, login, password);
+    }
+
+    public static void main(String[] args) {
+        String s1 =  new BCryptPasswordEncoder().encode("1");
+        String s2 =  new BCryptPasswordEncoder().encode("2");
+        int a = 0;
     }
 }
