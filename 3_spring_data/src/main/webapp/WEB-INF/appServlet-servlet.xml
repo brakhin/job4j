@@ -43,7 +43,7 @@
         <property name="entityManagerFactory" ref="entityManagerFactory"/>
     </bean>
 
-    <jpa:repositories base-package="ru.bgbrakhi.carseller.repositories"
+    <jpa:repositories base-package="ru.bgbrakhi.carseller.repository"
                       entity-manager-factory-ref="entityManagerFactory"
                       transaction-manager-ref="transactionManager"/>
 

@@ -1,9 +1,12 @@
-package ru.bgbrakhi.carseller.controller;
+package ru.bgbrakhi.carseller.web.controllers;
 
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import ru.bgbrakhi.carseller.models.CarBody;
 import ru.bgbrakhi.carseller.models.CarMark;
 import ru.bgbrakhi.carseller.models.CarModel;
@@ -36,7 +39,8 @@ public class AjaxController {
     private ICarBodyService carBodyService;
 
     @RequestMapping(value = "/ajax", method = RequestMethod.GET)
-    public @ResponseBody String  ajaxGetHandler(@RequestParam String command, @RequestParam String data) {
+    public @ResponseBody String  ajaxGetHandler(@RequestParam String command, @RequestParam String data,
+                                                Principal principal) {
         String result = "";
         if (CONSTANT_GET_MODELS.equals(command)) {
             List<CarModel> carModels = carModelService.findForType(data);
@@ -47,8 +51,9 @@ public class AjaxController {
         } else if (CONSTANT_GET_BODIES.equals(command)) {
             List<CarBody> carBodies = carBodyService.getCarBodyByType(data);
             result = new Gson().toJson(carBodies);
+        } else if (CONSTANT_SWAP_INACTIVE.equals(command)) {
+            carService.swapInactive(Long.parseLong(data), principal.getName());
         }
-
         return result;
     }
 

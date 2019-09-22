@@ -45,7 +45,7 @@
 
     <bean id="multipartResolver"  class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
-    <jpa:repositories base-package="ru.bgbrakhi.carseller.repositories"
+    <jpa:repositories base-package="ru.bgbrakhi.carseller.repository"
                       entity-manager-factory-ref="entityManagerFactory"
                       transaction-manager-ref="transactionManager"/>
 

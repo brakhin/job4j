@@ -1,10 +1,8 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page language="java" pageEncoding="UTF-8" session="true" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      lang="en">
 <head>
     <title>Список автомобилей</title>
     <meta content="text/html; charset=UTF-8" http-equiv="Content-Type">
@@ -16,18 +14,17 @@
 
     <script>
         function showMainPage() {
-            window.location = "${pageContext.servletContext.contextPath}/";
+            window.location = "/cars";
         }
         function doLogout() {
-//        window.location = "login.do?logout";
-            window.location = "logout.do";
+            window.location = "/logout";
         }
         function changeInactive(id, el) {
             if (el.checked) {el.parentElement.parentElement.className = "table-danger"}
             else {el.parentElement.parentElement.className = ""}
 
-            $.ajax("${pageContext.servletContext.contextPath}/ajax", {
-                method : "post",
+            $.ajax("/ajax", {
+                method : "get",
                 dataType : "json",
                 data : {command: "swap_inactive", data : id},
             });
@@ -37,7 +34,6 @@
             var comboBox = document.getElementById("cb" + button.id.toString());
             var edit = document.getElementById("ed" + button.id.toString());
 
-            button.firstChild.data = "qweqwe";
             button.classList.toggle('btn-danger');
             if(parseInt(button.value, 10) == 0) {
                 button.innerText = "Выбрать"
@@ -103,7 +99,7 @@
         function changeType() {
             var cbType = document.getElementById("cbType");
             if (cbType.selectedIndex > -1) {
-                $.ajax("${pageContext.servletContext.contextPath}/ajax", {
+                $.ajax("/ajax", {
                         method : "get",
                         data : {command : "get_models", data : cbType.options[cbType.selectedIndex].text},
                         complete : function(data) {
@@ -119,7 +115,7 @@
                         }
                     }
                 );
-                $.ajax("${pageContext.servletContext.contextPath}/ajax", {
+                $.ajax("/ajax", {
                         method : "get",
                         data : {command : "get_marks", data : cbType.options[cbType.selectedIndex].text},
                         complete : function(data) {
@@ -135,7 +131,7 @@
                         }
                     }
                 );
-                $.ajax("${pageContext.servletContext.contextPath}/ajax", {
+                $.ajax("/ajax", {
                         method : "get",
                         data : {command : "get_bodies", data : cbType.options[cbType.selectedIndex].text},
                         complete : function(data) {
@@ -160,7 +156,7 @@
 
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
     <!-- Brand -->
-    <a class="navbar-brand" id="navbar" href="#">CarStore${login}</a>
+    <a class="navbar-brand" id="navbar" href="#" th:inline="text">CarStore[[${login}]]</a>
 
     <!-- Links -->
     <ul class="navbar-nav">
@@ -176,7 +172,7 @@
 <div class="container-left" style="background-color:lightgray;padding:10px">
     <div class="container" style="padding-top: 20px; padding-bottom: 20px">
 
-        <form action="${pageContext.servletContext.contextPath}/mynotes.do" method="post"
+        <form th:action="@{/mynotes}" method="post"
               onsubmit="return validate()" enctype="multipart/form-data">
 
             <table width="100%">
@@ -186,9 +182,7 @@
                 <tr>
                     <td width="100%">
                         <select class="form-control" id="cbCity" name="cbCity">
-                            <c:forEach items="${cities}" var="city" varStatus="status">
-                                <option>${city.name}</option>
-                            </c:forEach>
+                            <option th:each="city: ${cities}" th:inline="text">[[${city.name}]]</option>
                         </select>
                         <input type="text" style="width:100%" id="edCity" name = "edCity" hidden/>
                     </td>
@@ -203,9 +197,7 @@
                 <tr>
                     <td width="100%">
                         <select class="form-control" id="cbType" name="sellist1" onchange="changeType();">
-                            <c:forEach items="${types}" var="type" varStatus="status">
-                                <option>${type.name}</option>
-                            </c:forEach>
+                            <option th:each="type: ${types}" th:inline="text">[[${type.name}]]</option>
                         </select>
                         <input type="text" style="width:100%" id="edType" name = "edType" hidden/>
                     </td>
@@ -302,12 +294,11 @@
                     </td>
                 </tr>
             </table>
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
         </form>
     </div>
 </div>
-
+123
 <table class="table table-striped" id="table">
     <thead>
     <tr>
@@ -324,43 +315,27 @@
         <th>Цена</th>
     </tr>
     </thead>
-    <c:set var="index" scope="page" value="0"/>
-
     <tbody>
-    <c:forEach items="${cars}" var="car" varStatus="status">
-        <c:set var="index" value="${index + 1}" scope="page"/>
-        <jsp:useBean id="dateValue" class="java.util.Date"/>
-        <jsp:setProperty name="dateValue" property="time" value="${car.timestamp}"/>
-        <tr <c:if test="${car.inactive}">class="table-danger"</c:if>>
-            <td style='width: 2%;vertical-align: middle'>${index}</td>
-            <td class='text-center' style='width: 10px;vertical-align: middle'>
-                <input class='form-check-input' <c:if test="${car.inactive}">checked</c:if>
-                       type='checkbox' onclick='changeInactive(${car.id}, this)'>
-                &nbsp;
-            </td>
-            <td style='width: 170px;vertical-align: middle'>
-                <fmt:formatDate value="${dateValue}" pattern="dd.MM.yyyy HH:mm"/>
-            </td>
-            <td style='width: 200px;vertical-align: middle'>
-                <c:choose>
-                    <c:when test="${car.filename.length()==0}">
-                        NO IMAGE
-                    </c:when>
-                    <c:otherwise>
-                        <img class='rounded mx-auto d-block' id='picture' name='picture' style='max-width: 400px'
-                             src='${pageContext.servletContext.contextPath}/image?file=${car.filename}'>
-                    </c:otherwise>
-                </c:choose>
-            </td>
-            <td style='vertical-align: middle'>${car.city.name}</td>
-            <td style='vertical-align: middle'>${car.carmodel.cartype.name}</td>
-            <td style='vertical-align: middle'>${car.carmodel.carmark.name}</td>
-            <td style='vertical-align: middle'>${car.carmodel.name}</td>
-            <td style='vertical-align: middle'>${car.carbody.name}</td>
-            <td style='vertical-align: middle'>${car.year}</td>
-            <td style='vertical-align: middle'>${car.price}</td>
-        </tr>
-    </c:forEach>
+    <tr th:each="car,stat: ${cars}" th:class="${car.inactive ? 'table-danger' : ''}" >>
+        <td style="width: 2%;vertical-align: middle" th:text="${stat.index + 1}"\>
+        <td class='text-center' style='width: 10px;vertical-align: middle'>
+            <input class='form-check-input' th:checked="${car.inactive}"
+            type='checkbox' th:onclick="'changeInactive(' + ${car.id} + ', this)'">
+        </td>
+        <td style="vertical-align: middle" th:text="${car.timestamp}"\>
+        <td style="vertical-align: middle" th:if="${car.filename == ''}">NO IMAGE</td>
+        <td style="vertical-align: middle" th:unless="${car.filename == ''}">
+            <img class="rounded mx-auto d-block" id="picture" name="picture" style="max-width: 200px"
+                 th:if="${!car.filename.isEmpty()}" th:src="${car.filename}">
+        </td>
+        <td style="vertical-align: middle" th:text="${car.city.name}"\>
+        <td style="vertical-align: middle" th:text="${car.carmodel.cartype.name}"\>
+        <td style="vertical-align: middle" th:text="${car.carmodel.carmark.name}"\>
+        <td style="vertical-align: middle" th:text="${car.carmodel.name}"\>
+        <td style="vertical-align: middle" th:text="${car.carbody.name}"\>
+        <td style="vertical-align: middle" th:text="${car.year}"\>
+        <td style="vertical-align: middle" th:text="${car.price}"\>
+    </tr>
     </tbody>
 </table>
 </body>

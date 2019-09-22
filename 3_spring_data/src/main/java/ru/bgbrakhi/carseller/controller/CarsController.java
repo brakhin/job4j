@@ -1,9 +1,6 @@
 package ru.bgbrakhi.carseller.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +8,8 @@ import ru.bgbrakhi.carseller.UserFilter;
 import ru.bgbrakhi.carseller.models.Car;
 import ru.bgbrakhi.carseller.models.CarMark;
 import ru.bgbrakhi.carseller.models.CarModel;
-import ru.bgbrakhi.carseller.services.CarModelServiceImpl;
-import ru.bgbrakhi.carseller.services.CarServiceImpl;
-import ru.bgbrakhi.carseller.services.ICarModelService;
-import ru.bgbrakhi.carseller.services.ICarService;
+import ru.bgbrakhi.carseller.service.ICarModelService;
+import ru.bgbrakhi.carseller.service.ICarService;
 
 import java.util.List;
 import java.util.stream.Collectors;
