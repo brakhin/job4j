@@ -131,8 +131,12 @@ public class MyNotesController {
     @ResponseBody
     public ResponseEntity<Resource> gatNotesCarImage(@PathVariable String filename) {
         Resource file = storageService.loadAsResource(filename);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+        if (file == null) {
+            return null;
+        } else {
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                    "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+        }
     }
 
     private void loadData(Principal principal, ModelMap model) {
@@ -144,7 +148,8 @@ public class MyNotesController {
                         ?
                         ""
                         :
-                        MvcUriComponentsBuilder.fromMethodName(this.getClass(), "gatNotesCarImage", car.getFilename()).build().toString()
+                        MvcUriComponentsBuilder.fromMethodName(this.getClass(),
+                                "gatNotesCarImage", car.getFilename()).build().toString()
                 )
         );
 
@@ -152,6 +157,5 @@ public class MyNotesController {
         model.addAttribute("cars", cars);
         model.addAttribute("cities", cities);
         model.addAttribute("types", carTypes);
-        model.addAttribute("file", carTypes);
     }
 }

@@ -31,6 +31,12 @@ public class CarModel {
         this.name = name;
     }
 
+    public CarModel(CarType cartype, CarMark carmark, @NotNull String name) {
+        this.cartype = cartype;
+        this.carmark = carmark;
+        this.name = name;
+    }
+
     public long getId() {
         return id;
     }

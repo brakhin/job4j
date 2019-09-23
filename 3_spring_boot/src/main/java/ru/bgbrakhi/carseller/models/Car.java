@@ -52,6 +52,19 @@ public class Car {
         timestamp = System.currentTimeMillis();
     }
 
+    public Car(User user, City city, CarModel carmodel, CarBody carbody, @NotNull Integer year,
+               @NotNull Integer price, String filename, @NotNull Boolean inactive, Long timestamp) {
+        this.user = user;
+        this.city = city;
+        this.carmodel = carmodel;
+        this.carbody = carbody;
+        this.year = year;
+        this.price = price;
+        this.filename = filename;
+        this.inactive = inactive;
+        this.timestamp = timestamp;
+    }
+
     public long getId() {
         return id;
     }

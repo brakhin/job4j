@@ -19,6 +19,10 @@ public class CarBody {
     public CarBody() {
     }
 
+    public CarBody(@NotNull String name) {
+        this.name = name;
+    }
+
 /*
     public CarBody(String name) {
         this.name = name;

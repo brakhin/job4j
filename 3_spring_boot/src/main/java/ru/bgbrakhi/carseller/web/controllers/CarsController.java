@@ -60,8 +60,12 @@ public class CarsController {
     @ResponseBody
     public ResponseEntity<Resource> gatCarImage(@PathVariable String filename) {
         Resource file = storageService.loadAsResource(filename);
-        return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+        if (file == null) {
+            return null;
+        } else {
+            return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
+                    "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+        }
     }
 
     private void loadData(UserFilter filter, ModelMap model, Principal principal) {
@@ -72,7 +76,8 @@ public class CarsController {
                         ?
                         ""
                         :
-                        MvcUriComponentsBuilder.fromMethodName(this.getClass(), "gatCarImage", car.getFilename()).build().toString()
+                        MvcUriComponentsBuilder.fromMethodName(this.getClass(),
+                                "gatCarImage", car.getFilename()).build().toString()
                 )
         );
         model.addAttribute("login", principal == null ? "" : String.format(" [ %s ]", principal.getName()));
