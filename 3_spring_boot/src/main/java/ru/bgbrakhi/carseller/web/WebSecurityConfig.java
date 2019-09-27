@@ -11,6 +11,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -29,8 +30,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+                .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/", "/cars").permitAll()
+                    .antMatchers("/").permitAll()
                     .antMatchers("/all_images/**").permitAll()
                     .antMatchers("/note_images/**").permitAll()
                     .antMatchers("/files/**").permitAll()
@@ -50,8 +52,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
+/*
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.inMemoryAuthentication().passwordEncoder(NoOpPasswordEncoder.getInstance()).
+                withUser("1").password("1").roles("USER");
+    }
 
-
+*/
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.jdbcAuthentication().dataSource(dataSource)
@@ -63,4 +71,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                         + "where u.login=?")
                 .passwordEncoder(new BCryptPasswordEncoder());
     }
+
+
 }

@@ -135,7 +135,7 @@
                         result += "<td style=\"width: 2%;vertical-align: middle\">" + index++ + "</td>\n";
                         result += "<td style=\"width: 170px;vertical-align: middle\">" + timeConverter(item.timestamp) + "</td>\n";
                         result += "<td style=\"width: 200px;vertical-align: middle\"><img id=\"picture\" name=\"picture\" style=\"max-width: 400px\"\n" +
-                            (item.filename == undefined
+                            (item.filename == ''
                                 ?
                                 "                                         src=\"\"\n"
                                 :

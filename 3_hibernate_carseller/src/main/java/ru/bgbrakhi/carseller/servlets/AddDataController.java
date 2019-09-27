@@ -111,9 +111,9 @@ public class AddDataController extends HttpServlet {
                 car.setYear(Integer.parseInt(map.get("year")));
                 car.setPrice(Integer.parseInt(map.get("price")));
                 car.setFilename("null".equals(map.get("file")) ? "" : map.get("file"));
-                logic.getCar(new CarData((String) session.getAttribute("login"), map.get("city"), map.get("type"), map.get("mark"), map.get("model"),
-                        map.get("body"), Integer.parseInt(map.get("year")), Integer.parseInt(map.get("price")),
-                        "null".equals(map.get("file")) ? "" : map.get("file")));
+                logic.getCar(new CarData((String) session.getAttribute("login"), map.get("city"), map.get("type"),
+                        map.get("mark"), map.get("model"), map.get("body"), Integer.parseInt(map.get("year")),
+                        Integer.parseInt(map.get("price")), "null".equals(map.get("file")) ? "" : map.get("file")));
             }
         } catch (Exception e) {
             e.printStackTrace();

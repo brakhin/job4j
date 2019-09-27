@@ -14,7 +14,7 @@
 
     <script>
         function showMainPage() {
-            window.location = "/cars";
+            window.location = "/";
         }
         function doLogout() {
             window.location = "/logout";
@@ -24,8 +24,8 @@
             else {el.parentElement.parentElement.className = ""}
 
             $.ajax("/ajax", {
-                method : "get",
-                dataType : "json",
+                method : "post",
+                datatype: "json",
                 data : {command: "swap_inactive", data : id},
             });
         }
@@ -101,7 +101,10 @@
             if (cbType.selectedIndex > -1) {
                 $.ajax("/ajax", {
                         method : "get",
-                        data : {command : "get_models", data : cbType.options[cbType.selectedIndex].text},
+                        data : {
+                            command : "get_models",
+                            data : cbType.options[cbType.selectedIndex].text
+                        },
                         complete : function(data) {
                             if (data.responseText.length > 0) {
                                 var items = JSON.parse(data.responseText);
@@ -294,7 +297,9 @@
                     </td>
                 </tr>
             </table>
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <!--
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            -->
         </form>
     </div>
 </div>
@@ -317,13 +322,12 @@
     <tbody>
     <tr th:each="car,stat: ${cars}" th:class="${car.inactive ? 'table-danger' : ''}" >
         <td style="width: 2%;vertical-align: middle" th:text="${stat.index + 1}"\>
-        <td class='text-center' style='width: 10px;vertical-align: middle'>
-            <input class='form-check-input' th:checked="${car.inactive}"
+        <td class='text-center' style='width: 10px'>
+            <input style="vertical-align: center" class='form-check-input' th:checked="${car.inactive}"
             type='checkbox' th:onclick="'changeInactive(' + ${car.id} + ', this)'">
         </td>
-
         <td style="vertical-align: middle" th:text="${car.timestamp}"\>
-        <td style="vertical-align: middle" th:if="${car.filename == ''}">NO IMAGE</td>
+        <td style="vertical-align: middle" align="center" th:if="${car.filename == ''}">NO IMAGE</td>
         <td style="vertical-align: middle" th:unless="${car.filename == ''}">
             <img class="rounded mx-auto d-block" id="picture" name="picture" style="max-width: 200px"
                  th:if="${!car.filename.isEmpty()}" th:src="${car.filename}">

@@ -165,7 +165,7 @@ public class Storage implements IStorage {
                     builder.append(String.format(" and ce.timestamp > %d", startDayTimestamp));
                 }
                 if (userFilter.getPhotoOnly()) {
-                    builder.append(" and ce.filename is not null");
+                    builder.append(" and coalesce(ce.filename, '') <> ''");
                 }
             }
             List<Car> list;

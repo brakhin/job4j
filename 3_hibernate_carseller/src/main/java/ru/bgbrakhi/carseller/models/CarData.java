@@ -66,15 +66,15 @@ public class CarData {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CarData carData = (CarData) o;
-        return Objects.equals(login, carData.login) &&
-                Objects.equals(cityName, carData.cityName) &&
-                Objects.equals(carType, carData.carType) &&
-                Objects.equals(carMark, carData.carMark) &&
-                Objects.equals(carModel, carData.carModel) &&
-                Objects.equals(carBody, carData.carBody) &&
-                Objects.equals(year, carData.year) &&
-                Objects.equals(price, carData.price) &&
-                Objects.equals(fileName, carData.fileName);
+        return Objects.equals(login, carData.login)
+                && Objects.equals(cityName, carData.cityName)
+                && Objects.equals(carType, carData.carType)
+                && Objects.equals(carMark, carData.carMark)
+                && Objects.equals(carModel, carData.carModel)
+                && Objects.equals(carBody, carData.carBody)
+                && Objects.equals(year, carData.year)
+                && Objects.equals(price, carData.price)
+                && Objects.equals(fileName, carData.fileName);
     }
 
     @Override

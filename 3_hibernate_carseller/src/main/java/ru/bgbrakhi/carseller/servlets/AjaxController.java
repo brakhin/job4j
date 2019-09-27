@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
@@ -83,9 +84,16 @@ public class AjaxController extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        resp.setContentType("text/html");
+
+        resp.setContentType("text/html; charset=UTF-8");
+//        PrintWriter writer = new PrintWriter(new OutputStreamWriter(resp.getOutputStream(), "UTF8"), true);
+
+        PrintWriter writer = resp.getWriter();
+
+//        resp.setContentType("text/html");
+//        PrintWriter writer = new PrintWriter(resp.getOutputStream());
+
         String command = req.getParameter("command");
-        PrintWriter writer = new PrintWriter(resp.getOutputStream());
         if (CONSTANT_LOGIN.equals(command)) {
             writer.append(getLogin(req.getSession()));
         } else if (CONSTANT_GET_CITIES.equals(command)) {

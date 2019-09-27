@@ -5,24 +5,17 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.bgbrakhi.carseller.Application;
 import ru.bgbrakhi.carseller.models.*;
 import ru.bgbrakhi.carseller.service.CarServiceImpl;
 
-import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.List;
 
-import static org.junit.Assert.*;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -30,10 +23,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 @RunWith(SpringRunner.class)
-//@WebMvcTest(CarsController.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class CarsControllerTest {
+public class MyNotesControllerTest {
 
     @MockBean
     private CarServiceImpl service;
@@ -42,6 +34,7 @@ public class CarsControllerTest {
     private MockMvc mvc;
 
     @Test
+    @WithMockUser(username = "1", roles={"USER"})
     public void whenGetCarThenPageCar() throws Exception {
 
         Car car = new Car(
@@ -59,11 +52,11 @@ public class CarsControllerTest {
                 .willReturn(new ArrayList<Car>(Lists.newArrayList(car)));
 
         this.mvc.perform(
-                get("/").accept(MediaType.TEXT_HTML)
+                get("/mynotes").accept(MediaType.TEXT_HTML)
         ).andExpect(
                 status().isOk()
         ).andExpect(
-                view().name("cars")
+                view().name("mynotes")
         );
     }
 
@@ -71,7 +64,7 @@ public class CarsControllerTest {
     public void whenPostCarThenPageCar() throws Exception {
 
         this.mvc.perform(
-                post("/")
+                post("/mynotes")
         ).andExpect(
                 status().isOk()
         ).andExpect(

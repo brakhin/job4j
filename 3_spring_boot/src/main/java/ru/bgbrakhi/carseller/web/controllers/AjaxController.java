@@ -51,8 +51,8 @@ public class AjaxController {
         } else if (CONSTANT_GET_BODIES.equals(command)) {
             List<CarBody> carBodies = carBodyService.getCarBodyByType(data);
             result = new Gson().toJson(carBodies);
-        } else if (CONSTANT_SWAP_INACTIVE.equals(command)) {
-            carService.swapInactive(Long.parseLong(data), principal.getName());
+//        } else if (CONSTANT_SWAP_INACTIVE.equals(command)) {
+//            carService.swapInactive(Long.parseLong(data), principal.getName());
         }
         return result;
     }

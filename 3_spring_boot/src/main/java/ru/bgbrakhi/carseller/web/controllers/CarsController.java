@@ -4,6 +4,7 @@ import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -44,14 +45,14 @@ public class CarsController {
     @Autowired
     private ICarModelService carModelService;
 
-    @GetMapping("/cars")
+    @GetMapping("/")
     public String showItems(ModelMap model, Principal principal) {
         loadData(null, model, principal);
         return "cars";
     }
 
-    @PostMapping("/cars")
-    public String setFilter(@ModelAttribute UserFilter filter, ModelMap model, Principal principal) {
+    @PostMapping("/")
+    public String setFilter(@ModelAttribute UserFilter filter, ModelMap model, Principal principal, HttpServletRequest req) {
         loadData(filter, model, principal);
         return "cars";
     }

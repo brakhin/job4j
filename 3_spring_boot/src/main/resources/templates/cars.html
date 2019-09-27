@@ -33,7 +33,7 @@
 
 <div class="container-left" style="background-color:lightgray;padding:10px">
     <div class="container" style="padding-top: 20px; padding-bottom: 20px">
-        <form th:action="@{/cars}" method="post">
+        <form th:action="@{/}" method="post">
             <div class="form-group">
                 <label for="cbMark"><b>Марка</b></label>
                 <select class="form-control" id="cbMark" name="mark">
@@ -53,7 +53,9 @@
             <button type="submit" class="btn btn-primary" style="float:left;
                                        margin-right:10px">Поиск</button>
             <br>
+<!--
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+-->
         </form>
     </div>
 </div>
@@ -77,7 +79,7 @@
     <tr th:each="car,stat: ${cars}">
         <td style="width: 2%;vertical-align: middle" th:text="${stat.index + 1}"\>
         <td style="vertical-align: middle" th:text="${car.timestamp}"\>
-        <td style="vertical-align: middle" th:if="${car.filename == ''}">NO IMAGE</td>
+        <td style="vertical-align: middle" align="center" th:if="${car.filename == ''}">NO IMAGE</td>
         <td style="vertical-align: middle" th:unless="${car.filename == ''}">
             <img class="rounded mx-auto d-block" id="picture" name="picture" style="max-width: 200px"
                  th:if="${!car.filename.isEmpty()}" th:src="${car.filename}">
