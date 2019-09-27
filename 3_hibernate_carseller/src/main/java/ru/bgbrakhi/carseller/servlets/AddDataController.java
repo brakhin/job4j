@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -85,7 +86,9 @@ public class AddDataController extends HttpServlet {
                         }
                     } else {
                         String fieldname = item.getFieldName().toLowerCase();
-                        String fieldvalue = item.getString();
+                        String fieldvalue = new String (item.getString().getBytes (StandardCharsets.ISO_8859_1),
+                                StandardCharsets.UTF_8);
+
                         if (fieldname.startsWith("ed")) {
                             map.put(fieldname.substring(2), fieldvalue);
                         }

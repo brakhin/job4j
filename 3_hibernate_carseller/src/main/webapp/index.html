@@ -40,16 +40,8 @@
             })
         }
 
-        function doLogin() {
-            window.location = "login.html";
-        }
-
-        function doRegistration() {
-            window.location = "registration.html";
-        }
-
         function showMyNotes() {
-            window.location = "mynotes.do";
+            window.location = "mynotes.html";
         }
 
         function doLogout() {
@@ -133,14 +125,16 @@
                         var item = items[i];
                         result += "<tr>\n";
                         result += "<td style=\"width: 2%;vertical-align: middle\">" + index++ + "</td>\n";
-                        result += "<td style=\"width: 170px;vertical-align: middle\">" + timeConverter(item.timestamp) + "</td>\n";
-                        result += "<td style=\"width: 200px;vertical-align: middle\"><img id=\"picture\" name=\"picture\" style=\"max-width: 400px\"\n" +
-                            (item.filename == ''
+                        result += "<td style=\"width: 170px;vertical-align: middle\">"
+                               + timeConverter(item.timestamp) + "</td>\n";
+                        result += "<td style=\"width: 150px;vertical-align: middle\"><img id=\"picture\" " +
+                            "name=\"picture\" style=\"max-width: 150px\"\n"
+                            + (item.filename == ''
                                 ?
-                                "                                         src=\"\"\n"
+                                " src=\"\"\n"
                                 :
-                                "                                         src=\"image_upload/" + item.filename + "\"\n") +
-                            "                                         class=\"rounded mx-auto d-block\" alt=\"\"></td>\n";
+                                " src=\"image_upload/" + item.filename + "\"\n") +
+                            " class=\"rounded mx-auto d-block\" alt=\"\"></td>\n";
 
                         result += "<td style='vertical-align: middle'>" + item.city.name + "</td>\n";
                         result += "<td style='vertical-align: middle'>" + item.carmodel.cartype.name + "</td>\n";
@@ -209,13 +203,7 @@
         </li>
     </ul>
 </nav>
-
-
-
-
-
 <div class="container-left" style="background-color:lightgray;padding:10px">
-
     <div class="container" style="padding-top: 20px; padding-bottom: 20px">
         <form>
             <div class="form-group">
@@ -240,9 +228,6 @@
         </form>
     </div>
 </div>
-
-
-
 <table class="table table-striped" id="table">
 </table>
 </body>

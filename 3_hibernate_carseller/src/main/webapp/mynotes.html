@@ -127,10 +127,14 @@
                              if (data.responseText.length > 0) {
                                  var items = JSON.parse(data.responseText);
 
+
                                  var result = "";
                                  for (var i = 0; i < items.length; i ++) {
                                      var item = items[i];
-                                     result += "<option>" + item.carbody.name + "</option>\n";
+
+                                     console.log(item);
+
+                                     result += "<option>" + item.name + "</option>\n";
                                  }
                                  document.getElementById("cbBody").innerHTML = result;
 
@@ -142,6 +146,9 @@
         }
 
         function validate() {
+
+            console.log("----------------")
+
             var edCity = document.getElementById("edCity");
             var cbCity = document.getElementById("cbCity");
             var edType = document.getElementById("edType");
@@ -162,11 +169,14 @@
             if (edModel.hidden) edModel.value = cbModel.selectedIndex < 0 ? '' : cbModel.options[cbModel.selectedIndex].value;
             if (edBody.hidden) edBody.value = cbBody.selectedIndex < 0 ? '' : cbBody.options[cbBody.selectedIndex].value;
 
+            console.log(edBody.value);
+
+
             if (edCity.value == '') {
                 alert("Не указан город")
                 return false;
             }
-/*
+
             if (edType.value == '') {
                 alert("Не указан тип")
                 return false;
@@ -191,7 +201,7 @@
                 alert("Не указана цена")
                 return false;
             }
-*/
+
             return true;
         }
 
@@ -304,7 +314,7 @@
 
                         result += "<td style=\"width: 170px;vertical-align: middle\">" + timeConverter(item.timestamp) + "</td>\n";
 
-                        result += "<td style=\"width: 200px;vertical-align: middle\"><img id=\"picture\" name=\"picture\" style=\"max-width: 400px\"\n" +
+                        result += "<td style=\"width: 150px;vertical-align: middle\"><img id=\"picture\" name=\"picture\" style=\"max-width: 150px\"\n" +
                             (item.filename == ''
                             ?
                             "                                         src=\"\"\n"

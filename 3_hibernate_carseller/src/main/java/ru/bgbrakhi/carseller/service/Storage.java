@@ -175,11 +175,18 @@ public class Storage implements IStorage {
             } else {
                 list = session.createQuery(String.format("from Car ce where ce.id > -1 %s order by ce.id", builder.toString())).list();
             }
+            list.forEach(this::modifyFilename);
             return list;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    private void modifyFilename(Car car) {
+        if (car.getFilename() == null) {
+            car.setFilename("");
+        }
     }
 
     public List<Car> getUserCars(String  login) {
