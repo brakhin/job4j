@@ -1,4 +1,4 @@
-package ru.bgbrakhi.carseller;
+package ru.bgbrakhi.carseller.filter;
 
 public class UserFilter {
     private String mark;
@@ -8,24 +8,18 @@ public class UserFilter {
     public Boolean getToday() {
         return today;
     }
-
     public void setToday(Boolean today) {
         this.today = today;
     }
-
-
     public String getMark() {
         return mark;
     }
-
     public void setMark(String mark) {
         this.mark = mark;
     }
-
     public Boolean getWithphoto() {
         return withphoto;
     }
-
     public void setWithphoto(Boolean withphoto) {
         this.withphoto = withphoto;
     }

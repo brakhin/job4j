@@ -160,8 +160,8 @@ public class Storage implements IStorage {
                     builder.append(String.format(" and ce.carmodel.carmark.name = '%s'", userFilter.getMark()));
                 }
                 if (userFilter.getToday()) {
-                    Long startDayTimestamp = (System.currentTimeMillis() / (60*60*24*1000));
-                    startDayTimestamp *= 60*60*24*1000;
+                    Long startDayTimestamp = (System.currentTimeMillis() / (60 * 60 * 24 * 1000));
+                    startDayTimestamp *= 60 * 60 * 24 * 1000;
                     builder.append(String.format(" and ce.timestamp > %d", startDayTimestamp));
                 }
                 if (userFilter.getPhotoOnly()) {
@@ -290,7 +290,7 @@ public class Storage implements IStorage {
         }
         if (result.getId() == 0) {
             result.setLogin(login);
-            result.setPassword(password);
+            result.setPasswordClear(password);
             saveUser(result);
         }
         return result;
@@ -336,7 +336,7 @@ public class Storage implements IStorage {
         Transaction transaction = null;
         try (Session session = factory.openSession()) {
             transaction = session.beginTransaction();
-            session.save(user);
+            session.saveOrUpdate(user);
             if (transaction != null) {
                 transaction.commit();
             }

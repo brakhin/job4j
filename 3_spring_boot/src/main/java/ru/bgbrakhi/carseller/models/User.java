@@ -2,7 +2,10 @@ package ru.bgbrakhi.carseller.models;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
+import java.util.Set;
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
@@ -13,23 +16,25 @@ public class User {
     @Column(name = "id")
     private long id;
 
-    @Column(name = "login", unique = true)
+    @Column(name = "username", unique = true)
     @NotNull
-    private String login;
+    private String username;
 
     @Column(name = "password")
     @NotNull
     private String password;
 
-    @Column(name = "enable")
-    private Integer enable;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles;
+
+    @Transient
+    private String passwordConfirm;
 
     public User() {
-    }
-
-    public User(String login, String password) {
-        this.login = login;
-        this.password = password;
     }
 
     public long getId() {
@@ -40,12 +45,12 @@ public class User {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    public String getUsername() {
+        return username;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -53,15 +58,28 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = new BCryptPasswordEncoder().encode(password);
+        this.password = password;
     }
 
-    public Integer getEnable() {
-        return enable;
+    public Set<Role> getRoles() {
+        return roles;
     }
 
-    public void setEnable(Integer enable) {
-        this.enable = enable;
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public String getPasswordConfirm() {
+        return passwordConfirm;
+    }
+
+    public void setPasswordConfirm(String passwordConfirm) {
+        this.passwordConfirm = passwordConfirm;
+    }
+
+    public User(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
     @Override
@@ -70,18 +88,14 @@ public class User {
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
         return id == user.id &&
-                Objects.equals(login, user.login) &&
-                Objects.equals(password, user.password);
+                Objects.equals(username, user.username) &&
+                Objects.equals(password, user.password) &&
+                Objects.equals(roles, user.roles) &&
+                Objects.equals(passwordConfirm, user.passwordConfirm);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, login, password);
-    }
-
-    public static void main(String[] args) {
-        String s1 =  new BCryptPasswordEncoder().encode("1");
-        String s2 =  new BCryptPasswordEncoder().encode("2");
-        int a = 0;
+        return Objects.hash(id, username, password, roles, passwordConfirm);
     }
 }

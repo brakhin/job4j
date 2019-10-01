@@ -16,4 +16,5 @@ public class Controller403 {
         model.addAttribute("login", principal == null ? "" : String.format(" [ %s ]", principal.getName()));
         model.addAttribute("msg", "Нет прав для доступа к этой странице!");
         return "403";
-    }}
+    }
+}

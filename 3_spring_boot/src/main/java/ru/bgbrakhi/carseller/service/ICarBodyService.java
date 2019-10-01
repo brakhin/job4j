@@ -8,5 +8,4 @@ public interface ICarBodyService {
     List<CarBody> getCarBodyByType(String cartype);
     CarBody getByName(String name);
     CarBody save(CarBody car);
-
 }

@@ -25,4 +25,9 @@ public class CarTypeServiceImpl implements ICarTypeService {
     public CarType getByName(String name) {
         return carTypeRepository.findByName(name);
     }
+
+    @Override
+    public void save(CarType carType) {
+        carTypeRepository.save(carType);
+    }
 }

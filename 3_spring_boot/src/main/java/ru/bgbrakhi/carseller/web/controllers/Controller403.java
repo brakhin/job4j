@@ -12,7 +12,7 @@ public class Controller403 {
 
     @RequestMapping(value = "/403", method = RequestMethod.GET)
     public String accesssDenied(Principal principal, ModelMap model) {
-        model.addAttribute("login", principal == null ? "" : String.format(" [ %s ]", principal.getName()));
+        model.addAttribute("username", principal == null ? "" : String.format(" [ %s ]", principal.getName()));
         model.addAttribute("msg", "Нет прав для доступа к этой странице!");
         return "403";
     }}

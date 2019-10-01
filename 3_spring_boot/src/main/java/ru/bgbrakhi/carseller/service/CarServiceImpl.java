@@ -1,12 +1,10 @@
 package ru.bgbrakhi.carseller.service;
 
-import org.apache.logging.log4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.bgbrakhi.carseller.UserFilter;
+import ru.bgbrakhi.carseller.filter.UserFilter;
 import ru.bgbrakhi.carseller.models.Car;
 import ru.bgbrakhi.carseller.repository.ICarRepository;
 
@@ -34,13 +32,13 @@ public class CarServiceImpl implements ICarService {
     }
 
     @Override
-    public List<Car> findForUser(String login) {
-        return carRepository.findForUser(login);
+    public List<Car> findForUser(String username) {
+        return carRepository.findForUser(username);
     }
 
     @Override
-    public void swapInactive(Long id, String login) {
-        carRepository.swapInactive(id, login);
+    public void swapInactive(Long id, String username) {
+        carRepository.swapInactive(id, username);
     }
 
     @Override

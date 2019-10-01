@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.bgbrakhi.carseller.models.CarMark;
 import ru.bgbrakhi.carseller.models.CarModel;
 import ru.bgbrakhi.carseller.models.CarType;

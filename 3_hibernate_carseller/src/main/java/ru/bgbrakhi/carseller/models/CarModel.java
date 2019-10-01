@@ -77,13 +77,17 @@ public class CarModel {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         CarModel carModel = (CarModel) o;
-        return id == carModel.id &&
-                Objects.equals(cartype, carModel.cartype) &&
-                Objects.equals(carmark, carModel.carmark) &&
-                Objects.equals(name, carModel.name);
+        return id == carModel.id
+                && Objects.equals(cartype, carModel.cartype)
+                && Objects.equals(carmark, carModel.carmark)
+                && Objects.equals(name, carModel.name);
     }
 
     @Override

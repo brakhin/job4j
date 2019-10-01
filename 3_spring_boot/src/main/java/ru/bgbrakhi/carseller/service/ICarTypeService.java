@@ -7,4 +7,5 @@ import java.util.List;
 public interface ICarTypeService {
     List<CarType> getAll();
     CarType getByName(String name);
+    void save(CarType carType);
 }

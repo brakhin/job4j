@@ -7,4 +7,5 @@ import java.util.List;
 public interface ICarMarkService {
     List<CarMark> findForType(String cartype);
     CarMark getByName(String name);
+    void save(CarMark carMark);
 }

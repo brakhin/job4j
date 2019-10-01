@@ -35,4 +35,9 @@ public class CarMarkServiceImpl implements ICarMarkService {
     public CarMark getByName(String name) {
         return carMarkRepository.findByName(name);
     }
+
+    @Override
+    public void save(CarMark carMark) {
+        carMarkRepository.save(carMark);
+    }
 }

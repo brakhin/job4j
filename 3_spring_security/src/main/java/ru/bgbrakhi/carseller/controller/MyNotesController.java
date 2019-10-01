@@ -20,7 +20,7 @@ import java.util.List;
 
 @Controller
 public class MyNotesController {
-    private static final String UPLOAD_DIRECTORY ="/image_upload";
+    private static final String UPLOAD_DIRECTORY  = "/image_upload";
 
     @Autowired
     private ICarService carService;
@@ -60,7 +60,7 @@ public class MyNotesController {
                           @RequestParam CommonsMultipartFile edFile,
                           HttpSession session,
                           Principal principal,
-                          ModelMap model) throws Exception{
+                          ModelMap model) throws Exception {
 
         ServletContext context = session.getServletContext();
         String path = context.getRealPath(UPLOAD_DIRECTORY);

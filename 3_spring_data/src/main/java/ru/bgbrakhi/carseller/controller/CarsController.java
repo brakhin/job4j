@@ -27,7 +27,7 @@ public class CarsController {
     @RequestMapping(value = "/cars", method = RequestMethod.GET)
     public String showItems(ModelMap model) {
         List<Car> cars = carService.findWithFilter(null, true);
-        List<CarModel> models = carModelService.findForType("");;
+        List<CarModel> models = carModelService.findForType("");
 
         model.addAttribute("cars", cars);
         model.addAttribute("marks", getMarks(models));
@@ -37,7 +37,7 @@ public class CarsController {
     @RequestMapping(value = "/cars", method = RequestMethod.POST)
     public String addItem(@ModelAttribute UserFilter filter, ModelMap model) {
         List<Car> cars = carService.findWithFilter(filter, true);
-        List<CarModel> models = carModelService.findForType("");;
+        List<CarModel> models = carModelService.findForType("");
 
         model.addAttribute("cars", cars);
         model.addAttribute("marks", getMarks(models));

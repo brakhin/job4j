@@ -26,15 +26,15 @@ public interface ICarRepository extends CrudRepository<Car, Integer> {
             @Param("filter_today")Boolean filterToday,
             @Param("filter_photo")Boolean filterPhoto);
 
-    @Query("select c from Car c where c.user.login = :login")
-    List<Car> findForUser(@Param("login")String login);
+    @Query("select c from Car c where c.user.username = :username")
+    List<Car> findForUser(@Param("username")String username);
 
     @Transactional
     @Modifying
     @Query(value = "update cars set inactive = not coalesce(inactive, false) \n"
-            + "where id=:id and id_user in (select u.id from users u where u.login=:login)",
+            + "where id=:id and id_user in (select u.id from users u where u.username=:username)",
             nativeQuery = true)
-    void swapInactive(@Param("id")Long id, @Param("login") String login);
+    void swapInactive(@Param("id")Long id, @Param("username") String username);
 }
 
 

@@ -124,9 +124,13 @@ public class Car {
         this.inactive = inactive;
     }
 
-    public Long getTimestamp() { return timestamp; }
+    public Long getTimestamp() {
+        return timestamp;
+    }
 
-    public void setTimestamp(Long timestamp) { this.timestamp = timestamp; }
+    public void setTimestamp(Long timestamp) {
+        this.timestamp = timestamp;
+    }
 
     @Override
     public boolean equals(Object o) {

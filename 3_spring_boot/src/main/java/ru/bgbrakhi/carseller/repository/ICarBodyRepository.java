@@ -10,6 +10,5 @@ import java.util.List;
 public interface ICarBodyRepository extends CrudRepository<CarBody, Integer> {
     @Query("select ce.carbody from Car ce where ce.carmodel.cartype.name = :cartype")
     List<CarBody> getCarBodyByType(@Param("cartype")String cartype);
-
     CarBody findByName(String name);
 }

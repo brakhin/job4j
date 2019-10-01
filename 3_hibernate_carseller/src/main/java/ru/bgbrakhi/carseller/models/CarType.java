@@ -51,11 +51,15 @@ public class CarType {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         CarType carType = (CarType) o;
-        return id == carType.id &&
-                Objects.equals(name, carType.name);
+        return id == carType.id
+                && Objects.equals(name, carType.name);
     }
 
     @Override

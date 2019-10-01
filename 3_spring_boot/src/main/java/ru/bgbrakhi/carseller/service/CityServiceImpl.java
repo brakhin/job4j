@@ -19,7 +19,6 @@ public class CityServiceImpl implements ICityService {
     @Override
     public List<City> getAll() {
         return Lists.newArrayList(cityRepository.findAll());
-
     }
 
     @Override

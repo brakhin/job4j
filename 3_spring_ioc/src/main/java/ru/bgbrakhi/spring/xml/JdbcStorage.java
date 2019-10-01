@@ -36,7 +36,7 @@ public class JdbcStorage implements IStorage {
             statement.executeUpdate();
             ResultSet rs = statement.getGeneratedKeys();
             if (rs.next()) {
-                result= rs.getLong(1);
+                result = rs.getLong(1);
                 user.setId(result);
             }
         } catch (SQLException e) {

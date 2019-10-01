@@ -13,10 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-/**
- * обрабатывает 403 ошибку перенаправляя в случае ее вызова на /403 страницу
- */
-
 @Component
 public class MyAccessDeniedHandler implements AccessDeniedHandler {
 
@@ -25,7 +21,7 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
     @Override
     public void handle(HttpServletRequest httpServletRequest,
                        HttpServletResponse httpServletResponse,
-                       AccessDeniedException e) throws IOException, ServletException {
+                       AccessDeniedException e) throws IOException {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null){

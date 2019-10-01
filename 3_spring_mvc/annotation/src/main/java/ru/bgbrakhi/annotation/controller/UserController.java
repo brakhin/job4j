@@ -15,13 +15,13 @@ public class UserController {
 
     private final List<User> users = new CopyOnWriteArrayList<>();
 
-    @RequestMapping(value="/users.do", method = RequestMethod.GET)
+    @RequestMapping(value = "/users.do", method = RequestMethod.GET)
     public String showItems(ModelMap model) {
         model.addAttribute("users", this.users);
         return "users";
     }
 
-    @RequestMapping(value="/users", method = RequestMethod.POST)
+    @RequestMapping(value = "/users", method = RequestMethod.POST)
     public String addItem(@ModelAttribute User user) {
         this.users.add(user);
         return "redirect:users.do";

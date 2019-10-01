@@ -45,13 +45,15 @@ public class CarsController {
     @Autowired
     private ICarModelService carModelService;
 
-    @GetMapping("/")
+
+
+    @GetMapping({"/", "/cars"})
     public String showItems(ModelMap model, Principal principal) {
         loadData(null, model, principal);
         return "cars";
     }
 
-    @PostMapping("/")
+    @PostMapping({"/", "/cars"})
     public String setFilter(@ModelAttribute UserFilter filter, ModelMap model, Principal principal, HttpServletRequest req) {
         loadData(filter, model, principal);
         return "cars";
@@ -81,7 +83,7 @@ public class CarsController {
                                 "gatCarImage", car.getFilename()).build().toString()
                 )
         );
-        model.addAttribute("login", principal == null ? "" : String.format(" [ %s ]", principal.getName()));
+        model.addAttribute("username", principal == null ? "" : String.format(" [ %s ]", principal.getName()));
         model.addAttribute("cars", cars);
         model.addAttribute("marks", getMarks(models));
     }

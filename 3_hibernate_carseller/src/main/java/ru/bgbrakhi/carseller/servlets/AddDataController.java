@@ -86,7 +86,7 @@ public class AddDataController extends HttpServlet {
                         }
                     } else {
                         String fieldname = item.getFieldName().toLowerCase();
-                        String fieldvalue = new String (item.getString().getBytes (StandardCharsets.ISO_8859_1),
+                        String fieldvalue = new String(item.getString().getBytes(StandardCharsets.ISO_8859_1),
                                 StandardCharsets.UTF_8);
 
                         if (fieldname.startsWith("ed")) {

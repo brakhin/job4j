@@ -82,12 +82,14 @@ public class MyNotesController {
         if (carType == null) {
             carType = new CarType();
             carType.setName(edType);
+            carTypeService.save(carType);
         }
 
         CarMark carMark = carMarkService.getByName(edMark);
         if (carMark == null) {
             carMark = new CarMark();
             carMark.setName(edMark);
+            carMarkService.save(carMark);
         }
 
         City city = cityService.getByName(edCity);
@@ -110,7 +112,7 @@ public class MyNotesController {
             carModel.setName(edModel);
         }
 
-        User user = userService.findByLogin(principal.getName());
+        User user = userService.findByUsername(principal.getName());
 
         car.setUser(user);
         car.setCity(city);
@@ -153,7 +155,7 @@ public class MyNotesController {
                 )
         );
 
-        model.addAttribute("login", principal == null ? "" : String.format(" [ %s ]", principal.getName()));
+        model.addAttribute("username", principal == null ? "" : String.format(" [ %s ]", principal.getName()));
         model.addAttribute("cars", cars);
         model.addAttribute("cities", cities);
         model.addAttribute("types", carTypes);

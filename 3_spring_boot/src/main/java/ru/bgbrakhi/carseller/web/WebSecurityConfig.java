@@ -3,6 +3,7 @@ package ru.bgbrakhi.carseller.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -22,54 +23,48 @@ import javax.sql.DataSource;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
-    private DataSource dataSource;
+    private AccessDeniedHandler accessDeniedHandler;
 
     @Autowired
-    private AccessDeniedHandler accessDeniedHandler;
+    private UserDetailsService userDetailsService;
+
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .csrf().disable()
                 .authorizeRequests()
-                    .antMatchers("/").permitAll()
-                    .antMatchers("/all_images/**").permitAll()
-                    .antMatchers("/note_images/**").permitAll()
-                    .antMatchers("/files/**").permitAll()
+                    .antMatchers("/",
+                            "/registration",
+                            "/all_images/**",
+                            "/note_images/**",
+                            "/files/**"
+                    ).permitAll()
                     .antMatchers("/mynotes").hasAnyRole("USER")
-                    .anyRequest().authenticated()
+                    .anyRequest()
+                    .authenticated()
                     .and()
                 .formLogin()
                     .loginPage("/login")
-                    .usernameParameter("login").passwordParameter("password")
-                    .defaultSuccessUrl("/mynotes")
                     .permitAll()
-                    .failureUrl("/login?error")
                     .and()
                 .logout()
-                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/cars")
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/")
                     .permitAll()
                     .and()
                 .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
     }
-/*
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication().passwordEncoder(NoOpPasswordEncoder.getInstance()).
-                withUser("1").password("1").roles("USER");
+    @Bean
+    public AuthenticationManager customAuthenticationManager() throws Exception {
+        return authenticationManager();
     }
 
-*/
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery("select login, password, enable"
-                        + " from users where login=?")
-                .authoritiesByUsernameQuery("select u.login, r.name from user_role ur "
-                        + "inner join users u on ur.id_user = u.id "
-                        + "inner join ref_role r on ur.id_role = r.id "
-                        + "where u.login=?")
-                .passwordEncoder(new BCryptPasswordEncoder());
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
 

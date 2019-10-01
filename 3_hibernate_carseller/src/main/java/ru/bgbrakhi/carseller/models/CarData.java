@@ -63,8 +63,12 @@ public class CarData {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         CarData carData = (CarData) o;
         return Objects.equals(login, carData.login)
                 && Objects.equals(cityName, carData.cityName)
